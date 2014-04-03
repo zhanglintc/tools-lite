@@ -3,20 +3,21 @@ Convert encoding of files in given folder to uft-8.
 '''
 
 import os
-import shutil
-import re
-import fileinput
 import codecs
 import chardet
 import time
 
-#put your target folder address here:(if you are using drag function, this is useless)
+# set your python version true
+Python2 = True
+Python3 = False
+
+# put your target folder address here:(if you are using drag function, this is useless)
 target_folder=r"F:\Example\target_folders"
-#set your target file type:
+# set your target file type:
 fExt = ["c","cpp","h","txt","rc","ini"]
 
 ################################################################
-#functions:
+# functions:
 ################################################################
 def IsTargetFile(target_file):
     ''' to judge input file is target file type or not.
@@ -64,11 +65,14 @@ def WriteAsUtf_8(target_file):
         return False
 
 ################################################################
-#main:
+# main:
 ################################################################
 if __name__=="__main__":
     log_for_write = ''
-    target_folder = str(input("Drag your folder here:\n"))
+    if Python2:
+        target_folder = str(raw_input("Drag your folder here:\n"))
+    elif Python3:
+        target_folder = str(input("Drag your folder here:\n"))
     if target_folder[0] == '\"':# if target folder contain space, i will start with "
         target_folder = target_folder[1:-1]# so strip it
     start = time.time()
@@ -86,5 +90,8 @@ if __name__=="__main__":
     f.write(str(last))
     f.close()
     print('\n')
-    input("Convert finished, press any key to close")
+    if Python2:
+        raw_input("Convert finished, press any key to close")
+    elif Python3:
+        input("Convert finished, press any key to close")
 
