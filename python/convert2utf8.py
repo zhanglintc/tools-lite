@@ -1,3 +1,7 @@
+'''
+Convert encoding of files in given folder to uft-8.
+'''
+
 import os
 import shutil
 import re
@@ -5,14 +9,14 @@ import fileinput
 import codecs
 import chardet
 
-
-
-#put your target folder address here:
-target_folder=r"F:\SVN-Workspace\sakura editor\sakura_lang_en_US"
+#put your target folder address here:(if you are using drag function, this is useless)
+target_folder=r"F:\Example\target_folders"
 #set your target file type:
 fExt = ["c","cpp","h","txt","rc","ini"]
 
+################################################################
 #functions:
+################################################################
 def IsTargetFile(target_file):
     ''' to judge input file is target file type or not.
         True for is target_file
@@ -31,6 +35,7 @@ def WriteAsUtf_8(target_file):
     '''
     global log_for_write
     try:
+        # read and detect file
         fr = codecs.open(target_file)#open target file
         datas = fr.read()#read content
         encoding_type = chardet.detect(datas)['encoding']#get encoding
@@ -40,8 +45,11 @@ def WriteAsUtf_8(target_file):
         print(log_for_print)#print sth
         log_for_write += log_for_print
 
+        # decode and encode
         datas = datas.decode(encoding_type)#decode cotent by useing detected encoding type
         datas = datas.encode('utf-8-sig')#encode in utf-8
+        
+        # rewirte file
         fw = open(target_file,'w')#open target file using write mode
         fw.write(datas)#rewrite to original file
         fw.close()#close file
@@ -53,10 +61,14 @@ def WriteAsUtf_8(target_file):
         log_for_write += log_for_print
         return False
 
+################################################################
 #main:
+################################################################
 if __name__=="__main__":
-    log_for_write=''
-    #target_folder=input("Drag your folder here:\n")
+    log_for_write = ''
+    target_folder = str(input("Drag your folder here:\n"))
+    if target_folder[0] == '\"':# if target folder contain space, i will start with "
+        target_folder = target_folder[1:-1]# so strip it
     FTuple = os.walk(target_folder)
     for root,dirs,files in FTuple:
         for tmp_file in files:        
@@ -67,6 +79,6 @@ if __name__=="__main__":
     f = open('log.dat','w')
     f.write(log_for_write)
     f.close()
-    print '\n'
+    print('\n')
     input("Convert finished, press any key to close")
 
