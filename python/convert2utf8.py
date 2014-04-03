@@ -38,8 +38,9 @@ def WriteAsUtf_8(target_file):
         # read and detect file
         fr = codecs.open(target_file)#open target file
         datas = fr.read()#read content
-        encoding_type = chardet.detect(datas)['encoding']#get encoding
-        confidence = chardet.detect(datas)['confidence']#get confidence
+        result_dict = chardet.detect(datas)
+        encoding_type = result_dict['encoding']#get encoding
+        confidence = result_dict['confidence']#get confidence
         fr.close()#close file
         log_for_print = 'tpye: ' + str(encoding_type) + ' with ' + str(confidence*100) + '% ' + str(target_file) + '\n'
         print(log_for_print)#print sth
@@ -50,7 +51,7 @@ def WriteAsUtf_8(target_file):
         datas = datas.encode('utf-8-sig')#encode in utf-8
         
         # rewirte file
-        fw = open(target_file,'w')#open target file using write mode
+        fw = open(target_file,'wb')#open target file using write mode
         fw.write(datas)#rewrite to original file
         fw.close()#close file
         return True
