@@ -1,4 +1,4 @@
-::restart windows explorer easily
+﻿::restart windows explorer easily
 
 @echo off
 color 3e
