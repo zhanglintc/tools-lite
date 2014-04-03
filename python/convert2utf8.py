@@ -41,7 +41,7 @@ def WriteAsUtf_8(target_file):
         encoding_type = chardet.detect(datas)['encoding']#get encoding
         confidence = chardet.detect(datas)['confidence']#get confidence
         fr.close()#close file
-        log_for_print = 'tpye: ' + str(encoding_type) + ' with ' + str(confidence*100) + '% ' + str(target_file)
+        log_for_print = 'tpye: ' + str(encoding_type) + ' with ' + str(confidence*100) + '% ' + str(target_file) + '\n'
         print(log_for_print)#print sth
         log_for_write += log_for_print
 
@@ -56,7 +56,7 @@ def WriteAsUtf_8(target_file):
         return True
 
     except:
-        log_for_print = 'Errored in tpye: ' + str(encoding_type) + ' with ' + str(confidence*100) + '% ' + str(target_file)
+        log_for_print = 'Errored in tpye: ' + str(encoding_type) + ' with ' + str(confidence*100) + '% ' + str(target_file) + '\n'
         print(log_for_print)#print error infomation
         log_for_write += log_for_print
         return False
