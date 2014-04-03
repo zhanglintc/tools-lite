@@ -8,6 +8,7 @@ import re
 import fileinput
 import codecs
 import chardet
+import time
 
 #put your target folder address here:(if you are using drag function, this is useless)
 target_folder=r"F:\Example\target_folders"
@@ -70,15 +71,19 @@ if __name__=="__main__":
     target_folder = str(input("Drag your folder here:\n"))
     if target_folder[0] == '\"':# if target folder contain space, i will start with "
         target_folder = target_folder[1:-1]# so strip it
+    start = time.time()
     FTuple = os.walk(target_folder)
     for root,dirs,files in FTuple:
         for tmp_file in files:        
             if IsTargetFile(tmp_file):
                 target_file = os.path.join(root,tmp_file)
                 WriteAsUtf_8(target_file)
-
+    end = time.time()
+    last = end -start
+    print(str(last))
     f = open('log.dat','w')
     f.write(log_for_write)
+    f.write(str(last))
     f.close()
     print('\n')
     input("Convert finished, press any key to close")
