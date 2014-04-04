@@ -91,10 +91,10 @@ if __name__=="__main__":
                 WriteAsUtf_8(target_file)
     end = time.time()
     last = end -start
-    print(str(last))
+    print('Completed within ' + str(last)[:-13] +'s')
     f = open('log.dat','w')
-    f.write(log_for_write)
-    f.write(str(last))
+    f.write(log_for_write + '\n')
+    f.write('Completed within ' + str(last)[:-13] +'s')
     f.close()
     print('\n')
     if Python2:
