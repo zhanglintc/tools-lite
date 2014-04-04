@@ -1,10 +1,15 @@
 import os
 
+# todo: add quotaion mark strip funtion
+
 # count blank lines or not
 cnt_blank_lines = True
+# set your python version
+python2 = True
+python3 = False
 
 fExt = ["c",'cpp','h','py']
-target_folder = r"E:\SVN-Space\tools-lite"
+target_folder = r"F:\SVN-Workspace\sanguosha\trunk\src"
 
 def line_count(target_file):
     f = open(target_file,"rb")
@@ -41,4 +46,13 @@ def traverse(target_folder):
                 result += line_count(target_file)
     return result
 
-print(traverse(target_folder))
+
+if __name__ == '__main__':
+    if python2:
+        target_folder = raw_input("Drag target folder here to count:\n")
+        print(traverse(target_folder))
+        raw_input("Press any key to close")
+    elif python3:
+        target_folder = input("Drag target folder here count:\n")
+        print(traverse(target_folder))
+        raw_input("Press any key to close")
