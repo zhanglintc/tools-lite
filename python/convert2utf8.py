@@ -7,9 +7,9 @@ import codecs
 import chardet
 import time
 
-# set your python version true
-Python2 = True
-Python3 = False
+# set your python version True
+Python2 = False
+Python3 = True
 
 # put your target folder address here:(if you are using drag function, this is useless)
 target_folder=r"F:\Example\target_folders"
@@ -30,6 +30,15 @@ def IsTargetFile(target_file):
     else:
         return False
 
+def GetEncodingInfo(datas):
+    '''
+    return datas' encoding info and relevant confidence
+    '''
+    result_dict = chardet.detect(datas)
+    encoding_type = result_dict['encoding']#get encoding
+    confidence = result_dict['confidence']#get confidence
+    return encoding_type,confidence
+
 def WriteAsUtf_8(target_file):
     ''' try to convert target_file encoding type to uft-8
         True for success
@@ -40,9 +49,7 @@ def WriteAsUtf_8(target_file):
         # read and detect file
         fr = codecs.open(target_file)#open target file
         datas = fr.read()#read content
-        result_dict = chardet.detect(datas)
-        encoding_type = result_dict['encoding']#get encoding
-        confidence = result_dict['confidence']#get confidence
+        encoding_type,confidence = GetEncodingInfo(datas)
         fr.close()#close file
         log_for_print = 'tpye: ' + str(encoding_type) + ' with ' + str(confidence*100) + '% ' + str(target_file) + '\n'
         print(log_for_print)#print sth
