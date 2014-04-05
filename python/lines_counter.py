@@ -1,17 +1,24 @@
-import os
+'''
+count lines in given folder
+'''
 
-# todo: add quotaion mark strip funtion
+import os
+import sys
+
+# to-do: add quotation mark strip function
 
 # count blank lines or not
 cnt_blank_lines = True
-# set your python version
-python2 = True
-python3 = False
+# judge your python version
+version = sys.version[0]
 
 fExt = ["c",'cpp','h','py']
 target_folder = r"F:\SVN-Workspace\sanguosha\trunk\src"
 
 def line_count(target_file):
+    '''
+    count and return given files
+    '''
     f = open(target_file,"rb")
     datas = f.readline()
     cnt = 0
@@ -37,6 +44,9 @@ def IsTargetFile(target_file):
         return False
 
 def traverse(target_folder):
+    '''
+    traverse given target and return lines of all the files
+    '''
     FTuple = os.walk(target_folder)
     result = 0
     for root,dirs,files in FTuple:
@@ -44,15 +54,15 @@ def traverse(target_folder):
             if IsTargetFile(tmp_file):
                 target_file = os.path.join(root,tmp_file)
                 result += line_count(target_file)
-    return result
+    return str(result)
 
 
 if __name__ == '__main__':
-    if python2:
+    if version == '2':
         target_folder = raw_input("Drag target folder here to count:\n")
-        print(traverse(target_folder))
+        print(traverse(target_folder) + ' lines')
         raw_input("Press any key to close")
-    elif python3:
+    elif version == '3':
         target_folder = input("Drag target folder here count:\n")
-        print(traverse(target_folder))
+        print(traverse(target_folder) + ' lines')
         raw_input("Press any key to close")
