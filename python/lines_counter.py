@@ -5,7 +5,6 @@ count lines in given folder
 import os
 import sys
 
-# to-do: add quotation mark strip function
 
 # count blank lines or not
 cnt_blank_lines = True
@@ -14,6 +13,11 @@ version = sys.version[0]
 
 fExt = ["c",'cpp','h','py']
 target_folder = r"F:\SVN-Workspace\sanguosha\trunk\src"
+
+def QuotationStrip(target_folder):
+    if target_folder[0] == '\"':
+        target_folder = target_folder[1:-1]
+    return target_folder
 
 def line_count(target_file):
     '''
@@ -60,9 +64,11 @@ def traverse(target_folder):
 if __name__ == '__main__':
     if version == '2':
         target_folder = raw_input("Drag target folder here to count:\n")
+        target_folder = QuotationStrip(target_folder)
         print(traverse(target_folder) + ' lines')
         raw_input("Press any key to close")
     elif version == '3':
         target_folder = input("Drag target folder here count:\n")
+        target_folder = QuotationStrip(target_folder)
         print(traverse(target_folder) + ' lines')
         raw_input("Press any key to close")
