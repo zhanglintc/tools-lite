@@ -1,7 +1,16 @@
 @echo off
 title Lane at NEU
 COLOR 3E
+
 set t=1
+for /f "tokens=3" %%i in ('reg query "HKCU\Control Panel\International" /v "sLanguage"') do (
+    set reg_localevar=%%i
+)
+
+if %reg_localevar% == CHS goto Chinese
+goto English
+
+:Chinese
 echo -------------------------------------------------------------------------------
 echo 此为作者无聊闲暇之余做的自动关机程序,可以方便大家做一些事。
 echo 比如晚上放歌30分钟伴你入眠然后自动关机之类的。^^_^^呵呵。
@@ -30,15 +39,47 @@ set /p t=
 echo.
 cls
 if "%t%"=="0" (shutdown -a && echo. && echo 取消成功,谢谢使用！)
+
+:English
+echo -------------------------------------------------------------------------------
+echo This app was created in author's leisure time, could make something easier.
+echo For example after 30 minutes music then shut down your PC, ^^_^^.
+echo -------------------------------------------------------------------------------
+echo Because it is first time author write a batch file, there maybe several bugs.
+echo Note: should input numbers（1~315360000）。Charecters input means 0 ~~
+echo -------------------------------------------------------------------------------
+echo Input number 0 can cancel the current shut down plan.
+echo -------------------------------------------------------------------------------
+set /p time=input shut down time (unit：min)：
+set /a s=time*60
+if "%s%"=="0" (shutdown -a&cls&echo.&echo Cancel success，thank you!&&echo.&goto end1)
+shutdown -a
+ping -n 2 127.1 > nul
+shutdown -s -t "%s%"
+echo -------------------------------------------------------------------------------
+echo Your PC will be shouted down in %time% mins...
+echo -------------------------------------------------------------------------------
+cls
+echo -------------------------------------------------------------------------------
+echo If you want to cancel, please input 0, otherwise input Enter instead!
+echo (Shut down count down will continue after close...)
+echo -------------------------------------------------------------------------------
+echo.
+set /p t=
+echo.
+cls
+if "%t%"=="0" (shutdown -a && echo. && echo Cancel success，thank you)
+
+
 :end1
 echo -------------------------------------------------------------------------------
 echo.
-echo                                                     Powered by Linn at NEU
+echo                                                     Powered by Lane at NEU
 echo.
 echo -------------------------------------------------------------------------------
 if "%t%"=="1" goto end2
-if not "%t%"=="0" echo 谢谢使用！！
+if not "%t%"=="0" echo Thank you!!
 :end2
-echo 请按任意键退出程序...
+echo Press any key to quit...
 echo.
 pause>nul
