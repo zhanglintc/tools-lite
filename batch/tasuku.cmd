@@ -1,10 +1,34 @@
-ï»¿::Original useing to count file's lines in one tasuku
+::Original useing to count file's lines in one tasuku
 ::(that's why it is named as tasuku)
 ::Now could use to count file's lines in one folder
 
 @echo off
 setlocal enabledelayedexpansion
-title ã‚¿ã‚¹ã‚¯ ã‚«ã‚¦ãƒ³ãƒˆ ãƒ„ãƒ¼ãƒ« by Lane
+
+for /f "tokens=3" %%i in ('reg query "HKCU\Control Panel\International" /v "sLanguage"') do (
+    set reg_localevar=%%i
+)
+
+if reg_localevar==JPN goto Japanese
+goto English
+
+:Japanese
+set title_str=¥¿¥¹¥¯ ¥«¥¦¥ó¥È ¥Ä©`¥ë
+set process_str=„IÀíßM¶È£º
+set lines_str1=¾tÐÐÊý:
+set lines_str2=ÓÐ„¿ÐÐÊý¤Ï:
+set linesAbt_str=ÐÐ¤°¤é¤¤
+set end_str=ÒÔÉÏ¤Ç¤¹!
+
+:English
+set title_str=Lines count tool
+set process_str=processing: 
+set lines_str1=Lines: 
+set lines_str2=Lines is: 
+set linesAbt_str= more or less
+set end_str=All is done
+
+title %title_str% by Lane
 color 3E
 
 set /a input_path=initial
@@ -41,24 +65,24 @@ for /f "usebackq delims=" %%z in (%%i) do (
 set /a line_count=!line_count!+1
 )
 cls
-echo å‡¦ç†é€²åº¦ï¼š!completed!/%file_count%
-echo ç·è¡Œæ•°:!line_count!
+echo %process_str%!completed!/%file_count%
+echo %lines_str%!line_count!
 echo %%i
 set /a completed=!completed!+1
 )
 
 del tmp.dat
 
-echo æœ‰åŠ¹è¡Œæ•°ã¯:!line_count!è¡Œãã‚‰ã„>>log.c
+echo %lines_str2%!line_count!%linesAbt_str%>>log.c
 echo=>>log.c
 
 pause>nul
 
 ::echo the valid lines number
 
-::echo ã“ã“ã‹ã‚‰:>>log.c
+::echo ¤³¤³¤«¤é:>>log.c
 ::findstr /i "#" %input_path%>>log.c
-echo ä»¥ä¸Šã§ã™!>>log.c
+echo %end_str%>>log.c
 ::find the lines with # and output to the log.c
 
 start log.c
