@@ -45,14 +45,14 @@ echo ---------------------------------------------------------------------------
 echo This app was created in author's leisure time, could make something easier.
 echo For example after 30 minutes music then shut down your PC, ^^_^^.
 echo -------------------------------------------------------------------------------
-echo Because it is first time author write a batch file, there maybe several bugs.
-echo Note: should input numbers(1~315360000). Charecters input means 0 ~~
+echo It is the first time author writes a batch file, there may be several bugs.
+echo Note: should input numbers (1~315360000). Charecters input means 0 ~~
 echo -------------------------------------------------------------------------------
 echo Input number 0 can cancel the current shut down plan.
 echo -------------------------------------------------------------------------------
-set /p time=input shut down time (unit:min):
+set /p time=Input time (Unit: min):
 set /a s=time*60
-if "%s%"=="0" (shutdown -a&cls&echo.&echo Cancel success, thank you!&&echo.&goto end1)
+if "%s%"=="0" (shutdown -a&cls&echo.&echo Cancelled successfully, thank you!&&echo.&goto end1)
 shutdown -a
 ping -n 2 127.1 > nul
 shutdown -s -t "%s%"
@@ -62,13 +62,13 @@ echo ---------------------------------------------------------------------------
 cls
 echo -------------------------------------------------------------------------------
 echo If you want to cancel, please input 0, otherwise input Enter instead!
-echo (Shut down count down will continue after close...)
+echo (Shut down countdown will continue after close...)
 echo -------------------------------------------------------------------------------
 echo.
 set /p t=
 echo.
 cls
-if "%t%"=="0" (shutdown -a && echo. && echo Cancel success, thank you)
+if "%t%"=="0" (shutdown -a && echo. && echo Cancelled successfully, thank you!)
 
 
 :end1
