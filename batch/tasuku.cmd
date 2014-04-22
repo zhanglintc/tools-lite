@@ -19,6 +19,7 @@ set lines_str1=総行数:
 set lines_str2=有効行数は:
 set linesAbt_str=行ぐらい
 set end_str=以上です!
+goto begin
 
 :English
 set title_str=Lines count tool
@@ -28,6 +29,7 @@ set lines_str2=Lines is:
 set linesAbt_str= more or less
 set end_str=All is done
 
+:begin
 title %title_str% by Lane
 color 3E
 
