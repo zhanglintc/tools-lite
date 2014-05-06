@@ -71,4 +71,4 @@ if __name__ == '__main__':
         target_folder = input("Drag target folder here count:\n")
         target_folder = QuotationStrip(target_folder)
         print(traverse(target_folder) + ' lines')
-        raw_input("Press any key to close")
+        input("Press any key to close")
