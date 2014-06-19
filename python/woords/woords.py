@@ -8,26 +8,24 @@ gotton = input('letters key length:')
 gotton = gotton.split(" ")
 
 letters = gotton[0]
-key = gotton[1]
-length = int(gotton[2])
+
 
 #initialize
 word_chars = {}
-gotton_chars = dict([(l, 0) for l in alphabeta])
-
-for word in lexicon:
-    word_chars[word] = dict([(l, 0) for l in alphabeta])
+gotton_chars = {}
 
 #count gotton chars
 for char in gotton[0]:
-    gotton_chars[char] += 1
+    gotton_chars[char] = gotton_chars.get(char, 0) + 1
 
 #for all words
 for word in lexicon:
+    word_chars[word] = {}
     for char in word:
-        word_chars[word][char] += 1
-    for char in alphabeta:
-        if gotton_chars[char] < word_chars[word][char]:
+        word_chars[word][char] = word_chars[word].get(char, 0) + 1
+    for char in word:
+        if gotton_chars.get(char, 0) < word_chars[word].get(char, 0):
             break
-        elif char == 'z' and word_chars[word][key] != 0 and len(word) == length:
+        elif char == word[-1]:
             print(word)
+input('end')
