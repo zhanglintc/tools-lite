@@ -13,6 +13,7 @@ letters = gotton[0]
 #initialize
 word_chars = {}
 gotton_chars = {}
+found = 0
 
 #count gotton chars
 for char in gotton[0]:
@@ -28,4 +29,7 @@ for word in lexicon:
             break
         elif char == word[-1]:
             print(word)
-input('end')
+            found += 1
+
+print(str(found) + ' are found')
+input()
