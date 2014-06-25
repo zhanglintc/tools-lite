@@ -2,16 +2,24 @@
 
 def lastone(number, key):
     peoples = []
+    counter = 1
+    thisPeople = 0
     for i in range(number):
-        peoples.append(i)
+        peoples.append(i + 1)
 
-    i = 0
     while(True):
-        i += 1
-        print("I'm No.%2d, %2d times" % (peoples[i], ( i % key )+( key if i % key == 0 else 0 )))
-        if( i == 11): break
-
-    # print (len(peoples))
+        print("I'm No.%2d, %2d times" % (peoples[thisPeople], counter % key + ( key if counter % key == 0 else 0 )))
+        if counter % key == 0:
+            print("No.%2d has been excuted\n" % (peoples[thisPeople]))
+            peoples.pop(thisPeople)
+            thisPeople -= 1
+        counter += 1
+        thisPeople += 1
+        if thisPeople >= len(peoples):
+            thisPeople = 0        
+        if len(peoples) == 1: 
+            break
+    print("Congratulations, No.%2d is survived" % (peoples[0]))
 
 if __name__ == '__main__':
     lastone(13, 3)
