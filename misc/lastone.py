@@ -52,7 +52,7 @@ def lastone(number, key):
         peoples.append(i + 1)
 
 
-    while(True):        
+    while True:
         print("I'm No.%2d, %2d times" % (peoples[thisPeople], counter % key + ( key if counter % key == 0 else 0 )))
 
         if counter % key == 0:
@@ -65,8 +65,8 @@ def lastone(number, key):
         thisPeople += 1
 
         if thisPeople >= len(peoples):
-            thisPeople = 0        
-        if len(peoples) == 1: 
+            thisPeople = 0
+        if len(peoples) == 1:
             break
 
     print("Congratulations, No.%2d is survived" % (peoples[0]))
