@@ -11,13 +11,10 @@ import sys
 
 #multi-version support
 version = sys.version[0]
-print version
 if version == '2':
-    import Queue
-    Queue = Queue
+    import Queue as Queue
 elif version == '3':
-    import queue
-    Queue = queue
+    import queue as Queue
  
 #create a socket
 server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
