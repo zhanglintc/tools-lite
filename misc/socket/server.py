@@ -1,13 +1,23 @@
 '''
 Created on 2012-1-6
-The echo server example from the socket section can be extanded to watche for more than
+The echo server example from the socket section can be extended to watch for more than
 one connection at a time by using select() .The new version starts out by creating a nonblocking
 TCP/IP socket and configuring it to listen on an address
 @author: xiaojay
 '''
 import select
 import socket
-import queue
+import sys
+
+#multi-version support
+version = sys.version[0]
+print version
+if version == '2':
+    import Queue
+    Queue = Queue
+elif version == '3':
+    import queue
+    Queue = queue
  
 #create a socket
 server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -47,7 +57,7 @@ while inputs:
             print ("    connection from ", client_address)
             connection.setblocking(0)
             inputs.append(connection)
-            message_queues[connection] = queue.Queue()
+            message_queues[connection] = Queue.Queue()
         else:
             data = s.recv(1024).decode()
             if data :
@@ -68,7 +78,7 @@ while inputs:
     for s in writable:
         try:
             next_msg = message_queues[s].get_nowait()
-        except queue.Empty:
+        except Queue.Empty:
             print (" " , s.getpeername() , 'queue empty')
             outputs.remove(s)
         else:
