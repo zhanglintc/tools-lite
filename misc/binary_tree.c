@@ -22,7 +22,7 @@ void tree_insert(Tree **p_this, int num)            //插入变量的函数
     } 
     else                                            //如果不是空树
     {
-        if(num < (*p_this)->num)                    //如果小于当前树的值,左向插入
+        if(num <= (*p_this)->num)                   //如果小于等于当前树的值,左向插入
         {
             tree_insert(&((*p_this)->Lchild), num); //递归调用tree_insert函数
         } 
@@ -71,7 +71,7 @@ int main()                  //主函数
 
     for(i=1; i<=5; i++)     //循环5次而已
     {
-        printf("please input the %d number:", i);     /*不能输入相同数据，小bug*/  //其实可以默认设置为如果两数相同,自动放在左边,tree_insert处没有考虑,所以有此问题
+        printf("please input the %d number:", i);
         scanf("%d", &gotton);           //输入gotton
         tree_insert(&head, gotton);     //从head开始插入gotton
     }
