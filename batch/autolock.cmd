@@ -6,7 +6,7 @@ set file=lottery.pl
 REM first update the file and then get lock
 REM || means if failed to find "locked" then goto loop
 :loop
-ping 127.0.0.1 > nul
+ping 127.0.0.1 -n 4 > nul
 svn update %file%
 svn lock %file% | find "locked" || goto loop
 
