@@ -37,7 +37,7 @@ outputs = []
 message_queues = {}
  
 #A optional parameter for select is TIMEOUT
-timeout = 20
+timeout = 20000
  
 while inputs:
     print ("waiting for next event")
