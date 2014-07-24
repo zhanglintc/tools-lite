@@ -31,9 +31,9 @@ class Solution:
                             k_init = (points[i].y - points[j].y) / (points[i].x - points[j].x)
                     else: # current k
                         if points[i].x - points[j].x == 0: # horizontal
-                            k_init = -1
+                            k_curr = -1
                         else: # normal
-                            k_init = (points[i].y - points[j].y) / (points[i].x - points[j].x)
+                            k_curr = (points[i].y - points[j].y) / (points[i].x - points[j].x)
 
                 if k_curr == k_init:
                     cur_coutner += 1
