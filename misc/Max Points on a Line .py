@@ -19,7 +19,9 @@ class Solution:
             return 2
 
         for i in range(len(points)):
-            for j in range(len(points))[i+1:]:
+            for j in range(len(points)):
+                if i == j:
+                    continue
                 if points[i].x == points[j].x and points[i].y == points[j].y: # same point:
                     cur_coutner += 1
                     continue
