@@ -42,6 +42,6 @@ if __name__ == '__main__':
     head = tree_insert(head, 3)
     head = tree_insert(head, 4)
     head = tree_insert(head, 5)
-    DLR(head);print('\n')
-    LDR(head);print('\n')
-    LRD(head);print('\n')
+    print('DLR:');DLR(head);
+    print('LDR:');LDR(head);
+    print('LRD:');LRD(head);
