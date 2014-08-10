@@ -39,8 +39,9 @@ class Solution:
 
                 # other cases, not the same point
                 else:
-                    slope = float((points[i].y - points[j].y) / (points[i].x - points[j].x))
+                    slope = float((points[i].y - points[j].y)) / float((points[i].x - points[j].x))
                     line = (i, slope)
+                    #print line
 
                 # calculate the numbers of points on the same line
                 counter[line] = counter.get(line, 0) + 1
@@ -48,6 +49,7 @@ class Solution:
             # if counter is NOT null, calculate normally
             if counter.values() != []:
                 cur_counter = max(counter.values()) + modifier.get(i, 1)
+                #print "No.",i,": max is",max(counter.values()),"while modifier is",modifier.get(i, 1)
 
             # if counter is NULL, calculate only the modifier
             else:
