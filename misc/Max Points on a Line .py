@@ -9,35 +9,56 @@ class Solution:
     # @return an integer
     def maxPoints(self, points):
         max_counter = 0
-        modifier = 0
-        line = ()
+        cur_counter = 0
+        modifier = {}
         counter = {}
+        line = ()
 
+        # if numbers of points is not enough, return directly
         if len(points) == 1:
             return 1
         if len(points) == 2:
             return 2
 
+        # go through the list of points
         for i in range(len(points)):
             for j in range(len(points)):
-                if i == j: # this point, jump over
+                # this point, jump over
+                if i == j:
                     continue
 
-                if points[i].x == points[j].x and points[i].y == points[j].y: # same point:
-                    modifier += 1
+                # same point, calculate the modifier
+                if points[i].x == points[j].x and points[i].y == points[j].y:
+                    modifier[i] = modifier.get(i, 1) + 1
                     continue
 
-                elif points[i].x == points[j].x: # vertical
-                    slope = -1
+                # vertical, special process
+                elif points[i].x == points[j].x:
+                    slope = 'x'
                     line = (i, slope)
 
-                else: # not the same point
+                # other cases, not the same point
+                else:
                     slope = float((points[i].y - points[j].y) / (points[i].x - points[j].x))
                     line = (i, slope)
 
-                counter[line] = counter.get(line, 1) + 1
+                # calculate the numbers of points on the same line
+                counter[line] = counter.get(line, 0) + 1
 
-        max_counter = max(counter.values()) + modifier
+            # if counter is NOT null, calculate normally
+            if counter.values() != []:
+                cur_counter = max(counter.values()) + modifier.get(i, 1)
+
+            # if counter is NULL, calculate only the modifier
+            else:
+                cur_counter = modifier.get(i, 1)
+
+            # if cur is bigger the max, set max to cur
+            if cur_counter > max_counter:
+                max_counter = cur_counter
+
+            # clean the counter
+            counter = {}
 
         return max_counter
 
@@ -47,8 +68,9 @@ class Point:
         self.y = b
 
 points = []
-# lst = [(-4,-4),(-8,-582),(-3,3),(-9,-651),(9,591)]
-lst = [(1,1),(1,1),(1,1),(1,2)]
+# fail at this case, correct answer should be 6, not 8. consider about this
+lst = [(84,250),(0,0),(1,0),(0,-70),(0,-70),(1,-1),(21,10),(42,90),(-42,-230)]
+
 for i in lst:
     point = Point()
     point.x, point.y = i
