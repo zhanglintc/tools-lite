@@ -9,9 +9,9 @@ class Solution:
     # @return an integer
     def maxPoints(self, points):
         max_counter = 0
-        cur_coutner = 1
-        k_init = None
-        k_curr = None
+        modifier = 0
+        line = ()
+        counter = {}
 
         if len(points) == 1:
             return 1
@@ -20,33 +20,24 @@ class Solution:
 
         for i in range(len(points)):
             for j in range(len(points)):
-                if i == j:
+                if i == j: # this point, jump over
                     continue
+
                 if points[i].x == points[j].x and points[i].y == points[j].y: # same point:
-                    cur_coutner += 1
+                    modifier += 1
                     continue
-                else: # not same point
-                    if k_init == None: # get first k
-                        if points[i].x - points[j].x == 0: # vertical
-                            k_init = -1
-                        else: # normal
-                            k_init = float((points[i].y - points[j].y) / (points[i].x - points[j].x))
-                        cur_coutner += 1
-                        continue
-                    else: # current k
-                        if points[i].x - points[j].x == 0: # vertical
-                            k_curr = -1
-                        else: # normal
-                            k_curr = float((points[i].y - points[j].y) / (points[i].x - points[j].x))
 
-                if k_curr == k_init:
-                    cur_coutner += 1
+                elif points[i].x == points[j].x: # vertical
+                    slope = -1
+                    line = (i, slope)
 
-            if cur_coutner > max_counter:
-                max_counter = cur_coutner
-            cur_coutner = 1
-            k_init = None
-            k_curr = None
+                else: # not the same point
+                    slope = float((points[i].y - points[j].y) / (points[i].x - points[j].x))
+                    line = (i, slope)
+
+                counter[line] = counter.get(line, 1) + 1
+
+        max_counter = max(counter.values()) + modifier
 
         return max_counter
 
@@ -56,7 +47,8 @@ class Point:
         self.y = b
 
 points = []
-lst = [(-4,-4),(-8,-582),(-3,3),(-9,-651),(9,591)]
+# lst = [(-4,-4),(-8,-582),(-3,3),(-9,-651),(9,591)]
+lst = [(1,1),(1,1),(1,1),(1,2)]
 for i in lst:
     point = Point()
     point.x, point.y = i
