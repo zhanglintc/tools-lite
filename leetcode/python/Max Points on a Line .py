@@ -68,7 +68,7 @@ class Point:
         self.y = b
 
 points = []
-# fail at this case, correct answer should be 6, not 8. consider about this
+# the case below has been passed, by changing float(A / B) to float(A) / float(B)
 lst = [(84,250),(0,0),(1,0),(0,-70),(0,-70),(1,-1),(21,10),(42,90),(-42,-230)]
 
 for i in lst:
