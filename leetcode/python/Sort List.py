@@ -53,7 +53,4 @@ class Solution:
 
         return self.merge(new_head_1st, new_head_2nd)
 
-
-input = [1]
-S = Solution()
-print(S.sortList(input))
+# This version is using Merge Sort, but failed bacause of LTE.
