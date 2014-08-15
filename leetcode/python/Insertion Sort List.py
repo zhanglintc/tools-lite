@@ -14,30 +14,30 @@ class Solution:
         new_head = ListNode(0)
         pt_cache = None
         pt_currt = None
-        pt_head  = None
 
         while head != None and head.next != None: # until the end of head list
             if new_head.next == None: # the new_head is NULL
                 new_head.next = head # copy the first node of head to new_head
+                head = head.next # move forward before set as NULL
                 new_head.next.next = None #set the end of new_head as NULL
-                #the line above is not correct, try to fix it in the next edition
             else: # the new_head is not NULL
                 pt_cache = new_head
                 pt_currt = new_head.next
                 while pt_currt != None: # until the end
-                    if head.val <= pt_currt.val:
+                    if head.val <= pt_currt.val: # less than current, insert before current
                         pt_cache.next = head
+                        pt_cache.next = head
+                        head = head.next # move forward
                         pt_cache.next.next = pt_currt
                         break
-                    else:
+                    else: # move forward
                         pt_cache = pt_cache.next
                         pt_currt = pt_currt.next
-                        break
+                        continue
 
-                    pt_cache.next = head
-                    pt_cache.next.next = None
-
-            head = head.next
+                pt_cache.next = head
+                head = head.next # move forward before set as NULL
+                pt_cache.next.next = None
 
         return new_head.next
 
