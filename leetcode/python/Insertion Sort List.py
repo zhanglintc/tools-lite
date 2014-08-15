@@ -16,28 +16,31 @@ class Solution:
         pt_currt = None
 
         while head != None: # until the end of head list
-            if new_head.next == None: # the new_head is NULL
+            if new_head.next == None: # the new_head is None
                 new_head.next = head # copy the first node of head to new_head
-                head = head.next # move forward before set as NULL
-                new_head.next.next = None #set the end of new_head as NULL
-            else: # the new_head is not NULL
+                head = head.next # move forward before set as None
+                new_head.next.next = None #set the end of new_head as None
+
+            else: # the new_head is not None
                 pt_cache = new_head
                 pt_currt = new_head.next
+
                 while pt_currt != None: # until the end
                     if head.val <= pt_currt.val: # less than current, insert before current
                         pt_cache.next = head
                         head = head.next # move forward
                         pt_cache.next.next = pt_currt
                         break
+
                     else: # move forward
                         pt_cache = pt_cache.next
                         pt_currt = pt_currt.next
-                        head = head.next # move forward before set as NULL
                         continue
 
-                pt_cache.next = head
-                if head != None:
-                    pt_cache.next.next = None
+                if pt_currt == None: # already the end of the list
+                    pt_cache.next = head # add the node to the end
+                    head = head.next # head forward
+                    pt_cache.next.next = None # set the end of new_head as None
 
         return new_head.next
 
@@ -52,7 +55,7 @@ def debug_print(lst):
         print (lst.val)
         lst = lst.next
 
-lst = [11111,1111,111,11,1]
+lst = [1,1,11,111,1111,22]
 
 head = ListNode(0)
 pt = head # point to the head
@@ -71,5 +74,3 @@ S = Solution()
 pt = S.insertionSortList(pt)
 
 debug_print(pt)
-
-
