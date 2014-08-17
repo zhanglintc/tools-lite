@@ -10,17 +10,14 @@ class Solution:
     # @return a list of integers
     def postorderTraversal(self, root):
         lst = []
-        lst = self.helper(root, lst)
+        self.helper(root, lst)
         return lst        
 
     def helper(self, root, lst):
-        if root == None or root == []:
-            return []
-        else:
-            lst =  self.helper(root.left,  lst) # there's no '+' operator
-            lst += self.helper(root.right, lst) # but here is, WHY ???
+        if root != None and root != []:
+            self.helper(root.left,  lst)
+            self.helper(root.right, lst)
             lst.append(root.val)
-            return lst
 
 
 class TreeNode:
