@@ -1,3 +1,7 @@
+# Max Points on a Line
+# for leetcode problems
+# 2014.08.11 by zhanglin
+
 # Definition for a point
 # class Point:
 #     def __init__(self, a=0, b=0):
