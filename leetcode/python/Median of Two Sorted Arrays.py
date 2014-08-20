@@ -1,3 +1,7 @@
+# Median of Two Sorted Arrays
+# for leetcode problems
+# 2014.08.16 by zhanglin
+
 class Solution:
     # @return a float
     def findMedianSortedArrays(self, A, B):
