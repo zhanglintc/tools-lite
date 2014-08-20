@@ -1,3 +1,7 @@
+# Reorder List
+# for leetcode problems
+# 2014.08.17 by zhanglin
+
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -19,10 +23,10 @@ class Solution:
         current = head
         switch = 0
         while stack != []:
-            if switch % 2 == 0:
-                current.next = stack.pop()
-            else:
+            if switch & 0x01:
                 current.next = stack.pop(0)
+            else:
+                current.next = stack.pop()
             current = current.next
             switch += 1
 
