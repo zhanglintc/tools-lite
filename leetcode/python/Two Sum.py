@@ -1,6 +1,6 @@
 # Two Sum
 # for leetcode problems
-# 2014.07.4 by zhanglin
+# 2014.07.04 by zhanglin
 
 class Solution:
     # @return a tuple, (index1, index2)
