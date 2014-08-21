@@ -12,5 +12,19 @@
 class Solution:
     # @param root, a tree node
     # @return a boolean
+    def isBalanced_helper(self, root, counter, result):
+        if root == None or result[0] == False:
+            return counter
+
+        left  = self.isBalanced_helper(root.left,  counter, result)
+        right = self.isBalanced_helper(root.right, counter, result)
+
+        if abs(left - right) > 1:
+            result[0] = False
+
+        return max(left, right) + 1
+
     def isBalanced(self, root):
-        
+        result = [True]
+        self.isBalanced_helper(root, 0, result)
+        return result[0]
