@@ -11,8 +11,8 @@ class Solution:
             return matrix
 
         new_matrix = matrix
-        for i in range(length):
-            for j in range(length):
-                new_matrix[j][length - 1 - i] = matrix[i][j]
+        for x in range(length):
+            for y in range(length):
+                new_matrix[y][length - 1 - x] = matrix[x][y]
 
         return new_matrix
