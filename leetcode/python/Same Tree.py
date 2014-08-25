@@ -14,5 +14,11 @@ class Solution:
     # @param q, a tree node
     # @return a boolean
     def isSameTree(self, p, q):
-        pass
+        if p == None and q == None:
+            return True
+
+        if ((p == None and q != None) or (p != None and q == None) or p.val != q.val):
+            return False
+
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
