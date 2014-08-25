@@ -19,11 +19,11 @@ class Solution:
             new_list += A
 
         if len(new_list) % 2 == 1:
-            return new_list[(len(new_list) - 1) / 2]
+            return new_list[(len(new_list) - 1) // 2]
         else:
-            left  = new_list[(len(new_list) - 1) / 2]
-            right = new_list[len(new_list) / 2]
-            return (float(left) + float(right)) / 2
+            left  = new_list[(len(new_list) - 1) // 2]
+            right = new_list[len(new_list) // 2]
+            return (float(left) + float(right)) // 2
 
 A = [1]
 B = [1]
