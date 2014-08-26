@@ -14,7 +14,7 @@ class Solution:
     # @return nothing, do it in place
     def flatten_helper(self, root, pointer):
         if root == None:
-            return root
+            return pointer
 
         left  = root.left
         right = root.right
@@ -23,8 +23,10 @@ class Solution:
         pointer.left = None
         pointer = pointer.right
 
-        self.flatten_helper(left, pointer)
-        self.flatten_helper(right, pointer)
+        pointer = self.flatten_helper(left, pointer)
+        pointer = self.flatten_helper(right, pointer)
+
+        return pointer
 
     def flatten(self, root):
         pointer = TreeNode(0)
