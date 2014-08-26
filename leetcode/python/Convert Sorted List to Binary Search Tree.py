@@ -18,5 +18,30 @@
 class Solution:
     # @param head, a list node
     # @return a tree node
+    def sortedListToBST_helper(self, head, root):
+        if head == None: # here is the bug
+            return None
+
+        fast = head
+        slow = head
+        root.left  = TreeNode(0)
+        root.right = TreeNode(0)
+
+        while fast.next != None and fast.next.next != None:
+            fast = fast.next.next
+            slow = slow.next
+
+        cache = slow
+        slow = slow.next
+        cache.next = None
+
+        root.val   = cache.val
+
+        root.left  = self.sortedListToBST_helper(head, root.left)
+        root.right = self.sortedListToBST_helper(slow, root.right)
+
+        return root
+
     def sortedListToBST(self, head):
-        pass
+        root = TreeNode(0)
+        return self.sortedListToBST_helper(head, root)
