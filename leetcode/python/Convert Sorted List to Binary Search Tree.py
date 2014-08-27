@@ -3,36 +3,44 @@
 # 2014.08.27 by zhanglin
 
 # Definition for a  binary tree node
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 #
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
 class Solution:
     # @param head, a list node
     # @return a tree node
     def sortedListToBST_helper(self, head, root):
-        if head == None:
+        root.left  = TreeNode(0)
+        root.right = TreeNode(0)
+
+        if head == None: # no node
             return None
 
-        if head.next == None:
+        if head.next == None: # one node
             root.val = head.val
+            return root
+
+        if head.next.next == None: # two nodes
+            root.val   = head.next.val
+            head.next  = None
+            root.left  = self.sortedListToBST_helper(head,  root.left)
+            root.right = self.sortedListToBST_helper(None, root.right)
             return root
 
         fast = head
         slow = head
         prev = head
-        root.left  = TreeNode(0)
-        root.right = TreeNode(0)
 
-        while fast.next != None and fast.next.next != None:
+        while fast.next != None and fast.next.next != None: # three or more nodes
             fast = fast.next.next
             prev = slow
             slow = slow.next
@@ -57,14 +65,4 @@ class Solution:
     def sortedListToBST(self, head):
         root = TreeNode(0)
         return self.sortedListToBST_helper(head, root)
-'''
-Input:  {1,3}
-Output: {1,1,3}
-Expected:   {3,1}
-'''
 
-head = ListNode(1)
-head.next = ListNode(2)
-
-s = Solution()
-s.sortedListToBST(head)
