@@ -19,8 +19,12 @@ class Solution:
     # @param head, a list node
     # @return a tree node
     def sortedListToBST_helper(self, head, root):
-        if head == None: # here is the bug
+        if head == None:
             return None
+
+        if head.next == None:
+            root.val = head.val
+            return root
 
         fast = head
         slow = head
@@ -30,18 +34,22 @@ class Solution:
         while fast.next != None and fast.next.next != None:
             fast = fast.next.next
             slow = slow.next
+        
+        if fast.next == None:
+            pass
+        elif fast.next.next == None:
+            pass
 
-        cache = slow
-        slow = slow.next
-        cache.next = None
-
-        root.val   = cache.val
-
-        root.left  = self.sortedListToBST_helper(head, root.left)
-        root.right = self.sortedListToBST_helper(slow, root.right)
+        root.left  = self.sortedListToBST_helper(left,  root.left)
+        root.right = self.sortedListToBST_helper(right, root.right)
 
         return root
 
     def sortedListToBST(self, head):
         root = TreeNode(0)
         return self.sortedListToBST_helper(head, root)
+'''
+Input:  {1,3}
+Output: {1,1,3}
+Expected:   {3,1}
+'''
