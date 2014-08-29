@@ -26,7 +26,9 @@ class Solution:
             return None
 
         if head.next == None: # one node
-            root.val = head.val
+            root.val   = head.val
+            root.left  = None
+            root.right = None
             return root
 
         if head.next.next == None: # two nodes
@@ -55,7 +57,7 @@ class Solution:
             left = head
             right = slow.next.next
             root.val = slow.next.val
-            prev.next = None
+            slow.next = None
 
         root.left  = self.sortedListToBST_helper(left,  root.left)
         root.right = self.sortedListToBST_helper(right, root.right)
