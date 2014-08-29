@@ -75,7 +75,7 @@ public:
             left = head;
             right = slow->next->next;
             root->val = slow->next->val;
-            prev->next = NULL;
+            slow->next = NULL;
         }
 
         root->left  = sortedListToBST_helper(left,  root->left);
@@ -91,8 +91,3 @@ public:
     }
 };
 
-/*
-            {-1,0,1,2}
-Output:     {1,-1,2}
-Expected:   {1,0,2,-1}
-*/
