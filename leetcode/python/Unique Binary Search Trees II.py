@@ -23,5 +23,24 @@
 
 class Solution:
     # @return a list of tree node
+    def generateTrees_helper(self, start, end):
+        lst = []
+
+        if start > end:
+            return lst
+
+        for i in range(start, end + 1):
+            left  = self.generateTrees_helper(start, i - 1)
+            right = self.generateTrees_helper(i + 1, end)
+
+            for j in range(len(left)):
+                for k in range(len(right)):
+                    lst.append(TreeNode(i))
+                    root.left  = left[i]
+                    root.right = right[i]
+                    lst.append(root)
+
+        return lst
+
     def generateTrees(self, n):
-        pass
+        return self.generateTrees_helper(1, n)
