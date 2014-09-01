@@ -21,5 +21,23 @@
 class Solution:
     # @param root, a tree node
     # @return a boolean
+    def isValidBST_heper(self, root, lst):
+        if root == None:
+            return root
+
+        self.isValidBST_heper(root.left, lst)
+        lst.append(root.val)
+        self.isValidBST_heper(root.right, lst)
+
     def isValidBST(self, root):
-        pass
+        lst = []
+        self.isValidBST_heper(root, lst)
+
+        if len(lst) == 0 or len(lst) == 1:
+            return True
+
+        for i in range(len(lst) - 1):
+            if lst[i] >= lst[i + 1]:
+                return False
+
+        return True
