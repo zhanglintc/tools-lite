@@ -27,6 +27,7 @@ class Solution:
         lst = []
 
         if start > end:
+            lst.append(None)
             return lst
 
         for i in range(start, end + 1):
@@ -35,9 +36,9 @@ class Solution:
 
             for j in range(len(left)):
                 for k in range(len(right)):
-                    lst.append(TreeNode(i))
-                    root.left  = left[i]
-                    root.right = right[i]
+                    root = TreeNode(i)
+                    root.left  = left[j]
+                    root.right = right[k]
                     lst.append(root)
 
         return lst
