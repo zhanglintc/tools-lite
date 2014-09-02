@@ -31,5 +31,17 @@
 class Solution:
     # @param root, a tree node
     # @return a boolean
+    def isSymmetric_helper(self, left, right):
+        if left == None and right == None:
+            return True
+
+        if (left == None and right != None) or (left != None and right == None) or (left.val != right.val):
+            return False
+
+        return self.isSymmetric_helper(left.left, right.right) and self.isSymmetric_helper(left.right, right.left)
+
     def isSymmetric(self, root):
-        pass
+        if root == None:
+            return True
+
+        return self.isSymmetric_helper(root.left, root.right)
