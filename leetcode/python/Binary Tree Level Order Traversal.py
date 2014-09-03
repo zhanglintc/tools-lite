@@ -30,4 +30,24 @@ class Solution:
     # @param root, a tree node
     # @return a list of lists of integers
     def levelOrder(self, root):
-        pass
+        dikt = {}
+        self.levelOrder_helper(root, 1, dikt)
+
+        lst = []
+        for i in dikt:
+            lst.append(dikt[i])
+
+        return lst
+
+    def levelOrder_helper(self, root, dept, dikt):
+        if root == None:
+            return root
+
+        if dept not in dikt:
+            dikt[dept] = []
+        
+        dikt[dept].append(root.val)
+
+        self.levelOrder_helper(root.left,  dept + 1, dikt)
+        self.levelOrder_helper(root.right, dept + 1, dikt)
+
