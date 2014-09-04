@@ -20,6 +20,29 @@ class Solution:
     # @param inorder, a list of integers
     # @return a tree node
     def buildTree(self, preorder, inorder):
-        pass
+        if preorder == [] or inorder == []:
+            return None
 
+        root = TreeNode(0)
+        self.buildTree_helper(preorder, inorder, root)
+
+        return root
+
+    def buildTree_helper(self, preorder, inorder, root):
+        if preorder == [] or inorder == []:
+            return None
+
+        if len(preorder) == 1 or len(inorder) == 1:
+            root.val = preorder[0]
+            return None
+
+        cur = preorder[0]
+        idx = inorder.index(cur)
+        root.val = cur
+
+        root.left = TreeNode(0)
+        root.right = TreeNode(0)
+
+        self.buildTree_helper(preorder[1 : idx + 1], inorder[0 : idx], root.left)
+        self.buildTree_helper(preorder[idx + 1 : ], inorder[idx + 1 : ], root.right)
 
