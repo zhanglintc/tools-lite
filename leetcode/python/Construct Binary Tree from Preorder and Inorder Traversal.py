@@ -32,17 +32,15 @@ class Solution:
         if preorder == [] or inorder == []:
             return None
 
-        if len(preorder) == 1 or len(inorder) == 1:
-            root.val = preorder[0]
-            return None
-
-        cur = preorder[0]
-        idx = inorder.index(cur)
-        root.val = cur
+        cur = preorder[0]           # current value = preorder's first item
+        idx = inorder.index(cur)    # get the item's index in inorder, then divide preorder and inorder by this index
+        root.val = cur              # set root.val as preorder's first item
 
         root.left = TreeNode(0)
         root.right = TreeNode(0)
 
-        self.buildTree_helper(preorder[1 : idx + 1], inorder[0 : idx], root.left)
-        self.buildTree_helper(preorder[idx + 1 : ], inorder[idx + 1 : ], root.right)
+        root.left  = self.buildTree_helper(preorder[1 : idx + 1], inorder[0 : idx], root.left)
+        root.right = self.buildTree_helper(preorder[idx + 1 : ], inorder[idx + 1 : ], root.right)
+
+        return root
 
