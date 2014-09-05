@@ -19,13 +19,12 @@ class Solution:
         for i in s:
             if stack == [] and i == ')':
                 if max < cur:
-                    max = cur 
-                    cur = 0
+                    max = cur
+                cur = 0
                 continue
             
             if i == '(':
                 stack.append(i)
-                cur += 1
 
             elif i == ')':
                 stack.pop()
@@ -34,5 +33,5 @@ class Solution:
         if max < cur:
             max = cur
 
-        return max
+        return max * 2
 
