@@ -12,6 +12,27 @@ class Solution:
     # @param s, a string
     # @return an integer
     def longestValidParentheses(self, s):
-        pass
+        stack = []
+        max = 0
+        cur = 0
 
+        for i in s:
+            if stack == [] and i == ')':
+                if max < cur:
+                    max = cur 
+                    cur = 0
+                continue
+            
+            if i == '(':
+                stack.append(i)
+                cur += 1
+
+            elif i == ')':
+                stack.pop()
+                cur += 1
+
+        if max < cur:
+            max = cur
+
+        return max
 
