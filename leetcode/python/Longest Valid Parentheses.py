@@ -12,27 +12,21 @@ class Solution:
     # @param s, a string
     # @return an integer
     def longestValidParentheses(self, s):
-        stack = []
-        fin_max = 0
-        cur_max = 0
-        cur = 0
-
-        for i in s: # traverse the whole input string
-            if stack == [] and i == ')':
-                if fin_max < cur:
-                    fin_max = cur
-                cur = 0
-                continue
-            
-            if i == '(':
+        stack = [-1] # a stack which stores the index of the last unmatched '('
+        fin_max = 0 # the answer
+        
+        for i in range(len(s)): # traverse the in put string
+            if s[i] == '(': # if '(', update the stack
                 stack.append(i)
 
-            elif i == ')':
-                stack.pop()
-                cur += 1
+            else: # else if ')'
+                if len(stack) > 1: # if stack is not 'NULL', update the ans
+                    stack.pop()
+                    fin_max = max(fin_max, i - stack[-1])
 
-        if fin_max < cur:
-            fin_max = cur
+                else: # if stack is 'NULL', update the last index
+                    stack.pop()
+                    stack.append(i)
 
-        return fin_max * 2
+        return fin_max
 
