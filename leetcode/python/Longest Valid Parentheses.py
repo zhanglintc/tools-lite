@@ -13,13 +13,14 @@ class Solution:
     # @return an integer
     def longestValidParentheses(self, s):
         stack = []
-        max = 0
+        fin_max = 0
+        cur_max = 0
         cur = 0
 
-        for i in s:
+        for i in s: # traverse the whole input string
             if stack == [] and i == ')':
-                if max < cur:
-                    max = cur
+                if fin_max < cur:
+                    fin_max = cur
                 cur = 0
                 continue
             
@@ -30,8 +31,8 @@ class Solution:
                 stack.pop()
                 cur += 1
 
-        if max < cur:
-            max = cur
+        if fin_max < cur:
+            fin_max = cur
 
-        return max * 2
+        return fin_max * 2
 
