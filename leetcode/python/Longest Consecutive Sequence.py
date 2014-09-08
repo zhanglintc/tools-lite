@@ -15,33 +15,30 @@ class Solution:
     # @param num, a list of integer
     # @return an integer
     def longestConsecutive(self, num):
-        if num == []:
-            return 0
+        dikt = {i : False for i in num} # convert list to dictionary, False for not visit
 
-        fin_max = 1
-        cur_max = 1
+        fin_max = 0 # init the final max as 0, it should be at least 0
 
-        for i in num:
-            l = i - 1
-            r = i + 1
+        for i in dikt: # traverse the whole dictionary
+            if dikt[i] == False: # this item hasn't been visited
+                dikt[i] = True # mark as visited
+                cur_max = 0 # init current max
 
-            while l in num:
-                cur_max += 1
-                fin_max = max(fin_max, cur_max)
-                while l in num:
-                    num.remove(l)
-                l -= 1
+                l = i - 1 # the numbers smaller than i
+                r = i + 1 # the numbers bigger than i
 
-            while r in num:
-                cur_max += 1
-                fin_max = max(fin_max, cur_max)
-                while r in num:
-                    num.remove(r)
-                r += 1
+                while l in dikt and dikt[l] == False: # l in dikt and not visited
+                    dikt[l] = True # mark as visited
+                    cur_max += 1 # cur_max++
+                    l -= 1 # move to next
 
-            while i in num:
-                num.remove(i)
-            cur_max = 1
+                while r in dikt and dikt[r] == False: # r in dikt and not visited
+                    dikt[r] = True # mark as visited
+                    cur_max += 1 # cur_max++
+                    r += 1 # move to next
+
+                fin_max = max(fin_max, cur_max + 1) # update fin_max if cur_max is bigger
 
         return fin_max
+
 
