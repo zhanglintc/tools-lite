@@ -13,6 +13,15 @@
 
 class Solution:
     # @return a string
+    def Palindrome(self, s, i, j):
+        while i > 0 and j < len(s) and s[i] == s[j]:
+            i -= 1
+            j += 1
+
+        len_max = (j - 1) - (i + 1) + 1
+
+        return len_max
+
     def longestPalindrome(self, s):
         pass
 
