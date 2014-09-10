@@ -18,5 +18,15 @@ class Solution:
     # @param head, a ListNode
     # @return a boolean
     def hasCycle(self, head):
-        pass
+        fast = head
+        slow = head
+
+        while fast != None and fast.next != None:
+            fast = fast.next.next
+            slow = slow.next
+
+            if fast == slow:
+                return True
+
+        return False
 
