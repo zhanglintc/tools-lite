@@ -36,6 +36,10 @@ class Solution:
             cur_max = max(odd, even)
             if cur_max > fin_max:
                 fin_max = cur_max
-                start = i
+                if fin_max & 0x01:
+                    start = i - (fin_max // 2)
+                else:
+                    start = i - (fin_max // 2 - 1)
 
-        return s[i : i + fin_max]
+        return s[start : start + fin_max]
+
