@@ -12,5 +12,21 @@ class Solution:
     # @param prices, a list of integer
     # @return an integer
     def maxProfit(self, prices):
-        pass
+        profit = 0
+        bought = False
+
+        for i in range(len(prices) - 1):
+            if prices[i] < prices[i + 1] and bought == False:
+                profit -= prices[i]
+                bought = True
+
+            if prices[i] > prices[i + 1] and bought == True:
+                profit += prices[i]
+                bought = False
+
+        if bought == True:
+            profit += prices[-1]
+
+        return profit
+
 
