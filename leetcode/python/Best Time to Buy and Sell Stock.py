@@ -12,21 +12,18 @@ class Solution:
     # @param prices, a list of integer
     # @return an integer
     def maxProfit(self, prices):
-        profit = 0
-        bought = False
+        profit = 0 # the maximum profit
 
-        for i in range(len(prices) - 1):
-            if prices[i] < prices[i + 1] and bought == False:
-                profit -= prices[i]
-                bought = True
+        if prices == []: # special case
+            return profit
 
-            if prices[i] > prices[i + 1] and bought == True:
-                profit += prices[i]
-                bought = False
+        lowest = prices[0] # from the very fisrt position 0, try to find the lowest price
 
-        if bought == True:
-            profit += prices[-1]
+        for i in range(1, len(prices)): # 1 to end
+            lowest = min(lowest, prices[i]) # try to find the lowest
+            profit = max(profit, prices[i] - lowest) # try to find the maximum profit
 
         return profit
+
 
 
