@@ -16,24 +16,27 @@ class Solution:
     def maxProfit(self, prices):
         profit = 0
 
-        for i in range(len(prices)):
-            left  = self.maxProfit_helper(prices[:i])
-            right = self.maxProfit_helper(prices[i:])
-            profit = max(profit, left + right)
-
-        return profit
-
-    def maxProfit_helper(self, prices):
-        profit = 0 # the maximum profit
-
-        if prices == []: # special case
+        if prices == []:
             return profit
 
-        lowest = prices[0] # from the very fisrt position 0, try to find the lowest price
+        n = len(prices)
 
-        for i in range(1, len(prices)): # 1 to end
-            lowest = min(lowest, prices[i]) # try to find the lowest
-            profit = max(profit, prices[i] - lowest) # try to find the maximum profit
+        left  = [0 for i in range(n)] # to store left  maximum profit, traverse from left to right
+        right = [0 for i in range(n)] # to sotre right maximum profit, traverse from right to left
 
-        return profit
+        lowest = prices[0]
+        for i in range(1, n): # 1 to n -1, counting, O(n) time to find maximum profit for left slice
+            lowest = min(lowest, prices[i])
+            left[i] = max(prices[i] - lowest, left[i - 1])
+
+        highest = prices[-1]
+        for i in range(n - 2, -1, -1): # n - 1 to 1, reverse counting, O(n) time to find maximum profit for rifht slice
+            highest = max(highest, prices[i])
+            right[i] = max(highest - prices[i], right[i + 1])
+
+        for i in range(len(prices)): # O(n) time to find maximum profit between each node's profit
+            profit = max(profit, left[i] + right[i])
+
+        return profit # O(3n) solution
+
 
