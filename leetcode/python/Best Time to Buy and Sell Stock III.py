@@ -14,35 +14,26 @@ class Solution:
     # @param prices, a list of integer
     # @return an integer
     def maxProfit(self, prices):
-        profits = []
-        bought = False
+        profit = 0
 
-        for i in range(len(prices) - 1):
-            if prices[i] < prices[i + 1] and bought == False:
-                buy = prices[i]
-                bought = True
+        for i in range(len(prices)):
+            left  = self.maxProfit_helper(prices[:i])
+            right = self.maxProfit_helper(prices[i:])
+            profit = max(profit, left + right)
 
-            if prices[i] > prices[i + 1] and bought == True:
-                sell = prices[i]
-                bought = False
-                profits.append(sell - buy)
-
-        if bought == True:
-            sell = prices[-1]
-            profits.append(sell - buy)
-
-        profits.sort()
-        
-        length = len(profits)
-        if length == 0:
-            profit = 0
-        elif length == 1:
-            profit = profits[-1]
-        else:
-            profit = profits[-2] + profits[-1]
-        print(profits)
         return profit
 
-s = Solution()
-print (s.maxProfit([1,2,4,2,5,7,2,4,9,0]))
+    def maxProfit_helper(self, prices):
+        profit = 0 # the maximum profit
+
+        if prices == []: # special case
+            return profit
+
+        lowest = prices[0] # from the very fisrt position 0, try to find the lowest price
+
+        for i in range(1, len(prices)): # 1 to end
+            lowest = min(lowest, prices[i]) # try to find the lowest
+            profit = max(profit, prices[i] - lowest) # try to find the maximum profit
+
+        return profit
 
