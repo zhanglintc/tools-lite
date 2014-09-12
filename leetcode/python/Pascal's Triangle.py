@@ -19,6 +19,23 @@
 class Solution:
     # @return a list of lists of integers
     def generate(self, numRows):
-        pass
+        triangle = []
 
+        if numRows == 0:
+            return triangle
+
+        for row in range(numRows):
+            if row == 0:
+                triangle.append([1])
+
+            else: # row[1] to row[n]
+                pre_lst  = [0] + triangle[row - 1] + [0]
+                this_lst = []
+
+                for i in range(len(pre_lst) - 1):
+                    this_lst.append(pre_lst[i] + pre_lst[i + 1])
+
+                triangle.append(this_lst)
+
+        return triangle
 
