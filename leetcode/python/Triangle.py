@@ -21,6 +21,18 @@ class Solution:
     # @param triangle, a list of lists of integers
     # @return an integer
     def minimumTotal(self, triangle):
-        pass
+        if len(triangle) <= 1: # special case
+            return triangle[0][0]
+
+        prev_sum_list = triangle[-1] # set prev list as the last row of triangle
+        for row in range(len(triangle) - 2, -1, -1): # reverse count from triangle[-2] to triangle[0]
+
+            this_sum_list = triangle[row]
+            for i in range(len(this_sum_list)):
+                this_sum_list[i] += min(prev_sum_list[i], prev_sum_list[i + 1]) # caculate the minimum path sum
+
+            prev_sum_list = this_sum_list # store the last calculated results
+
+        return this_sum_list[0] # after the for loop, there would be only one item in this_sum_list, return it
 
 
