@@ -36,6 +36,40 @@ class Solution:
     # @param root, a tree node
     # @return nothing
     def connect(self, root):
-        pass
+        if (root == None) or (root.left == None and root.right == None): # node is None or node has no children
+            return root
+
+        if root.left != None: # root.left is not None
+            if root.right != None: # root.right is not None, left to right
+                root.left.next = root.right
+
+            elif root.right == None: # if root.right is None
+                explorer = root.next # find next
+                while explorer != None:
+                    if explorer.left != None:
+                        root.left.next = explorer.left
+                        break
+
+                    if explorer.right != None:
+                        root.left.next = explorer.right
+                        break
+
+                    explorer = explorer.next
+
+        if root.right != None: # root.right is not None
+            explorer = root.next
+            while explorer != None:
+                if explorer.left != None:
+                    root.right.next = explorer.left
+                    break
+
+                if explorer.right != None:
+                    root.right.next = explorer.right
+                    break
+
+                explorer = explorer.next
+
+        self.connect(root.left)
+        self.connect(root.right)
 
 
