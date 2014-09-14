@@ -16,7 +16,21 @@ class Solution:
     # @param n  an integer, length of B
     # @return nothing
     def merge(self, A, m, B, n):
-        pass
+        while m != 0 and n != 0: # while A and B not NULL
+            if A[m - 1] >= B[n - 1]: # if A >= B, put A to the end
+                A[m + n - 1] = A[m - 1]
+                m -= 1
+            else: # else if A < B, put B to the end
+                A[m + n - 1] = B[n - 1]
+                n -= 1
+
+        while m != 0: # if A remains items
+            A[m + n - 1] = A[m - 1]
+            m -= 1
+
+        while n != 0: # if B remains items
+            A[m + n - 1] = B[n - 1]
+            n -= 1
 
 
 
