@@ -69,7 +69,7 @@ class Solution:
 
                 explorer = explorer.next
 
+        self.connect(root.right) # right first
         self.connect(root.left)
-        self.connect(root.right)
 
 
