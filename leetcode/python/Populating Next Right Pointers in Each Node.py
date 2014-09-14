@@ -44,5 +44,16 @@ class Solution:
     # @param root, a tree node
     # @return nothing
     def connect(self, root):
-        pass
+        if root == None:
+            return root
+
+        if root.left != None and root.right != None:
+            root.left.next = root.right # connect two children in one node
+
+            if root.next != None:
+                root.right.next = root.next.left # connect two nodes' children
+
+        self.connect(root.left)
+        self.connect(root.right)
+
 
