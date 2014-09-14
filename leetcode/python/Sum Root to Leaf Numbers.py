@@ -30,6 +30,18 @@ class Solution:
     # @param root, a tree node
     # @return an integer
     def sumNumbers(self, root):
-        pass
+        return self.sumNumbers_helper(root, 0)
+
+    def sumNumbers_helper(self, root, val):
+        if root == None:
+            return 0
+
+        val = val * 10 + root.val
+
+        if root.left == None and root.right == None:
+            return val
+
+        return self.sumNumbers_helper(root.left, val) + self.sumNumbers_helper(root.right, val)
+
 
 
