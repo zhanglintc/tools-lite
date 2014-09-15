@@ -16,6 +16,14 @@ class Solution:
     # @param a list of integers
     # @return an integer
     def removeDuplicates(self, A):
-        pass
+        occured = {}
+        for i in A:
+            if i not in occured:
+                occured[i] = None
+
+            else:
+                A.remove(i)
+
+        return len(A)
 
 
