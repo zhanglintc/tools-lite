@@ -12,5 +12,9 @@ class Solution:
     # @param    elem    an integer, value need to be removed
     # @return an integer
     def removeElement(self, A, elem):
-        pass
+        while elem in A:
+            A.remove(elem)
+
+        return len(A)
+
 
