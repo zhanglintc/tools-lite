@@ -16,14 +16,15 @@ class Solution:
     # @param a list of integers
     # @return an integer
     def removeDuplicates(self, A):
-        occured = {}
-        for i in A:
-            if i not in occured:
-                occured[i] = None
+        if A == []:
+            return 0
 
-            else:
-                A.remove(i)
+        new_idx = 0
+        for i in range(1, len(A)):
+            if A[new_idx] != A[i]:
+                new_idx += 1
+                A[new_idx] = A[i]
 
-        return len(A)
+        return new_idx + 1
 
 
