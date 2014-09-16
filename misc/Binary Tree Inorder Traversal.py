@@ -31,9 +31,6 @@ class Solution:
         lst = []
         stack = []
 
-        if root == None:
-            return lst
-
         explorer = root
         while stack != [] or explorer != None:
             if explorer != None:
