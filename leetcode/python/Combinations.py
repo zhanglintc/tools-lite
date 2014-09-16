@@ -33,7 +33,7 @@ class Solution:
         else:                                               # not reach k
             for i in range(start, n + 1):                   # index is 0 ~ n while number is 1 ~ n + 1
                 this_lst[depth] = i                         # set number to this depth
-                self.combine_helper(n, k, fina_lst, this_lst, depth + 1, start + 1)
+                self.combine_helper(n, k, fina_lst, this_lst, depth + 1, i + 1)
 
 s = Solution()
 print s.combine(10, 5)
