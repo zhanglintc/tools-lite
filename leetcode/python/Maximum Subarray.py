@@ -16,5 +16,12 @@ class Solution:
     # @param A, a list of integers
     # @return an integer
     def maxSubArray(self, A):
-        pass
+        this_sum = A[0]
+        max_sum  = A[0]
+        for i in range(1, len(A)):
+            this_sum = (A[i] if this_sum < 0 else this_sum + A[i])
+            max_sum  = (this_sum if this_sum > max_sum else max_sum)
+
+        return max_sum
+
 
