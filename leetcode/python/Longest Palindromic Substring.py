@@ -20,26 +20,20 @@ class Solution:
 
         len_max = (r - 1) - (l + 1) + 1
 
-        return len_max
+        return len_max, l + 1
 
     def longestPalindrome(self, s):
-        odd  = 0
-        even = 0
-        fin_max = 0
-        cur_max = 0
+        fina_max   = 0
+        fina_start = 0
 
         for i in range(len(s)):
-            odd = max(odd, self.Palindrome(s, i, i))
-            if i < len(s) - 1:
-                even = max(even, self.Palindrome(s, i, i + 1))
+            odd_max,   odd_start = self.Palindrome(s, i, i)     # max length is odd
+            even_max, even_start = self.Palindrome(s, i, i + 1) # max length is even
 
-            cur_max = max(odd, even)
-            if cur_max > fin_max:
-                fin_max = cur_max
-                if fin_max & 0x01:
-                    start = i - (fin_max // 2)
-                else:
-                    start = i - (fin_max // 2 - 1)
+            if max(odd_max, even_max) > fina_max: # need update
+                fina_max = max(odd_max, even_max)
+                fina_start = (odd_start if odd_max > even_max else even_start) # set start position
+        return s[fina_start : fina_start + fina_max]
 
-        return s[start : start + fin_max]
+
 
