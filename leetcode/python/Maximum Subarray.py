@@ -26,22 +26,21 @@ class Solution:
         left_max  = self.maxSubArray(A[:mid])
         right_max = self.maxSubArray(A[mid:])
 
-        mid_max = A[mid - 1]
-        left = A[mid - 1]
-        i = mid - 2
+        mid_max = A[mid]
+        temp = mid_max
+        i = mid - 1
         while i >= 0:
-            mid_max += A[i]
-            left = max(mid_max, left)
+            temp += A[i]
+            mid_max = max(mid_max, temp)
             i -= 1
 
-        mid_max = A[mid]
-        right = A[mid]
+        temp = mid_max
         i = mid + 1
         while i < len(A):
-            mid_max += A[i]
-            right = max(mid_max, right)
+            temp += A[i]
+            mid_max = max(mid_max, temp)
             i += 1
 
-        return max(left_max, left + right, right_max)
+        return max(left_max, mid_max, right_max)
 
 
