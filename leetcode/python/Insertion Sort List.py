@@ -2,6 +2,9 @@
 # for leetcode problems
 # 2014.08.15 by zhanglin
 
+# Problem:
+# Sort a linked list using insertion sort.
+
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -12,69 +15,29 @@ class Solution:
     # @param head, a ListNode
     # @return a ListNode
     def insertionSortList(self, head):
-        if head == None or head.next == None:
+        if head == None:
             return head
 
-        new_head = ListNode(0)
-        pt_cache = None
-        pt_currt = None
+        dummy = ListNode(0)
+        dummy.next = head
 
-        while head != None: # until the end of head list
-            if new_head.next == None: # the new_head is None
-                new_head.next = head # copy the first node of head to new_head
-                head = head.next # move forward before set as None
-                new_head.next.next = None #set the end of new_head as None
+        current = head
+        while current.next:
+            if current.val < current.next.val: # if sorted, move forward
+                current = current.next
 
-            else: # the new_head is not None
-                pt_cache = new_head
-                pt_currt = new_head.next
+            else: # this node need to be inserted to previous sorted list
+                insertPos = dummy # find insertion position from the very beginning
+                while insertPos.next.val < current.next.val: # find appropriate position
+                    insertPos = insertPos.next
 
-                while pt_currt != None: # until the end
-                    if head.val <= pt_currt.val: # less than current, insert before current
-                        pt_cache.next = head
-                        head = head.next # move forward
-                        pt_cache.next.next = pt_currt
-                        break
+                # after while loop, now insertPos.val <= TobeMoved.val <= insertPos.next.val
+                # then insert TobeMoved between insertPos and insertPos.next
+                TobeMoved = current.next
+                current.next = TobeMoved.next
+                TobeMoved.next = insertPos.next
+                insertPos.next = TobeMoved
 
-                    else: # move forward
-                        pt_cache = pt_cache.next
-                        pt_currt = pt_currt.next
-                        continue
-
-                if pt_currt == None: # already the end of the list
-                    pt_cache.next = head # add the node to the end
-                    head = head.next # head forward
-                    pt_cache.next.next = None # set the end of new_head as None
-
-        return new_head.next
+        return dummy.next
 
 
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
-def debug_print(lst):
-    while lst != None:
-        print (lst.val)
-        lst = lst.next
-
-lst = [1,1,11,111,1111,22]
-
-head = ListNode(0)
-pt = head # point to the head
-for i in lst:
-    node = ListNode(i) # new a node
-    if head.next == None:
-        head.next = node
-    else:
-        pt.next = node
-    pt = pt.next
-
-pt = head.next
-
-S = Solution()
-
-pt = S.insertionSortList(pt)
-
-debug_print(pt)
