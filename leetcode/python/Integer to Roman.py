@@ -10,12 +10,6 @@
 class Solution:
     # @return a string
     def intToRoman(self, num):
-        '''
-        units    = ['I','II','III','IV','V','VI','VII','VIII','IX']
-        tens     = ['X','XX','XXX','XL','L','LX','LXX','LXXX','XC']
-        hundreds = ['C','CC','CCC','CD','D','DC','DCC','DCCC','CM']
-        kilobis  = ['M','MM','MMM']
-        '''
         convert_list = [
             ['','I','II','III','IV','V','VI','VII','VIII','IX'],
             ['','X','XX','XXX','XL','L','LX','LXX','LXXX','XC'],
