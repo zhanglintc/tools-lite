@@ -17,23 +17,21 @@ class Solution:
         kilobis  = ['M','MM','MMM']
         '''
         convert_list = [
-            ['I','II','III','IV','V','VI','VII','VIII','IX'],
-            ['X','XX','XXX','XL','L','LX','LXX','LXXX','XC'],
-            ['C','CC','CCC','CD','D','DC','DCC','DCCC','CM'],
-            ['M','MM','MMM']
+            ['','I','II','III','IV','V','VI','VII','VIII','IX'],
+            ['','X','XX','XXX','XL','L','LX','LXX','LXXX','XC'],
+            ['','C','CC','CCC','CD','D','DC','DCC','DCCC','CM'],
+            ['','M','MM','MMM']
         ]
 
         lst = []
         while num:
             lst.append(num % 10)
             num //= 10
-            print lst
 
         roman = ''
         while lst:
-            roman += convert_list[len(lst) - 1][lst.pop() - 1]
+            roman += convert_list[len(lst) - 1][lst.pop()]
 
         return roman
 
-s = Solution()
-print s.intToRoman(3999)
+
