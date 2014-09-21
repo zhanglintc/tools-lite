@@ -12,6 +12,19 @@
 class Solution:
     # @return an integer
     def maxArea(self, height):
-        pass
+        left  = height.pop(0)
+        right = height.pop()
+
+        capacity = min(left, right) * (len(height) + 1) # calculate the capacity
+
+        while height: # while height not NULL, continue to try
+            if left < right: # if left is shorter, use the one next to it
+                left = height.pop(0)
+            else: # if right is shorter, use the one next to it
+                right = height.pop()
+
+            capacity = max(capacity, min(left, right) * (len(height) + 1)) # recalculate the capacity
+
+        return capacity
 
 
