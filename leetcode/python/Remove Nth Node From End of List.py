@@ -23,6 +23,21 @@
 class Solution:
     # @return a ListNode
     def removeNthFromEnd(self, head, n):
-        pass
+        dummy = ListNode(0)
+        dummy.next = head
+
+        slow = dummy
+        fast = dummy
+
+        for i in range(n): # make fast n steps ahead of slow
+            fast = fast.next
+
+        while fast.next: # while fast not reach the end
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next # remove slow.next
+
+        return dummy.next #return
 
 
