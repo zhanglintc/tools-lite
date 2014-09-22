@@ -20,20 +20,20 @@ class Solution:
             'M': 1000
         }
 
-        s.reverse()
-        last = 'I'
-        digit = 0
-        for i in s:
-            if convert_dict[i] < convert_dict[last]:
+        
+        last = None # the previous result
+        digit = 0 # the answer
+
+        s = s[::-1] # reverse this string
+
+        for i in s: # s has been reversed before, thus this mean traverse from the end of the string
+            if convert_dict[i] < last: # if this number smaller than previous one, reduce it
                 digit -= convert_dict[i]
-            else:
+            else: # otherwise add it to the answer
                 digit += convert_dict[i]
 
-            last = i
+            last = convert_dict[i] # store the previous one
 
-        return digit
-
-s = Solution()
-print(s.romanToInt("X"))
+        return digit # return answer
 
 
