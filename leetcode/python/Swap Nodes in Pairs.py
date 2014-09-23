@@ -21,6 +21,13 @@ class Solution:
     # @param a ListNode
     # @return a ListNode
     def swapPairs(self, head):
-        pass
+        if not head:
+            return head
+
+        dummy = head
+        curr = dummy
+        while curr.next.next:
+            curr.next.next = curr.next
+            curr.next = curr.next.next
 
 
