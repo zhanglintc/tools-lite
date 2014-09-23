@@ -24,10 +24,23 @@ class Solution:
         if not head:
             return head
 
-        dummy = head
-        curr = dummy
-        while curr.next.next:
-            curr.next.next = curr.next
-            curr.next = curr.next.next
+        dummy = ListNode(0)
+        dummy.next = head
+
+        slow = dummy
+        fast = dummy.next
+
+        while fast and fast.next:
+            # swap two nodes
+            TobeMoved = fast.next
+            fast.next = TobeMoved.next
+            TobeMoved.next = fast
+            slow.next = TobeMoved
+
+            # move forward
+            slow = fast
+            fast = fast.next
+
+        return dummy.next
 
 
