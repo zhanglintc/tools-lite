@@ -28,4 +28,5 @@ class Solution:
             this_lst[length - 1] = num[i] # set the last index
             self.permute_helper(num[:i] + num[i + 1:], this_lst, fina_lst)
 
-
+s = Solution()
+print s.permute([1,-1,1,2,-1,2,2,-1])
