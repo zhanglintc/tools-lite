@@ -18,6 +18,15 @@
 class Solution:
     # @return an integer
     def uniquePaths(self, m, n):
-        pass
+        if min(m, n) == 1:
+            return 1
+
+        if m <= n:
+            return n * self.uniquePaths(m - 1, n - 1)
+        else:
+            return m * self.uniquePaths(m - 1, n - 1)
+
+s = Solution()
+print s.uniquePaths(3,3)
 
 
