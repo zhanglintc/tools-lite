@@ -18,21 +18,19 @@
 class Solution:
     # @return an integer
     def uniquePaths(self, m, n):
-        return self.getRow(m, n)
+        grid = [[None for i in range(n)] for i in range(m)] # make this map grid
 
-    def getRow(self, m, n):
-        cache   = [1]
-        current = [1]
+        for row in range(m): # set all elements in first row as 1
+            grid[row][0] = 1
 
-        for row in range(m + n - 1 - 1): # -1 for length, -1 for index offset
-            cache  = [0] + cache + [0]
-            current = []
+        for line in range(n): # set all elements in first line as 1
+            grid[0][line] = 1
 
-            for i in range(len(cache) - 1):
-                current.append(cache[i] + cache[i + 1])
+        # DP[row][line] = DP[row - 1][line] + DP[row][line - 1]
+        for row in range(1, m):
+            for line in range(1, n):
+                grid[row][line] = grid[row - 1][line] + grid[row][line - 1]
 
-            cache = current
-
-        return current[min(m, n) - 1] # -1 for index offset
+        return grid[m - 1][n - 1] # -1 for offset
 
 
