@@ -24,7 +24,7 @@ class Solution:
         cache   = [1]
         current = [1]
 
-        for row in range(m + n - 2):
+        for row in range(m + n - 1 - 1): # -1 for length, -1 for index offset
             cache  = [0] + cache + [0]
             current = []
 
@@ -33,6 +33,6 @@ class Solution:
 
             cache = current
 
-        return current[min(m, n) - 1]
+        return current[min(m, n) - 1] # -1 for index offset
 
 
