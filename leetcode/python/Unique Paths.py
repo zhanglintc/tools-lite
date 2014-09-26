@@ -18,15 +18,21 @@
 class Solution:
     # @return an integer
     def uniquePaths(self, m, n):
-        if min(m, n) == 1:
-            return 1
+        return self.getRow(m, n)
 
-        if m <= n:
-            return n * self.uniquePaths(m - 1, n - 1)
-        else:
-            return m * self.uniquePaths(m - 1, n - 1)
+    def getRow(self, m, n):
+        cache   = [1]
+        current = [1]
 
-s = Solution()
-print s.uniquePaths(3,3)
+        for row in range(m + n - 2):
+            cache  = [0] + cache + [0]
+            current = []
+
+            for i in range(len(cache) - 1):
+                current.append(cache[i] + cache[i + 1])
+
+            cache = current
+
+        return current[min(m, n) - 1]
 
 
