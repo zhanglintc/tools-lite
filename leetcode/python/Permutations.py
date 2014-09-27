@@ -20,17 +20,9 @@ class Solution:
             return [num]
 
         for i in range(len(num)):
-            num[i], num[-1] = num[-1], num[i]
-            FixNum = num.pop()
-
-            for SortedList in self.permute(num):
-                fina_lst.append([FixNum] + SortedList)
-
-            num.append(FixNum)
-            num[i], num[-1] = num[-1], num[i]
+            for SortedList in self.permute(num[:i] + num[i + 1:]):
+                fina_lst.append([num[i]] + SortedList) # fixnum + sortedlist
 
         return fina_lst
         
 
-s = Solution()
-print s.permute([1,2,3])
