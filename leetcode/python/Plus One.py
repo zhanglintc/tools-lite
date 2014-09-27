@@ -11,6 +11,26 @@ class Solution:
     # @param digits, a list of integer digits
     # @return a list of integer digits
     def plusOne(self, digits):
-        pass
+        # the smallest digit process
+        add_flag = 0
+        digits[-1] += 1
+        if digits[-1] >= 10:
+            digits[-1] %= 10
+            add_flag = 1
+
+        # normal process
+        for i in range(len(digits) - 2, -1, -1):
+            digits[i] = (digits[i] + 1 if add_flag else digits[i])
+            add_flag = 0
+
+            if digits[i] >= 10:
+                digits[i] %= 10
+                add_flag = 1
+
+        # the most significant digit process
+        if add_flag:
+            digits.insert(0, 1)
+
+        return digits
 
 
