@@ -15,18 +15,22 @@ class Solution:
     # @return a list of lists of integers
     def permute(self, num):
         fina_lst = []
-        this_lst = [None for i in range(len(num))]
-        self.permute_helper(num, this_lst, fina_lst)
+
+        if len(num) == 1:
+            return [num]
+
+        for i in range(len(num)):
+            num[i], num[-1] = num[-1], num[i]
+            FixNum = num.pop()
+
+            for SortedList in self.permute(num):
+                fina_lst.append([FixNum] + SortedList)
+
+            num.append(FixNum)
+            num[i], num[-1] = num[-1], num[i]
+
         return fina_lst
-
-    def permute_helper(self, num, this_lst, fina_lst):
-        length = len(num)
-        if not num:
-            fina_lst.append(this_lst[:])
-
-        for i in range(length):
-            this_lst[length - 1] = num[i] # set the last index
-            self.permute_helper(num[:i] + num[i + 1:], this_lst, fina_lst)
+        
 
 s = Solution()
-print s.permute([1,-1,1,2,-1,2,2,-1])
+print s.permute([1,2,3])
