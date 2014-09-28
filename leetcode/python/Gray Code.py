@@ -24,6 +24,24 @@
 class Solution:
     # @return a list of integers
     def grayCode(self, n):
-        pass
+        if n == 0:
+            return [0]
+
+        if n == 1:
+            return [0, 1]
+
+        prev_codelist = self.grayCode(n - 1) # get the previous Gray Code list
+        this_codelist = []
+
+        # append the previous numbers to this_codelist
+        for num in prev_codelist:
+            this_codelist.append(num)
+
+        # make prev_codelist mirrored and insert 1 to the very first position
+        for num in prev_codelist[::-1]:
+            fix = 1 << (n - 1)
+            this_codelist.append(fix + num)
+
+        return this_codelist
 
 
