@@ -22,7 +22,24 @@ class Solution:
     # @param A a list of integers
     # @return nothing, sort in place
     def sortColors(self, A):
-        pass
+        left  = 0 # index of red
+        curr  = 0 # index of white
+        right = len(A) - 1 # index of blue
 
+        while curr != right + 1: # while curr doesn't meet right + 1
+            # move left and curr
+            if A[curr] == 0:
+                A[left], A[curr] = A[curr], A[left]
+                left += 1
+                curr += 1
+
+            # move right only(no need to move curr)
+            elif A[curr] == 2:
+                A[right], A[curr] = A[curr], A[right]
+                right -= 1
+
+            # move curr only(left and right stay the same position)
+            else: # A[curr] == 1
+                curr += 1
 
 
