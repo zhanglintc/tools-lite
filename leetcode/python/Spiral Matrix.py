@@ -21,4 +21,20 @@ class Solution:
     def spiralOrder(self, matrix):
         pass
 
+    def spiralOrder_helper(self, matrix, m, n):
+        pass
+
+
+
+
+
+
+lst = [
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+s = Solution()
+print(s.spiralOrder(lst))
+
 
