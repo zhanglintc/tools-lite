@@ -10,6 +10,22 @@ class Solution:
     # @param n, a integer
     # @return a float
     def pow(self, x, n):
-        pass
+        if n == 0:
+            return 1
+
+        elif n == 1:
+            return x
+
+        elif n == -1:
+            return 1 / x
+            
+        elif n % 2 == 1:
+            return self.pow(x * x, n // 2) * x
+
+        elif n % 2 == 0:
+            return self.pow(x * x, n // 2)
+
+        else:
+            pass
 
 
