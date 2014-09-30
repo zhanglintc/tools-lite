@@ -23,24 +23,26 @@ class Solution:
     # @param target, an integer
     # @return a boolean
     def searchMatrix(self, matrix, target):
-        if len(matrix) == 0:
+        if not matrix:
             return False
 
-        if len(matrix) == 1:
-            return (True if matrix[0] == target else False)
 
-        mid = len(matrix) // 2
-        if matrix[mid] == target:
-            return True
+        if len(matrix) == 1: # search in a single row
+            if len(matrix[0]) == 1: # judge when only one element left
+                return (True if matrix[0][0] == target else False)
 
-        else:
-            return (
-                self.searchMatrix(matrix[:mid], target)
-                if target < matrix[mid] else
-                self.searchMatrix(matrix[mid+1:], target)
-                )
+            mid_idx = len(matrix[0]) // 2
+            if target < matrix[0][mid_idx]: # search left
+                return self.searchMatrix([ matrix[0][:mid_idx] ], target)
+            else: # search right
+                return self.searchMatrix([ matrix[0][mid_idx:] ], target)
 
-s = Solution()
-print s.searchMatrix([1,2,3,4,5,6.5], 6.5)
+        else: # if not single row, make it smaller
+            mid_row = len(matrix) // 2
+            if target < matrix[mid_row][0]: # search up
+                return self.searchMatrix(matrix[:mid_row], target)
+            else: # search down
+                return self.searchMatrix(matrix[mid_row:], target)
+
 
 
