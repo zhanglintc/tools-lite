@@ -16,6 +16,33 @@
 class Solution:
     # @return a string
     def countAndSay(self, n):
-        pass
+        count_and_said = '1'
+        count_and_say  = ''
+
+        if n == 0:
+            return ''
+
+        if n == 1:
+            return '1'
+
+
+        for no_matter_what_here in range(n - 1): # n - 1 times
+            count_and_say = ''
+            last_C = None
+
+            for this_C in count_and_said:
+                if this_C != last_C: # append times of last character only if a new character appears
+                    if last_C != None: # append only if last character not None
+                        count_and_say += (str(times) + last_C)
+                    last_C = this_C # store this character
+                    times = 1 # reset times
+                else: # else count times
+                    times += 1
+
+            # reach the end, append remaining data
+            count_and_say += (str(times) + last_C)
+            count_and_said = count_and_say
+
+        return count_and_say
 
 
