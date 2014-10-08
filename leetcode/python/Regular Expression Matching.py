@@ -25,16 +25,28 @@
 class Solution:
     # @return a boolean
     def isMatch(self, s, p):
-        i, j = 0, 0
-        length = min(len(s), len(p))
-        dp = [False for i in range(length)]
-        while i < length - 1 and j < length - 1:
-            dp[i] = (s[i] == p[j] or p[j] == '.')
-            i += 1
-            j += 1
+        # dp[string][pattern]
+        #           pattern pattern pattern
+        # string
+        # string
+        # string
+        dp = [[False for pattern in range(len(p) + 1)] for string in range(len(s) + 1)]
 
-        return dp[i - 1] and (s[i] == p[j] or p[j] == '.')
+        dp[0][0] = True
+        for string in range(1, len(s) + 1):
+            for pattern in range(1, len(p) + 1):
+                if p[pattern - 1] == '*':
+                    dp[string][pattern] = dp[string][pattern - 1] or dp[string][pattern - 2] or dp[string - 1][pattern] # or dp[string - 1][pattern], why?!
+
+                else:
+                    dp[string][pattern] = dp[string - 1][pattern - 1] and (s[string - 1] == p[pattern - 1] or p[pattern - 1] == '.')
+
+        return dp[len(s)][len(p)]
+
+
+
+
 
 s = Solution()
-print (s.isMatch('aca','aca'))
+print (s.isMatch('aca','.*.'))
 
