@@ -25,16 +25,16 @@
 class Solution:
     # @return a boolean
     def isMatch(self, s, p):
-    	i, j = 0, 0
-    	length = min(len(s), len(p))
-    	dp = [False for i in range(length)]
+        i, j = 0, 0
+        length = min(len(s), len(p))
+        dp = [False for i in range(length)]
         while i < length - 1 and j < length - 1:
-        	dp[i] = s[i] == p[j] or p[j] == '.'
-        	i += 1
-        	j += 1
+            dp[i] = (s[i] == p[j] or p[j] == '.')
+            i += 1
+            j += 1
 
-        return dp[i] and (s[i] == p[j] or p[j] == '.')
+        return dp[i - 1] and (s[i] == p[j] or p[j] == '.')
 
 s = Solution()
-print s.isMatch('ac','ac')
+print (s.isMatch('aca','aca'))
 
