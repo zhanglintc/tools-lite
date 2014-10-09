@@ -26,20 +26,22 @@ class Solution:
     # @return a boolean
     def isMatch(self, s, p):
         # dp[string][pattern]
-        #           pattern pattern pattern
-        # string
-        # string
-        # string
-        dp = [[False for pattern in range(len(p) + 1)] for string in range(len(s) + 1)]
+        #  i for string, j for pattern
+        dp = [[False for j in range(len(p) + 1)] for i in range(len(s) + 1)]
 
         dp[0][0] = True
-        for string in range(1, len(s) + 1):
-            for pattern in range(1, len(p) + 1):
-                if p[pattern - 1] == '*':
-                    dp[string][pattern] = dp[string][pattern - 1] or dp[string][pattern - 2] or dp[string - 1][pattern] # or dp[string - 1][pattern], why?!
+        for j in range(1, len(p) + 1):
+            if p[j - 1] == '*':
+                if j > 1:
+                    dp[0][j]=dp[0][j - 2]
+
+        for i in range(1, len(s) + 1):
+            for j in range(1, len(p) + 1):
+                if p[j - 1] == '*':
+                    dp[i][j] = (dp[i][j - 1] or dp[i][j - 2]) or dp[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == '.')
 
                 else:
-                    dp[string][pattern] = dp[string - 1][pattern - 1] and (s[string - 1] == p[pattern - 1] or p[pattern - 1] == '.')
+                    dp[i][j] = dp[i - 1][j - 1] and (s[i - 1] == p[j - 1] or p[j - 1] == '.')
 
         return dp[len(s)][len(p)]
 
@@ -48,5 +50,5 @@ class Solution:
 
 
 s = Solution()
-print (s.isMatch('aca','.*.'))
+print (s.isMatch('aab','c*a*b'))
 
