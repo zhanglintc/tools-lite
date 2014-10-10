@@ -1,0 +1,39 @@
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+author	setup.py	/^    author='Lx Yu',$/;"	v
+author_email	setup.py	/^    author_email='i@lxyu.net',$/;"	v
+classifiers	setup.py	/^    classifiers=[$/;"	v
+description	setup.py	/^    description='Python sina weibo sdk',$/;"	v
+install_requires	setup.py	/^    install_requires=[$/;"	v
+license	setup.py	/^    license="BSD",$/;"	v
+long_description	setup.py	/^    long_description=open('README.rst').read(),$/;"	v
+name	setup.py	/^    name='weibo',$/;"	v
+py_modules	setup.py	/^    py_modules=['weibo', ],$/;"	v
+setup	setup.py	/^from setuptools import setup$/;"	i
+url	setup.py	/^    url='http:\/\/lxyu.github.io\/weibo\/',$/;"	v
+version	setup.py	/^    version='0.2.2',$/;"	v
+Client	weibo.py	/^class Client(object):$/;"	c
+__init__	weibo.py	/^    def __init__(self, api_key, api_secret, redirect_uri, token=None,$/;"	m	class:Client
+_assert_error	weibo.py	/^    def _assert_error(self, d):$/;"	m	class:Client
+absolute_import	weibo.py	/^from __future__ import absolute_import$/;"	i
+alive	weibo.py	/^    def alive(self):$/;"	m	class:Client
+authorize_url	weibo.py	/^    def authorize_url(self):$/;"	m	class:Client
+get	weibo.py	/^    def get(self, uri, **kwargs):$/;"	m	class:Client
+json	weibo.py	/^import json$/;"	i
+post	weibo.py	/^    def post(self, uri, **kwargs):$/;"	m	class:Client
+requests	weibo.py	/^import requests$/;"	i
+set_code	weibo.py	/^    def set_code(self, authorization_code):$/;"	m	class:Client
+set_token	weibo.py	/^    def set_token(self, token):$/;"	m	class:Client
+time	weibo.py	/^import time$/;"	i
+urlencode	weibo.py	/^    from urllib import urlencode$/;"	i
+urlencode	weibo.py	/^    from urllib.parse import urlencode$/;"	i
+API_KEY	zhanglin.py	/^API_KEY = '2038131539'            # app key$/;"	v
+API_SECRET	zhanglin.py	/^API_SECRET = 'b4d84f59af3e5a52c8df1f0e7ccfa75d'      # app secret$/;"	v
+Client	zhanglin.py	/^from weibo import Client$/;"	i
+REDIRECT_URI	zhanglin.py	/^REDIRECT_URI = 'http:\/\/zhanglintc.blog.163.com'  # callback ur$/;"	v
+c2	zhanglin.py	/^c2 = Client(API_KEY, API_SECRET, REDIRECT_URI, token)$/;"	v
+token	zhanglin.py	/^token = {u'access_token': u'2.00_ShHyB2HnvNCca83c087d04aFAkC', u'remind_in': u'157679999', u'uid': u'1804547715', u'expires_at': 1569833194}$/;"	v
