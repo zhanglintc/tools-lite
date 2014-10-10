@@ -18,7 +18,7 @@ new
 for i in range(len(NewFileName)):
     NewFileName[i] = NewFileName[i].strip()
     
-fExt = ["INI","SUB","PPD","INF","UNF","GPD","KMP"]
+fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP"]
 for i in range(len(fExt)):
     fExt[i] = fExt[i].strip().upper()
     
@@ -47,11 +47,11 @@ def ProcessFile(fPathName):
         if fStr.find(keywordstrip) != -1:
             fStr = fStr.replace(keywordstrip, NewFileName[idx])
             IsReplace = True
-        idx = idx+1
+        idx = idx + 1
 
     if IsReplace:
-        TxtFile.WriteTxtFile( fStr )
-        print("replced file: {}".format(fPathName) )
+        TxtFile.WriteTxtFile(fStr)
+        print("replced file: {}".format(fPathName))
     
 FTuple = os.walk(r"D:\ZDsoft_SVN\Zeus-S\PKI")
 for root,dirs,files in FTuple:
