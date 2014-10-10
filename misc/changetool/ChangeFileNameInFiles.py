@@ -27,6 +27,7 @@ def IsTargetFile(FileName):
     
     if sufix.upper() in fExt:
         return True
+
     else:
         return False
 
@@ -42,6 +43,7 @@ def ProcessFile(fPathName):
     IsReplace = False
     for keyword in OrgFileName:
         keywordstrip  = keyword.strip()
+
         if fStr.find(keywordstrip) != -1:
             fStr = fStr.replace(keywordstrip, NewFileName[idx])
             IsReplace = True
@@ -54,7 +56,6 @@ def ProcessFile(fPathName):
 FTuple = os.walk(r"D:\ZDsoft_SVN\Zeus-S\PKI")
 for root,dirs,files in FTuple:
     for Tmpfile in files:
-        
         if IsTargetFile(Tmpfile):
             of = os.path.join(root,Tmpfile)
             #print("process:{}".format(of))
