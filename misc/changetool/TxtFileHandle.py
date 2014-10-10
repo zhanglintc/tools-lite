@@ -1,24 +1,23 @@
 import codecs
 import chardet
 
+# written by zhanglin
 def GetEncodingInfo(datas):
     '''
     return datas' encoding info and relevant confidence
     '''
     result_dict = chardet.detect(datas)
-    encoding_type = result_dict['encoding']#get encoding
-    confidence = result_dict['confidence']#get confidence
-    return encoding_type,confidence
+    encoding_type = result_dict['encoding'] # get encoding
+    confidence = result_dict['confidence'] # get confidence
+    return encoding_type, confidence
 
 def ReadTxtFile(FilePathName):
     encodinglist = ["utf8","utf_8_sig","utf16","cp932","mbcs","ascii","cp936","cp1252"]
     
     f = open(FilePathName, "rb")
     datas = f.read()
-
-    #encoding_type,confidence = GetEncodingInfo(datas)
     
-    for EncodingName in encodinglist:#encoding_type,encodinglist:
+    for EncodingName in encodinglist: # encoding_type, encodinglist:
         try:
             strs = codecs.decode(datas, EncodingName)
         except ValueError:
@@ -38,8 +37,6 @@ class TxtFileHandle:
     def ReadTxtFile( self, FilePathName ):
         f = codecs.open(FilePathName, "rb")
         datas = f.read()
-
-        #encoding_type,confidence = GetEncodingInfo(datas)
         
         for EncodingName in self._encodinglist:
             try:
