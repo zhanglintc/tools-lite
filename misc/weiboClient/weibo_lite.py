@@ -27,29 +27,29 @@ def get_comments_to_me(start_page, end_page):
     '''
     Download comments from 'start_page' to 'end_page'
     '''
+
     my_client = Client(API_KEY, API_SECRET, REDIRECT_URI, ACCESS_TOKEN)
     my_page = start_page
 
-    fw = open('comments.txt', 'ab')
+    fw = open('comments.txt', 'wb')
 
     while my_page <= end_page:
         try:
-            print('page', my_page, 'downloading')
+            print('Page {} is downloading'.format(my_page))
             received = my_client.get('comments/to_me', count = 20, uid = 1804547715, page = my_page)
 
         except:
-            print('page', my_page, 'has failed\n')
+            print('Page {} is downloading has failed'.format(my_page))
             time.sleep(DELAY_TIME)
             continue
 
-        fw.write(b'\n\npage' + str(my_page).encode('utf8') + b':\n')
+        fw.write('\n\nPage {}:\n'.format(my_page).encode('utf8'))
         for item in received['comments']:
             to_be_written = item['created_at'] + ': ' + item['text'] + ' by ' + item['user']['name'] + '\n'
             fw.write(to_be_written.encode('utf8'))
 
         fw.flush()
         time.sleep(DELAY_TIME)
-        print('page', my_page, 'downloaded\n')
 
         my_page += 1
         
@@ -57,7 +57,7 @@ def get_comments_to_me(start_page, end_page):
     print('All the comments have downloaded')
 
 if __name__=="__main__":
-    get_comments_to_me(1, 1)
+    get_comments_to_me(1, 533)
 
 
 
