@@ -35,7 +35,7 @@ def get_comments_to_me(start_page, end_page):
     while my_page <= end_page:
         try:
             print('page', my_page, 'downloading')
-            received = my_client.get('comments/to_me', uid = 1804547715, page = my_page)
+            received = my_client.get('comments/to_me', count = 20, uid = 1804547715, page = my_page)
 
         except:
             print('page', my_page, 'has failed\n')
