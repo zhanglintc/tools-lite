@@ -183,14 +183,15 @@ class APIClient(object):
     '''
     API client using synchronized invocation.
     '''
-    def __init__(self, app_key, app_secret, redirect_uri=None, response_type='code', domain='api.weibo.com', version='2'):
+    # parameter access_token=None added by zhanglin 2014.10.12
+    def __init__(self, app_key, app_secret, redirect_uri=None, access_token=None, response_type='code', domain='api.weibo.com', version='2'):
         self.client_id = str(app_key)
         self.client_secret = str(app_secret)
         self.redirect_uri = redirect_uri
         self.response_type = response_type
         self.auth_url = 'https://%s/oauth2/' % domain
         self.api_url = 'https://%s/%s/' % (domain, version)
-        self.access_token = None
+        self.access_token = access_token # None -> access_token by zhanglin 2014.10.12
         self.expires = 0.0
         self.get = HttpObject(self, _HTTP_GET)
         self.post = HttpObject(self, _HTTP_POST)
