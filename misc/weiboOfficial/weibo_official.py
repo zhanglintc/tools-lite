@@ -3,8 +3,8 @@
 # -*- coding: utf-8 -*-
 '''
 
-from weibo import APIClient
-# from snspy import SinaWeiboMixin
+from snspy import APIClient
+from snspy import SinaWeiboMixin
 
 import time
 import codecs
@@ -35,10 +35,10 @@ if 0: # get token
 else: # use token
     ACCESS_TOKEN='2.00_ShHyB2HnvNCca83c087d04aFAkC'
     EXPIRES_TIME=1569833194
-    client2 = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL, access_token=ACCESS_TOKEN)
+    client2 = APIClient(SinaWeiboMixin, app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL, access_token=ACCESS_TOKEN)
 
     fw = open('comments.txt', 'wb')
-    for my_page in range(1, 5):
+    for my_page in range(1, 533):
         print('Page {} is downloading'.format(my_page))
         received = client2.comments.to_me.get(uid = 1804547715, page = my_page, count = 20)
 
