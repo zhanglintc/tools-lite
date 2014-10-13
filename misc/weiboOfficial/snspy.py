@@ -156,7 +156,7 @@ def _http(method, url, headers=None, **kw):
         params = _encode_params(**kw)
     http_url = '%s?%s' % (url, params) if method==_HTTP_GET else url
     http_body = None if method=='GET' else params
-    # logging.error('%s: %s' % (method, http_url)) # commented by zhanglin 2014.11.12
+    # logging.error('%s: %s' % (method, http_url)) # commented by zhanglin 2014.10.12
     req = urllib2.Request(http_url, data=http_body)
     req.add_header('Accept-Encoding', 'gzip')
     if headers:
