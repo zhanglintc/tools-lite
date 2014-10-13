@@ -56,8 +56,19 @@ def get_comments_to_me(start_page, end_page):
     fw.close()
     print('All the comments have downloaded')
 
+
+def get_friends_timeline():
+    my_client = Client(API_KEY, API_SECRET, REDIRECT_URI, ACCESS_TOKEN)
+
+    received = my_client.get('statuses/friends_timeline')
+
+    i = 1
+    for item in received['statuses']:
+        print(('No.' + str(i) + ': ' + item['text'] + ' by @' + item['user']['name'] + '\n').encode('utf8'))
+        i += 1
+
 if __name__=="__main__":
-    get_comments_to_me(1, 533)
+    get_friends_timeline()
 
 
 
