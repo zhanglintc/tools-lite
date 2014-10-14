@@ -45,7 +45,7 @@ def update_access_token():
         ACCESS_TOKEN = pickle.load(fr)
         fr.close()
 
-    except FileNotFoundError:
+    except IOError:
         c = Client(API_KEY, API_SECRET, REDIRECT_URI)
         webbrowser.open(c.authorize_url)
 
