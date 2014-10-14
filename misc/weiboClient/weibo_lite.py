@@ -6,9 +6,20 @@ Lane's Weibo Client Application Beta, Nothing Reserved
 """
 
 from weibo import Client
+import sys
 import webbrowser
 import json
 import pickle
+
+version = sys.version[0]
+
+if version == '2':
+    input = raw_input
+elif version == '3':
+    input = input
+else:
+    pass
+
 
 # ACCESS_TOKEN = {u'access_token': u'2.00_ShHyB2HnvNCca83c087d04aFAkC', u'remind_in': u'157679999', u'uid': u'1804547715', u'expires_at': 1569833194}
 
