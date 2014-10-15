@@ -128,6 +128,8 @@ class Client(object):
 
         # original usage
         # res = json.loads(self.session.get(url, params=kwargs).text)
+
+        # added by zhanglin below
         session_got = self.session.get(url, params = kwargs).text
         res = json.loads(session_got, object_hook = lambda pairs: JsonDict(pairs.items()))
 
