@@ -112,10 +112,29 @@ def get_friends_timeline(client):
     """Show 20 friends_timeline in the screen"""
 
     received = client.get('statuses/friends_timeline')
-    i = 1
+    index = 1
     for item in received.statuses:
-        print('No.{0}: {1} by @{2}\n'.format(str(i), item.text, item.user.name).encode('utf8'))
-        i += 1
+        retweet = item.get('retweeted_status')
+
+        if retweet: # have original weibo
+            print('No.{0}:\n{1} by @{2}\n-- {3} by @{4}\n'.format
+            (
+                str(index), 
+                item.text, 
+                item.user.name, 
+                item.retweeted_status.text, 
+                item.retweeted_status.user.name).encode('utf8')
+            )
+
+        else: # no original weibo
+            print('No.{0}:\n{1} by @{2}\n'.format
+            (
+                str(index), 
+                item.text, 
+                item.user.name).encode('utf8')
+            )
+
+        index += 1
 
 if __name__=="__main__":
     ACCESS_TOKEN = update_access_token()
