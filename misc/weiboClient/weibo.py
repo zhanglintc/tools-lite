@@ -113,8 +113,13 @@ class Client(object):
                 d.get("error_code", ""), d.get("error", "")))
 
     def get(self, uri, **kwargs):
-        """Request resource by get method.
         """
+        Request resource by get method.
+
+        2014.10.15 by zhanglin:
+        return a JsonDict object.
+        """
+
         url = "{0}{1}.json".format(self.api_url, uri)
 
         # for username/password client auth
@@ -131,7 +136,11 @@ class Client(object):
 
         # plan B by zhanglin 2014.10.15
         # convert dict to JsonDict
-        res = JsonDict(json.loads(self.session.get(url, params=kwargs).text))
+        # res = JsonDict(json.loads(self.session.get(url, params=kwargs).text))
+
+        # plan C by zhanglin 2014.10.15
+        # convert dict to JsonDict
+        res = json.loads(self.session.get(url, params=kwargs).text, object_hook=lambda pairs: JsonDict(pairs.items()))
 
         self._assert_error(res)
         return res

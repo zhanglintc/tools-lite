@@ -88,8 +88,8 @@ def get_comments_to_me(clinet, start_page, end_page):
             continue
 
         fw.write('\n\nPage {}:\n'.format(my_page).encode('utf8'))
-        for item in received['comments']:
-            to_be_written = item['created_at'] + ': ' + item['text'] + ' by ' + item['user']['name'] + '\n'
+        for item in received.comments:
+            to_be_written = '{0}: {1} by {2}\n'.format(item.created_at, item.text, item.user.name)
             fw.write(to_be_written.encode('utf8'))
 
         fw.flush()
@@ -104,8 +104,8 @@ def get_friends_timeline(client):
 
     received = client.get('statuses/friends_timeline')
     i = 1
-    for item in received['statuses']:
-        print(('No.' + str(i) + ': ' + item['text'] + ' by @' + item['user']['name'] + '\n').encode('utf8'))
+    for item in received.statuses:
+        print('No.{0}: {1} by @{2}\n'.format(str(i), item.text, item.user.name).encode('utf8'))
         i += 1
 
 if __name__=="__main__":
