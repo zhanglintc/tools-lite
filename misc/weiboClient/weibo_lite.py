@@ -65,7 +65,7 @@ def update_access_token():
 
     return ACCESS_TOKEN
 
-def get_comments_to_me(clinet, start_page, end_page):
+def get_comments_to_me(client, start_page, end_page):
     """Download comments from 'start_page' to 'end_page'"""
 
     my_page = start_page
@@ -121,12 +121,21 @@ def get_friends_timeline(client):
 
         index += 1
 
-if __name__=="__main__":
+def post_statuses_update(client, to_be_updated):
+    try:
+        client.post('statuses/update', status = to_be_updated)
+        print('Successfully updated!')
+
+    except RuntimeError as e:
+        print("Failed because: '{}'".format(str(e)))
+
+if __name__ == "__main__":
     ACCESS_TOKEN = update_access_token()
 
     client = Client(API_KEY, API_SECRET, REDIRECT_URI, ACCESS_TOKEN)
-    get_friends_timeline(client)
+    # get_friends_timeline(client)
     # get_comments_to_me(client, 1, 5)
+    post_statuses_update(client, 'another weibo')
 
 
 
