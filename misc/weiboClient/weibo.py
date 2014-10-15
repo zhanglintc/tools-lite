@@ -128,19 +128,8 @@ class Client(object):
 
         # original usage
         # res = json.loads(self.session.get(url, params=kwargs).text)
-
-        # plan A by zhanglin 2014.10.15
-        # convert dict to JsonDict
-        # res = json.loads(self.session.get(url, params=kwargs).text)
-        # res = JsonDict(res)
-
-        # plan B by zhanglin 2014.10.15
-        # convert dict to JsonDict
-        # res = JsonDict(json.loads(self.session.get(url, params=kwargs).text))
-
-        # plan C by zhanglin 2014.10.15
-        # convert dict to JsonDict
-        res = json.loads(self.session.get(url, params=kwargs).text, object_hook=lambda pairs: JsonDict(pairs.items()))
+        session_got = self.session.get(url, params = kwargs).text
+        res = json.loads(session_got, object_hook = lambda pairs: JsonDict(pairs.items()))
 
         self._assert_error(res)
         return res

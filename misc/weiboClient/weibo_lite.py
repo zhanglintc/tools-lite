@@ -36,21 +36,6 @@ API_KEY = '2038131539' # app key
 API_SECRET = 'b4d84f59af3e5a52c8df1f0e7ccfa75d' # app secret
 REDIRECT_URI = 'http://zhanglintc.blog.163.com' # callback url
 
-def get_token_manually():
-    """
-    Call this function if your 'ACCESS_TOKEN' is out of data,
-    replace the 'ACCESS_TOKEN' above after the 'c.token' is printed.
-
-    Out of dated, plan to remove -> zhanglin 2014.10.14
-    """
-
-    c = Client(API_KEY, API_SECRET, REDIRECT_URI)
-    webbrowser.open(c.authorize_url)
-
-    code = input('paste code here:\n')
-    c.set_code(code)
-    print(c.token)
-
 def update_access_token():
     """
     Get ACCESS_TOKEN form file 'token'. It will direct you to weibo.com to get
@@ -119,18 +104,18 @@ def get_friends_timeline(client):
         if retweet: # have original weibo
             print('No.{0}:\n{1} by @{2}\n-- {3} by @{4}\n'.format
             (
-                str(index), 
-                item.text, 
-                item.user.name, 
-                item.retweeted_status.text, 
+                str(index),
+                item.text,
+                item.user.name,
+                item.retweeted_status.text,
                 item.retweeted_status.user.name).encode('utf8')
             )
 
         else: # no original weibo
             print('No.{0}:\n{1} by @{2}\n'.format
             (
-                str(index), 
-                item.text, 
+                str(index),
+                item.text,
                 item.user.name).encode('utf8')
             )
 
