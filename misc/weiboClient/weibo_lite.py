@@ -11,16 +11,22 @@ import webbrowser
 import json
 import pickle
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 version = sys.version[0]
 
 if version == '2':
+    # default encoding
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+
+    # input method
     input = raw_input
+
 elif version == '3':
+    #input method
     input = input
+
 else:
+    # do nothing
     pass
 
 
