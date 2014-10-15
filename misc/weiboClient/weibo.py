@@ -21,6 +21,24 @@ import time
 
 import requests
 
+class JsonDict(dict):
+    """
+    Copied from weibo official SDK: 
+    https://github.com/michaelliao/sinaweibopy
+
+    Make a dict access more convenient,
+    now you can get value from dict just like property.
+    """
+
+    def __getattr__(self, attr):
+        try:
+            return self[attr]
+        except KeyError:
+            raise AttributeError(r"'JsonDict' object has no attribute '%s'" % attr)
+
+    def __setattr__(self, attr, value):
+        self[attr] = value
+
 
 class Client(object):
     def __init__(self, api_key, api_secret, redirect_uri, token=None,
@@ -103,7 +121,18 @@ class Client(object):
         if self.session.auth:
             kwargs['source'] = self.client_id
 
-        res = json.loads(self.session.get(url, params=kwargs).text)
+        # original usage
+        # res = json.loads(self.session.get(url, params=kwargs).text)
+
+        # plan A by zhanglin 2014.10.15
+        # convert dict to JsonDict
+        # res = json.loads(self.session.get(url, params=kwargs).text)
+        # res = JsonDict(res)
+
+        # plan B by zhanglin 2014.10.15
+        # convert dict to JsonDict
+        res = JsonDict(json.loads(self.session.get(url, params=kwargs).text))
+
         self._assert_error(res)
         return res
 
