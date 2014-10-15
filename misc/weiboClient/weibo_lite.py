@@ -11,6 +11,9 @@ import webbrowser
 import json
 import pickle
 
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 version = sys.version[0]
 
 if version == '2':
