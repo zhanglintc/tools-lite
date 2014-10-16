@@ -27,6 +27,9 @@ class Solution:
     # @param p, a pattern string
     # @return a boolean
     def isMatch(self, s, p):
-        pass
+        j = 0
+        for i in range(len(s)):
+            if s[i] == p[j]:
+                
 
 
