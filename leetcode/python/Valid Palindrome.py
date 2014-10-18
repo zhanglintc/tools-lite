@@ -23,7 +23,7 @@ class Solution:
         left_to_right = 0
         right_to_left = len(s) - 1
 
-        while left_to_right < len(s):
+        while left_to_right < right_to_left:
             if s[left_to_right].lower() not in alphanumeric:
                 left_to_right += 1
                 continue
@@ -39,8 +39,5 @@ class Solution:
             right_to_left -= 1
 
         return True
-
-s = Solution()
-print s.isPalindrome('a:/ab')
 
 
