@@ -47,13 +47,14 @@ class Solution:
                     cur_patt += 1
 
                 # this is not '*' (or cur_patt is out of range)
-                # try to use the previous '*' position to match this one
+                # restore cur_patt and cur_str from saved ones + 1
+                # and saved_str++
                 else:
                     # '*' has occurred before
                     if saved_patt != None:
-                        saved_str += 1
-                        cur_str  = saved_str
+                        cur_str  = saved_str + 1
                         cur_patt = saved_patt + 1
+                        saved_str += 1
 
                     # no '*' has occurred before
                     else:
