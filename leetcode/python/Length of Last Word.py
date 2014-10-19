@@ -18,6 +18,15 @@ class Solution:
     # @param s, a string
     # @return an integer
     def lengthOfLastWord(self, s):
-        pass
+        words = s.split()
+
+        if words == []:
+            return 0
+
+        else:
+            return len(words[-1])
+
+s = Solution()
+print s.lengthOfLastWord(' 1  ')
 
 
