@@ -15,6 +15,50 @@ class Solution:
     # @param b, a string
     # @return a string
     def addBinary(self, a, b):
-        pass
+        s = ''
+        add_flag = 0
+
+        a = list(a)
+        b = list(b)
+        while a and b:
+            this = (int(a.pop()) + int(b.pop()) + add_flag if add_flag else int(a.pop()) + int(b.pop()))
+
+            if this >= 2:
+                add_flag = 1
+                this %= 2
+
+            else:
+                add_flag = 0
+
+            s = str(this) + s
+
+        while a:
+            this = (int(a.pop()) + add_flag if add_flag else int(a.pop()))
+
+            if this >= 2:
+                add_flag = 1
+                this %= 2
+
+            else:
+                add_flag = 0
+
+            s = str(this) + s
+
+        while b:
+            this = (int(b.pop()) + add_flag if add_flag else int(b.pop()))
+
+            if this >= 2:
+                add_flag = 1
+                this %= 2
+
+            else:
+                add_flag = 0
+
+            s = str(this) + s
+
+        if add_flag:
+            s = str(add_flag) + s
+
+        return s
 
 
