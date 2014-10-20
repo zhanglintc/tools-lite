@@ -32,20 +32,9 @@ class Solution:
 
             s = str(this) + s
 
-        while a:
-            this = (int(a.pop()) + add_flag if add_flag else int(a.pop()))
-
-            if this >= 2:
-                add_flag = 1
-                this %= 2
-
-            else:
-                add_flag = 0
-
-            s = str(this) + s
-
-        while b:
-            this = (int(b.pop()) + add_flag if add_flag else int(b.pop()))
+        alter = (a if a else b)
+        while alter:
+            this = (int(alter.pop()) + add_flag if add_flag else int(alter.pop()))
 
             if this >= 2:
                 add_flag = 1
@@ -57,7 +46,7 @@ class Solution:
             s = str(this) + s
 
         if add_flag:
-            s = str(add_flag) + s
+            s = '1' + s
 
         return s
 
