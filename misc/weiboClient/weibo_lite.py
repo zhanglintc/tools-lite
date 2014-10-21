@@ -133,9 +133,9 @@ if __name__ == "__main__":
     ACCESS_TOKEN = update_access_token()
 
     client = Client(API_KEY, API_SECRET, REDIRECT_URI, ACCESS_TOKEN)
-    # get_friends_timeline(client)
+    get_friends_timeline(client)
     # get_comments_to_me(client, 1, 5)
-    post_statuses_update(client, 'another weibo')
+    # post_statuses_update(client, 'another weibo')
 
 
 
