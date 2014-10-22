@@ -26,22 +26,24 @@ class Solution:
     # @return a boolean
     def isMatch(self, s, p):
         # dp[string][pattern]
-        #  i for string, j for pattern
-        dp = [[False for j in range(len(p) + 1)] for i in range(len(s) + 1)]
+        dp = [[False for cur_pat in range(len(p) + 1)] for cur_str in range(len(s) + 1)]
 
         dp[0][0] = True
-        for j in range(1, len(p) + 1):
-            if p[j - 1] == '*':
-                if j > 1:
-                    dp[0][j]=dp[0][j - 2]
 
-        for i in range(1, len(s) + 1):
-            for j in range(1, len(p) + 1):
-                if p[j - 1] == '*':
-                    dp[i][j] = (dp[i][j - 1] or dp[i][j - 2]) or (dp[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == '.'))
+        # check patterns can match first character or not
+        for cur_pat in range(1, len(p) + 1):
+            if p[cur_pat - 1] == '*':
+                if cur_pat > 1:
+                    dp[0][cur_pat] = dp[0][cur_pat - 2]
+
+        # check the other characters
+        for cur_str in range(1, len(s) + 1):
+            for cur_pat in range(1, len(p) + 1):
+                if p[cur_pat - 1] == '*':
+                    dp[cur_str][cur_pat] = (dp[cur_str][cur_pat - 1] or dp[cur_str][cur_pat - 2]) or (dp[cur_str - 1][cur_pat] and (s[cur_str - 1] == p[cur_pat - 2] or p[cur_pat - 2] == '.'))
 
                 else:
-                    dp[i][j] = dp[i - 1][j - 1] and (s[i - 1] == p[j - 1] or p[j - 1] == '.')
+                    dp[cur_str][cur_pat] = dp[cur_str - 1][cur_pat - 1] and (s[cur_str - 1] == p[cur_pat - 1] or p[cur_pat - 1] == '.')
 
         return dp[len(s)][len(p)]
 
