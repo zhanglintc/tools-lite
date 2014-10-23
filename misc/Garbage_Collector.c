@@ -67,6 +67,9 @@ void assert(int condition, const char* message)
   }
 }
 
+/***************************
+ return a new Virtual Machine
+***************************/
 VM* newVM()
 {
   VM* vm = (VM*)malloc(sizeof(VM));
@@ -77,20 +80,29 @@ VM* newVM()
   return vm;
 }
 
-
+/***************************
+ push a object to a Virtual Machine
+***************************/
 void push(VM* vm, Object* value)
 {
   assert(vm->stackSize < STACK_MAX, "Stack overflow!");
   vm->stack[vm->stackSize++] = value;
 }
 
-
+/***************************
+ pop a 'thing' from a Virtual Machine
+***************************/
 Object* pop(VM* vm)
 {
   assert(vm->stackSize > 0, "Stack underflow!");
   return vm->stack[--vm->stackSize];
 }
 
+/***************************
+ mark a object as in-use
+ 1 for in-use
+ 0 for not-in-use
+***************************/
 void mark(Object* object)
 {
   /* If already marked, we're done. Check this first to avoid recursing
@@ -106,6 +118,9 @@ void mark(Object* object)
   }
 }
 
+/***************************
+ mark all objects in Virtual Machine
+***************************/
 void markAll(VM* vm)
 {
   for (int i = 0; i < vm->stackSize; i++)
@@ -114,6 +129,10 @@ void markAll(VM* vm)
   }
 }
 
+/***************************
+ sweep the VM, check if there is
+ object need to be removed
+***************************/
 void sweep(VM* vm)
 {
   Object** object = &vm->firstObject;
@@ -139,6 +158,9 @@ void sweep(VM* vm)
   }
 }
 
+/***************************
+ Garbage Collector
+***************************/
 void gc(VM* vm)
 {
   int numObjects = vm->numObjects;
@@ -148,10 +170,14 @@ void gc(VM* vm)
 
   vm->maxObjects = vm->numObjects * 2;
 
-  printf("Collected %d objects, %d remaining.\n", numObjects - vm->numObjects,
+  printf("Collected %d objects, %d remaining.\n", 
+         numObjects - vm->numObjects,
          vm->numObjects);
 }
 
+/***************************
+ return a new object
+***************************/
 Object* newObject(VM* vm, ObjectType type) {
   if (vm->numObjects == vm->maxObjects) gc(vm);
 
@@ -166,6 +192,9 @@ Object* newObject(VM* vm, ObjectType type) {
   return object;
 }
 
+/***************************
+ push a int to a VM by calling push()
+***************************/
 void pushInt(VM* vm, int intValue)
 {
   Object* object = newObject(vm, OBJ_INT);
@@ -174,6 +203,9 @@ void pushInt(VM* vm, int intValue)
   push(vm, object);
 }
 
+/***************************
+ push a pair to a VM by calling push()
+***************************/
 Object* pushPair(VM* vm)
 {
   Object* object = newObject(vm, OBJ_PAIR);
@@ -184,6 +216,9 @@ Object* pushPair(VM* vm)
   return object;
 }
 
+/***************************
+ __str__ of object
+***************************/
 void objectPrint(Object* object)
 {
   switch (object->type)
@@ -202,6 +237,9 @@ void objectPrint(Object* object)
   }
 }
 
+/***************************
+ free the whole Virtual Machine
+***************************/
 void freeVM(VM *vm)
 {
   vm->stackSize = 0;
