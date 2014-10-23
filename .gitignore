@@ -14,3 +14,7 @@ misc/weiboOfficial/data.txt
 misc/weiboOfficial/comments.txt
 
 misc/weiboClient/token
+
+misc/.tags
+
+misc/.tags_sorted_by_file
