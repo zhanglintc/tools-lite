@@ -1,3 +1,8 @@
+/**************************************
+ Refer to:
+ http://blog.jobbole.com/53376/
+**************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 
