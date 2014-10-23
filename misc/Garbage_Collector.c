@@ -243,6 +243,8 @@ void objectPrint(Object* object)
 void freeVM(VM *vm)
 {
   vm->stackSize = 0;
+  printf("\n");
+  printf("Force free elements in VM:\n");
   gc(vm);
   free(vm);
 }
