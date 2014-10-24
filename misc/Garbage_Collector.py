@@ -3,6 +3,10 @@
  http://blog.jobbole.com/53376/
 '''
 
+class Dummy():
+    def __init__(self):
+        self.next = None
+
 class Obj():
     def __init__(self, vm):
         if vm.numObjects == vm.maxObjects:
@@ -39,21 +43,25 @@ def gc(vm):
     for i in range(vm.stackSize):
         vm.stack[i].marked = 1
 
-    pointer = vm.firstObject
+    dummy = Dummy()
+    dummy.next = vm.firstObject
+    pointer = dummy
 
-    while pointer:
-        if not pointer.marked:
-            unreached = pointer
-            pointer = unreached.next
-            # free(unreached)
+    while pointer.next:
+        if not pointer.next.marked:
+            pointer.next = pointer.next.next
+            pointer = pointer.next
 
             vm.numObjects -= 1
 
         else:
-            pointer.marked = 0
+            pointer.marked = 0 # here !!!
             pointer = pointer.next
 
+    print 'before', vm.maxObjects, vm.numObjects
     vm.maxObjects = vm.numObjects * 2
+    print 'after', vm.maxObjects, vm.numObjects
+    print '----'
 
     print "Collected {} objects, {} remaining.\n".format(numObjects - vm.numObjects, vm.numObjects)
 
@@ -97,8 +105,8 @@ def perfTest():
             vm.pop()
 
 if __name__ == '__main__':
-    test1()
-    test2()
+    # test1()
+    # test2()
     perfTest()
 
 
