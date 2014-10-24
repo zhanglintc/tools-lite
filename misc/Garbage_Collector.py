@@ -5,6 +5,9 @@
 
 class Obj():
     def __init__(self, vm):
+        if vm.numObjects == vm.maxObjects:
+            gc(vm)
+
         self.next = vm.firstObject
         vm.firstObject = self
 
@@ -50,6 +53,8 @@ def gc(vm):
             pointer.marked = 0
             pointer = pointer.next
 
+    vm.maxObjects = vm.numObjects * 2
+
     print "Collected {} objects, {} remaining.\n".format(numObjects - vm.numObjects, vm.numObjects)
 
 def test1():
@@ -79,9 +84,22 @@ def test2():
 
     gc(vm)
 
+def perfTest():
+    print "Performance Test."
+
+    vm = VM()
+
+    for i in range(1000):
+        for j in range(20):
+            vm.push(i)
+
+        for k in range(20):
+            vm.pop()
+
 if __name__ == '__main__':
     test1()
     test2()
+    perfTest()
 
 
 
