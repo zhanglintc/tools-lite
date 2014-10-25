@@ -63,7 +63,7 @@ def gc(vm):
 
     vm.maxObjects = vm.numObjects * 2
 
-    print "Collected {} objects, {} remaining.\n".format(numObjects - vm.numObjects, vm.numObjects)
+    print "Collected {} objects, {} remaining.".format(numObjects - vm.numObjects, vm.numObjects)
 
 def test1():
     print "Test 1: Objects on stack are preserved."
