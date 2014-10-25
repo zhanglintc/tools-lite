@@ -1,6 +1,7 @@
 '''
  Refer to:
  http://blog.jobbole.com/53376/
+ and ./Garbage_Collector.c
 '''
 
 class Dummy():
@@ -45,23 +46,22 @@ def gc(vm):
 
     dummy = Dummy()
     dummy.next = vm.firstObject
-    pointer = dummy
+    pre = dummy
+    cur = dummy.next
 
-    while pointer.next:
-        if not pointer.next.marked:
-            pointer.next = pointer.next.next
-            pointer = pointer.next
+    while cur:
+        if not cur.marked:
+            pre.next = cur.next
+            cur = cur.next
 
             vm.numObjects -= 1
 
         else:
-            pointer.marked = 0 # here !!!
-            pointer = pointer.next
+            cur.marked = 0 # here !!!
+            pre = pre.next
+            cur = cur.next
 
-    print 'before', vm.maxObjects, vm.numObjects
     vm.maxObjects = vm.numObjects * 2
-    print 'after', vm.maxObjects, vm.numObjects
-    print '----'
 
     print "Collected {} objects, {} remaining.\n".format(numObjects - vm.numObjects, vm.numObjects)
 
