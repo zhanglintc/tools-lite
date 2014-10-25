@@ -44,7 +44,7 @@ class Solution:
             this_lst[this_depth] = S[i]
             self.subsets_helper(S, req_depth, this_depth + 1, i + 1, fina_lst, this_lst)
             # start + 1 wrong
-            # i + 1 	right
+            # i + 1     right
             # hard to understand
 
 s = Solution()
