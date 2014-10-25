@@ -42,10 +42,7 @@ class Solution:
 
         for i in range(start, len(S)):
             this_lst[this_depth] = S[i]
-            self.subsets_helper(S, req_depth, this_depth + 1, i + 1, fina_lst, this_lst)
-            # start + 1 wrong
-            # i + 1     right
-            # hard to understand
+            self.subsets_helper(S, req_depth, this_depth + 1, i + 1, fina_lst, this_lst) # must be i + 1, not start + 1
 
 s = Solution()
 print s.subsets([1,2,3])
