@@ -78,10 +78,10 @@ void assert(int condition, const char* message)
 VM* newVM()
 {
   VM* vm = (VM*)malloc(sizeof(VM));
-  vm->stackSize = 0;
+  vm->stackSize = 0;      // the number of objects that still in stack
   vm->firstObject = NULL;
-  vm->numObjects = 0;
-  vm->maxObjects = 8;
+  vm->numObjects = 0;     // the number of objects that ever created
+  vm->maxObjects = 8;     // the number of objects that VM allowed to store
   return vm;
 }
 
@@ -321,7 +321,7 @@ void perfTest()
   printf("Performance Test.\n");
   VM* vm = newVM();
 
-  for (int i = 0; i < 1000; i++)
+  for (int i = 0; i < 100; i++)
   {
     for (int j = 0; j < 20; j++)
     {

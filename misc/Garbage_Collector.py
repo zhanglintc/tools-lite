@@ -23,9 +23,9 @@ class Obj():
 class VM():
     def __init__(self):
         self.firstObject = None
-        self.stackSize = 0
-        self.numObjects = 0
-        self.maxObjects = 8
+        self.stackSize = 0      # the number of objects that still in stack
+        self.numObjects = 0     # the number of objects that ever created
+        self.maxObjects = 8     # the number of objects that VM allowed to store
         self.stack = []
 
     def push(self, val):
@@ -97,7 +97,7 @@ def perfTest():
 
     vm = VM()
 
-    for i in range(1000):
+    for i in range(100):
         for j in range(20):
             vm.push(i)
 
