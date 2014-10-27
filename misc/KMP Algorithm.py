@@ -9,8 +9,8 @@ class Solution:
         Pi[0] = 0
         k = 0
         for q in range(1, m):
-            while k > 0 and needle[k] != needle[q]:
-                k = Pi[k - 1]
+            if k > 0 and needle[k] != needle[q]:
+                k = 0
             if needle[k] == needle[q]:
                 k = k + 1
             Pi[q] = k
@@ -23,13 +23,22 @@ class Solution:
             return haystack
         Pi = self.ComputePrefixFunction(needle)
         q = 0
-        for i in range(0, n):
-            while q > 0 and needle[q] != haystack[i]:
-                q = Pi[q - 1]
+        i = 0
+        saved_hay = 0
+        while i < n:
             if needle[q] == haystack[i]:
-                q = q + 1
+                q += 1
+                i += 1
+            else:
+                i = saved_hay
+                if q == 0:
+                    i += 1
+                else:
+                    i += (q - Pi[q - 1])
+                q = 0
+                saved_hay = i
             if q == m:
-                return haystack[i - m + 1:]
+                return haystack[i - m:]
         return None
 
 
