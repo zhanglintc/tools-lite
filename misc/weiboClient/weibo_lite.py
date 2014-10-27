@@ -121,12 +121,27 @@ def get_friends_timeline(client):
 
         index += 1
 
-def post_statuses_update(client, to_be_updated):
+def post_statuses_update(client, text):
+    """Update a new weibo(text only) to Sina"""
+
     try:
-        client.post('statuses/update', status = to_be_updated)
+        client.post('statuses/update', status = text)
         print('Successfully updated!')
 
     except RuntimeError as e:
+        print("Failed because: '{}'".format(str(e)))
+
+def post_statuses_upload(client, text, picture):
+    """Upload a new weibo(with picture) to Sina"""
+
+    try:
+        f = open(picture, 'rb')
+        client.post('statuses/upload', status = text, pic = f)
+        f.close()
+
+        print('Successfully updated!')
+
+    except (RuntimeError, IOError) as e:
         print("Failed because: '{}'".format(str(e)))
 
 if __name__ == "__main__":
@@ -135,7 +150,8 @@ if __name__ == "__main__":
     client = Client(API_KEY, API_SECRET, REDIRECT_URI, ACCESS_TOKEN)
     get_friends_timeline(client)
     # get_comments_to_me(client, 1, 5)
-    # post_statuses_update(client, 'another weibo')
+    # post_statuses_update(client, 'From Xiao霸王其乐无穷')
+    # post_statuses_upload(client, 'From Xiao霸王其乐无穷', r'picture_path_here')
 
 
 
