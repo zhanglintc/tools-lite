@@ -13,21 +13,41 @@
 # Given [5, 7, 7, 8, 8, 10] and target value 8,
 # return [3, 4].
 
-# Time O(n) solution
+# Time O(log n) Solution
 class Solution:
     # @param A, a list of integers
     # @param target, an integer to be searched
     # @return a list of length 2, [index1, index2]
     def searchRange(self, A, target):
-        start = end = -1
+        start = 0
+        end = len(A) - 1
+        lst = [-1, -1]
 
-        for i in range(len(A)):
-            if A[i] == target and start == -1:
-                start = i
+        while start < end:
+            mid = (start + end) // 2
 
-            if A[i] == target:
-                end = i
+            if A[mid] < target:
+                start = mid + 1 # cause (start+end)//2 can become smaller, so here should be mid+1 to make ajust
 
-        return [start, end]
+            else:
+                end = mid
 
+        if A[start] != target:
+            return lst
+        else:
+            lst[0] = start
+
+        end = len(A)
+        while start < end:
+            mid = (start + end) // 2
+
+            if A[mid] > target:
+                end = mid
+
+            else:
+                start = mid + 1 # cause (start+end)//2 can become smaller, so here should be mid+1 to make ajust
+
+        lst[1] = end - 1 # can I write Chinese here...
+
+        return lst
 
