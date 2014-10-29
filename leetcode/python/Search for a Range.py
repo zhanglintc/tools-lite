@@ -20,7 +20,7 @@ class Solution:
     # @return a list of length 2, [index1, index2]
     def searchRange(self, A, target):
         start = 0
-        end = len(A) - 1
+        end = len(A) - 1 # must minus 1
         lst = [-1, -1]
 
         while start < end:
@@ -37,7 +37,7 @@ class Solution:
         else:
             lst[0] = start
 
-        end = len(A)
+        end = len(A) # cannot minus 1
         while start < end:
             mid = (start + end) // 2
 
