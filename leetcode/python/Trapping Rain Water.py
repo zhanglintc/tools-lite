@@ -24,6 +24,8 @@ class Solution:
     # @param A, a list of integers
     # @return an integer
     def trap(self, A):
+        # find every position which bigger than left and right first
+        # then? I don't know ...
         pass
 
 
