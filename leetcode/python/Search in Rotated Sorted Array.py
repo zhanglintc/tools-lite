@@ -16,6 +16,9 @@ class Solution:
     # @param target, an integer to be searched
     # @return an integer
     def search(self, A, target):
-        pass
+        for i in A:
+            if i == target:
+                return A.index(i)
+        return -1
 
 
