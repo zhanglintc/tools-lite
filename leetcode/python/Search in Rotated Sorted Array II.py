@@ -15,6 +15,9 @@ class Solution:
     # @param target an integer
     # @return a boolean
     def search(self, A, target):
-        pass
+        for i in A:
+            if i == target:
+                return True
+        return False
 
 
