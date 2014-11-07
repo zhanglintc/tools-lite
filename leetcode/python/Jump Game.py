@@ -27,12 +27,6 @@ class Solution:
                     bool_list[i] = True
                     break
 
-        if bool_list[0] == True:
-            return True
-        else:
-            return False
-
-s = Solution()
-print s.canJump([1,2,0,1,4])
+        return bool_list[0]
 
 
