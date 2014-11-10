@@ -17,11 +17,12 @@ while line:
     line = web_cotent.readline()
     if today in line: # find today
         idx = line.find('data-count')
-        content = line[idx : idx + 14]
+        count = line[idx + 12 : idx + 13] # 12 & 13 to find count of today's commits
         break
 
-send_content = "{}, {}  #GitHub reminder#".format(cur_time, content)
-os.system('wb -t "{}"'.format(send_content))
+send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
+send_command = 'wb -t "{}"'.format(send_content)
+os.system(send_command)
 
 try:
     raw_input()
