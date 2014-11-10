@@ -1,18 +1,30 @@
-import urllib, urllib2
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os, sys, urllib
 import datetime
 
-today = str(datetime.date.today())
+reload(sys)
+sys.setdefaultencoding('utf8')
 
-web = urllib.urlopen("https://github.com/zhanglintc")
+today = str(datetime.date.today()) # something like: 2014-11-10
 
-# fw = open("git.txt", 'w')
+web_cotent = urllib.urlopen("https://github.com/zhanglintc") # open website
 
 line = True
 while line:
-    line = web.readline()
-    if today in line and ('data-count="0"') in line: # if today's data-count is 0, do remind
-        # call a remind function here
-        print line
-    # fw.write(line)
+    line = web_cotent.readline()
+    if today in line: # find today
+        idx = line.find('data-count')
+        content = line[idx : idx + 14]
+        break
 
-# fw.close()
+# wb -t "data-count="1"  #GitHub reminder#"
+os.system('wb -t "{}"'.format(content + '  #GitHub reminder#'))
+
+try:
+    raw_input()
+except:
+    pass
+
+
