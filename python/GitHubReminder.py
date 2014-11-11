@@ -13,6 +13,7 @@ cur_time = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%
 web_cotent = urllib.urlopen("https://github.com/zhanglintc") # open website
 
 line = True
+count = 0
 while line:
     line = web_cotent.readline()
     if today in line: # find today
