@@ -13,9 +13,13 @@ cur_time = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%
 web_cotent = urllib.urlopen("https://github.com/zhanglintc") # open website
 
 line = True
-count = 0
+count = None
 while line:
     line = web_cotent.readline()
+
+    if line and count == None: # readline isn't None means urlopen success, initialize count as 0
+        count = 0
+
     if today in line: # find today
         idx = line.find('data-count')
         count = line[idx + 12 : idx + 13] # 12 & 13 to find count of today's commits
@@ -23,7 +27,11 @@ while line:
 
 send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
 send_command = 'wb -t "{}"'.format(send_content)
-os.system(send_command)
+
+if count != None: # if count is initialized, send weibo
+    os.system(send_command)
+else: # else exit as 100
+    sys.exit(100)
 
 try:
     raw_input()
