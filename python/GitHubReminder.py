@@ -29,7 +29,7 @@ while line:
 
 send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
 # send_command = 'wb -t "{}"'.format(send_content) # for weibo
-send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@gmail'.format(send_content) # for mail
+send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@gmail.com'.format(send_content) # for mail
 
 if count != None: # if count is initialized, send weibo
     if 'Linux' in platform.platform():
@@ -37,6 +37,9 @@ if count != None: # if count is initialized, send weibo
         sp.communicate()
     else:
         os.system(send_command)
+
+    print(send_command)
+
 else: # else exit as 100
     sys.exit(100)
 
