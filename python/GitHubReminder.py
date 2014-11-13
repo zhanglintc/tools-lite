@@ -1,8 +1,10 @@
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#-*- coding: utf-8 -*-
 
 import os, sys, urllib
 import datetime, time
+import subprocess
+import platform
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -29,7 +31,11 @@ send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_
 send_command = 'wb -t "{}"'.format(send_content)
 
 if count != None: # if count is initialized, send weibo
-    os.system(send_command)
+    if 'Linux' in platform.platform():
+        sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+        sp.communicate()
+    else:
+        os.system(send_command)
 else: # else exit as 100
     sys.exit(100)
 
