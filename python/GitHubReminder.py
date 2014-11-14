@@ -16,14 +16,12 @@ web_cotent = urllib.urlopen("https://github.com/zhanglintc") # open website
 
 line = True
 count = None
+fw = open(today+'.log', 'w')
 while line:
     line = web_cotent.readline()
 
     # write web_content to log file
-    try:
-        os.system("echo "{}" > `date +20%y%m%d`.log".format(line))
-    except:
-        pass
+    fw.write(line)
 
     if line and count == None: # readline isn't None means urlopen success, initialize count as 0
         count = 0
@@ -32,6 +30,8 @@ while line:
         idx = line.find('data-count')
         count = line[idx + 12 : idx + 13] # 12 & 13 to find count of today's commits
         break
+
+fw.close()
 
 send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
 # send_command = 'wb -t "{}"'.format(send_content) # for weibo
