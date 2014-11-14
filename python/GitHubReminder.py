@@ -23,6 +23,10 @@ while line:
     # write web_content to log file
     fw.write(line)
 
+    # if get web_content error, exit with code 100, so caller.py will recall this script
+    if 'wrong' in line:
+        sys.exit(100)
+
     if line and count == None: # readline isn't None means urlopen success, initialize count as 0
         count = 0
 
