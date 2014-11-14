@@ -19,6 +19,12 @@ count = None
 while line:
     line = web_cotent.readline()
 
+    # write web_content to log file
+    try:
+        os.system("echo "{}" > `date +20%y%m%d`.log".format(line))
+    except:
+        pass
+
     if line and count == None: # readline isn't None means urlopen success, initialize count as 0
         count = 0
 
