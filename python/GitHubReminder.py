@@ -12,12 +12,13 @@ def github_reminder():
 
     today = str(datetime.date.today()) # something like: 2014-11-10
     cur_time = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
+    file_name = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')) + '.log' # 2014-11-10_15:12:40.log
 
     web_cotent = urllib.urlopen("https://github.com/zhanglintc") # open website
 
     line = True
     count = None
-    fw = open(today+'.log', 'w')
+    fw = open(file_name + '.log', 'w')
     while line:
         line = web_cotent.readline()
 
