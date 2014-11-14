@@ -18,7 +18,7 @@ def github_reminder():
 
     line = True
     count = None
-    fw = open(file_name + '.log', 'w')
+    fw = open(file_name, 'w')
     while line:
         line = web_cotent.readline()
 
@@ -27,6 +27,8 @@ def github_reminder():
 
         # if get web_content error, exit with code 100, so caller.py will recall this script
         if 'wrong' in line:
+            fw.close()
+            os.remove(file_name)
             return 100
 
         if line and count == None: # readline isn't None means urlopen success, initialize count as 0
