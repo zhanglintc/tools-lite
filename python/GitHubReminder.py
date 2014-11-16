@@ -46,14 +46,16 @@ def github_reminder():
     # send_command = 'wb -t "{}"'.format(send_content) # for weibo
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
 
-    if count != None: # if count is initialized, send weibo
+    if count != None: # if count is initialized, do command
+        print("sending...\n")
+
         if 'Linux' in platform.platform():
             sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
             sp.communicate()
         else:
             os.system(send_command)
 
-        print(send_command)
+        print(send_command + '\n')
 
         return 0
 
