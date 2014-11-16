@@ -12,14 +12,14 @@ import codecs
 import webbrowser
 APP_KEY = '2038131539' # app key
 APP_SECRET = 'b4d84f59af3e5a52c8df1f0e7ccfa75d' # app secret
-CALLBACK_URL = 'http://zhanglintc.blog.163.com' # callback url
+CALLBACK_URL = 'https://api.weibo.com/oauth2/default.html' # callback url
 # TOKEN = {u'access_token': u'2.00_ShHyB2HnvNCca83c087d04aFAkC', u'remind_in': u'157679999', u'uid': u'1804547715', u'expires_at': 1569833194}
 
 
-if 0: # get token
-    client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
+if 1: # get token
+    client = APIClient(SinaWeiboMixin, app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
     url = client.get_authorize_url()    # redirect the user to 'url'
-    # print url
+    print url
     webbrowser.open(url, new=0, autoraise=True)
 
     ACCESS = raw_input("input your code here:\n")
