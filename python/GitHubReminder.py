@@ -66,7 +66,13 @@ def github_reminder():
     fw.close()
 
     # send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
-    send_content = "You have {} commits today.\nChecked at {}.\n\n{}\n\n#GitHub reminder#\n".format(count, cur_time, pushed_detail)
+    send_content = "You have {} {} today.\nChecked at {}.\n\n{}\n#GitHub reminder#\n".format\
+        (
+            count,
+            'commit' if count == 0 else 'commits',
+            cur_time,
+            pushed_detail,
+        )
     # send_command = 'wb -t "{}"'.format(send_content) # for weibo
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
 
