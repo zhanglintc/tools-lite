@@ -37,6 +37,7 @@ def github_reminder():
     pushed_detail = ""
     fw = open(file_name, 'w')
     while line:
+        # read each line while not the end
         line = web_cotent.readline()
 
         # write web_content to log file
@@ -60,7 +61,6 @@ def github_reminder():
 
         if today in line: # find today
             count = line.split('\"')[11] # today's commit is in 11th position
-            # break # not break here to find pushed_details
 
         if 'Pushed' in line:
             line = re.sub('^ *', '', line) # strip spaces in the beginning of this line
@@ -69,15 +69,6 @@ def github_reminder():
 
     fw.close()
 
-    ##########################################
-    # if localtime is between 23:00 and 24:00 but still no commit
-    # do automatically commit function
-
-    if time.localtime().tm_hour == 23 and count == 0:
-        auto_commit()
-    ##########################################
-
-    # send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
     send_content = "You have {} {} today\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
             count,
@@ -85,8 +76,15 @@ def github_reminder():
             cur_time,
             pushed_detail,
         )
-    # send_command = 'wb -t "{}"'.format(send_content) # for weibo
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
+
+    ##########################################
+    # if localtime is between 23:00 and 24:00 but still no commit
+    # do automatically commit function
+
+    if time.localtime().tm_hour == 23 and count == 0:
+        auto_commit()
+    ##########################################
 
     if count != None: # if count is initialized, do command
         print("sending...\n")
