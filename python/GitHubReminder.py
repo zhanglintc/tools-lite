@@ -19,7 +19,6 @@ def github_reminder():
     line = True
     count = None
     fw = open(file_name, 'w')
-    pushed_detail = ""
     while line:
         line = web_cotent.readline()
 
@@ -28,27 +27,21 @@ def github_reminder():
 
         # if get web_content error, exit with code 100, so caller.py will recall this script
         if 'wrong' in line:
-            if count == None:
-                fw.close()
-                os.remove(file_name)
-                return 100
-
-            else: # count != None
-                break
+            fw.close()
+            os.remove(file_name)
+            return 100
 
         if line and count == None: # readline isn't None means urlopen success, initialize count as 0
             count = 0
 
         if today in line: # find today
             count = line.split('\"')[11] # today's commit is in 11th position
+            break
 
-        if "Pushed" in line:
-            pushed_detail = pushed_detail + line.split('<')[0] + '\n'
-
-    # fw.close()
+    fw.close()
 
     # send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
-    send_content = "You have {} commits today.\nChecked at {}.\n\n{}\n#GitHub reminder#\n".format(count, cur_time, pushed_detail)
+    send_content = "You have {} commits today.\nChecked at {}.\n#GitHub reminder#\n".format(count, cur_time)
     # send_command = 'wb -t "{}"'.format(send_content) # for weibo
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
 
