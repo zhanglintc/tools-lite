@@ -19,7 +19,21 @@ import re
 
 def auto_commit():
     """auto push a commit to GitHub"""
-    pass
+
+    send_command = ""
+
+    os.system('git pull')
+    fa = open('auto_commit_file.txt', 'a')
+    fa.write(cur_time)
+    fa.close()
+    os.system('git add auto_commit_file.txt')
+    os.system('git commit - m "{} auto commit"'.format(cur_time))
+    os.system('git push')
+
+    send_content = "You haven't pushed any commit today\nso we did it automatically for you\n\n#GitHub reminder#"
+    send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content)
+
+    return send_command
 
 def github_reminder():
     reload(sys)
@@ -83,7 +97,7 @@ def github_reminder():
     # do automatically commit function
 
     if time.localtime().tm_hour == 23 and count == 0:
-        auto_commit()
+        send_command = auto_commit()
     ##########################################
 
     if count != None: # if count is initialized, do command
