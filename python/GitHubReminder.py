@@ -15,6 +15,7 @@ import os, sys, urllib
 import datetime, time
 import subprocess
 import platform
+import re
 
 def github_reminder():
     reload(sys)
@@ -58,12 +59,13 @@ def github_reminder():
             # break # not break here to find pushed_details
 
         if 'Pushed' in line:
-            pushed_detail = pushed_detail + line + '\n'
+            line = re.sub('^ *', '', line) # strip spaces in the beginning of this line
+            pushed_detail += line
 
     fw.close()
 
     # send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
-    send_content = "You have {} commits today.\nChecked at {}.\n\n{}\n#GitHub reminder#\n".format(count, cur_time, pushed_detail)
+    send_content = "You have {} commits today.\nChecked at {}.\n\n{}\n\n#GitHub reminder#\n".format(count, cur_time, pushed_detail)
     # send_command = 'wb -t "{}"'.format(send_content) # for weibo
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
 
