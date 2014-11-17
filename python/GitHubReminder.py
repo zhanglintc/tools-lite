@@ -1,6 +1,16 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
+"""
+Check https://github.com/zhanglintc and get the day's commit's count,
+if everything goes right, send a mail to foxmail and exit with code 0.
+Otherwise exit with code 100.
+
+Exit code:
+0  : success
+100: fail
+"""
+
 import os, sys, urllib
 import datetime, time
 import subprocess
@@ -12,7 +22,7 @@ def github_reminder():
 
     today = str(datetime.date.today()) # something like: 2014-11-10
     cur_time = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
-    file_name = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')) + '.log' # 2014-11-10_15:12:40.log
+    file_name = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
 
     web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # open website
 
