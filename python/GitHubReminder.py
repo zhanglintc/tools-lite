@@ -26,8 +26,10 @@ def github_reminder():
 
     web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # open website
 
-    line = True
+    line  = True
+    error = True
     count = None
+    pushed_detail = ""
     fw = open(file_name, 'w')
     while line:
         line = web_cotent.readline()
@@ -35,23 +37,33 @@ def github_reminder():
         # write web_content to log file
         fw.write(line)
 
+        # if 'data-count' is found, means connect is OK, set error as False
+        if error and 'data-count' in line:
+            error = False
+
         # if get web_content error, exit with code 100, so caller.py will recall this script
         if 'wrong' in line:
-            fw.close()
-            os.remove(file_name)
-            return 100
+            if error: # really error, this make script hasn't get data-count
+                fw.close()
+                os.remove(file_name)
+                return 100
+            else: # something occurred after get data-count, doesn't matter
+                break
 
         if line and count == None: # readline isn't None means urlopen success, initialize count as 0
             count = 0
 
         if today in line: # find today
             count = line.split('\"')[11] # today's commit is in 11th position
-            break
+            # break # not break here to find pushed_details
+
+        if 'Pushed' in line:
+            pushed_detail = pushed_detail + line + '\n'
 
     fw.close()
 
     # send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
-    send_content = "You have {} commits today.\nChecked at {}.\n#GitHub reminder#\n".format(count, cur_time)
+    send_content = "You have {} commits today.\nChecked at {}.\n\n{}\n#GitHub reminder#\n".format(count, cur_time, pushed_detail)
     # send_command = 'wb -t "{}"'.format(send_content) # for weibo
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
 
