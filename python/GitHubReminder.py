@@ -17,6 +17,10 @@ import subprocess
 import platform
 import re
 
+def auto_commit():
+    """auto push a commit to GitHub"""
+    pass
+
 def github_reminder():
     reload(sys)
     sys.setdefaultencoding('utf8')
@@ -64,6 +68,14 @@ def github_reminder():
             pushed_detail += line
 
     fw.close()
+
+    ##########################################
+    # if localtime is between 23:00 and 24:00 but still no commit
+    # do automatically commit function
+
+    if time.localtime().tm_hour == 23 and count == 0:
+        auto_commit()
+    ##########################################
 
     # send_content = "Until {}, {} commits has pushed.  #GitHub reminder#".format(cur_time, count)
     send_content = "You have {} {} today\n{}\n\n{}\n#GitHub reminder#\n".format\
