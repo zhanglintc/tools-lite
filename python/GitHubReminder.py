@@ -60,6 +60,7 @@ def github_reminder():
 
         if 'Pushed' in line:
             line = re.sub('^ *', '', line) # strip spaces in the beginning of this line
+            line = re.sub('</a>', '', line) # remove </a>
             pushed_detail += line
 
     fw.close()
