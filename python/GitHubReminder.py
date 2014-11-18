@@ -20,15 +20,13 @@ import re
 def auto_commit():
     """auto push a commit to GitHub"""
 
-    send_command = ""
+    cd_command = "cd {} &&".format(sys.path[0])
 
-    os.system('git pull')
-    fa = open('auto_commit_file.txt', 'a')
-    fa.write(cur_time)
-    fa.close()
-    os.system('git add auto_commit_file.txt')
-    os.system('git commit - m "{} auto commit"'.format(cur_time))
-    os.system('git push')
+    os.system('{} git pull'.format(cd_command))
+    os.system('{} date >> auto_commit_file'.format(cd_command))
+    os.system('{} git add auto_commit_file'.format(cd_command))
+    os.system('{} git commit -m "{} auto commit"'.format(cd_command, cur_time))
+    os.system('{} git push'.format(cd_command))
 
     send_content = "You haven't pushed any commit today\nso we did it automatically for you\n\n#GitHub reminder#"
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content)
