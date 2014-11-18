@@ -81,7 +81,7 @@ def github_reminder():
 
     fw.close()
 
-    send_content = "You have {} {} today\n{}\n\n{}\n#GitHub reminder#\n".format\
+    send_content = "You have pushed {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
             count,
             'commit' if count < 2 else 'commits',
