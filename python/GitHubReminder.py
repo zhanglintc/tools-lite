@@ -17,6 +17,10 @@ import subprocess
 import platform
 import re
 
+TODAY = str(datetime.date.today()) # something like: 2014-11-10
+CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
+FILE_NAME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
+
 def auto_commit():
     """auto push a commit to GitHub"""
 
@@ -25,10 +29,10 @@ def auto_commit():
     os.system('{} git pull'.format(cd_command))
     os.system('{} date >> auto_commit_file'.format(cd_command))
     os.system('{} git add auto_commit_file'.format(cd_command))
-    os.system('{} git commit -m "{} auto commit"'.format(cd_command, cur_time))
+    os.system('{} git commit -m "{} auto commit"'.format(cd_command, CUR_TIME))
     os.system('{} git push'.format(cd_command))
 
-    send_content = "You haven't pushed any commit today\nso we did it automatically for you\n\n#GitHub reminder#"
+    send_content = "You haven't pushed any commit today\nso we did a auto-commit for you\n\n#GitHub reminder#"
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content)
 
     return send_command
@@ -37,17 +41,13 @@ def github_reminder():
     reload(sys)
     sys.setdefaultencoding('utf8')
 
-    today = str(datetime.date.today()) # something like: 2014-11-10
-    cur_time = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
-    file_name = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
-
     web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # open website
 
     line  = True
     error = True
     count = None
     pushed_detail = ""
-    fw = open(file_name, 'w')
+    fw = open(FILE_NAME, 'w')
     while line:
         # read each line while not the end
         line = web_cotent.readline()
@@ -63,7 +63,7 @@ def github_reminder():
         if 'wrong' in line:
             if error: # really error, this make script hasn't get data-count
                 fw.close()
-                os.remove(file_name)
+                os.remove(FILE_NAME)
                 return 100
             else: # something occurred after get data-count, doesn't matter
                 break
@@ -71,7 +71,7 @@ def github_reminder():
         if line and count == None: # readline isn't None means urlopen success, initialize count as 0
             count = 0
 
-        if today in line: # find today
+        if TODAY in line: # find today
             count = line.split('\"')[11] # today's commit is in 11th position
 
         if 'Pushed' in line:
@@ -84,8 +84,8 @@ def github_reminder():
     send_content = "You have pushed {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
             count,
-            'commit' if count < 2 else 'commits',
-            cur_time,
+            "commit" if count < 2 else "commits",
+            CUR_TIME,
             pushed_detail,
         )
     send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
