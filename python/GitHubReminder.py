@@ -94,7 +94,7 @@ def github_reminder():
     # if localtime is between 23:00 and 24:00 but still no commit
     # do automatically commit function
 
-    if time.localtime().tm_hour == 23 and count == 0:
+    if time.localtime().tm_hour == 23 and count == '0':
         send_command = auto_commit()
     ##########################################
 
