@@ -84,7 +84,7 @@ def github_reminder():
     send_content = "You have pushed {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
             count,
-            "commit" if count < 2 else "commits",
+            "commit" if int(count) < 2 else "commits",
             CUR_TIME,
             pushed_detail,
         )
