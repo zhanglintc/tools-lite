@@ -19,7 +19,7 @@ import re
 
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
 CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
-FILE_NAME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
+LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
 
 def auto_commit():
     """auto push a commit to GitHub"""
@@ -47,7 +47,7 @@ def github_reminder():
     error = True
     count = None
     pushed_detail = ""
-    fw = open(FILE_NAME, 'w')
+    fw = open(LOG_FILE, 'w')
     while line:
         # read each line while not the end
         line = web_cotent.readline()
@@ -63,7 +63,7 @@ def github_reminder():
         if 'wrong' in line:
             if error: # really error, this make script hasn't get data-count
                 fw.close()
-                os.remove(FILE_NAME)
+                os.remove(LOG_FILE)
                 return 100
             else: # something occurred after get data-count, doesn't matter
                 break
