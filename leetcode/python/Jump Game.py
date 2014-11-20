@@ -18,15 +18,16 @@ class Solution:
     # @param A, a list of integers
     # @return a boolean
     def canJump(self, A):
-        bool_list = [False for i in range(len(A))]
-        bool_list[-1] = True
+        available_step = A[0]
 
-        for i in range(len(A) - 2, -1, -1):
-            for step in range(1, A[i] + 1):
-                if bool_list[i + step] == True:
-                    bool_list[i] = True
-                    break
+        for provided_step in A[1:]:
+            available_step -= 1
 
-        return bool_list[0]
+            if available_step < 0:
+                return False
+
+            available_step = max(available_step, provided_step)
+
+        return True
 
 
