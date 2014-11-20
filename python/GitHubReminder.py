@@ -47,13 +47,13 @@ def github_reminder():
     error = True
     count = None
     pushed_detail = ""
-    # fw = open(LOG_FILE, 'w') # discard by zhanglin 2014.11.20 stop write log
+    fw = open(LOG_FILE, 'w')
     while line:
         # read each line while not the end
         line = web_cotent.readline()
 
         # write web_content to log file
-        # fw.write(line) # discard by zhanglin 2014.11.20 stop write log
+        fw.write(line)
 
         # if 'data-count' is found, means connect is OK, set error as False
         if error and 'data-count' in line:
@@ -62,7 +62,7 @@ def github_reminder():
         # if get web_content error, exit with code 100, so caller.py will recall this script
         if 'wrong' in line:
             if error: # really error, this make script hasn't get data-count
-                # fw.close() # discard by zhanglin 2014.11.20 stop write log
+                fw.close()
                 os.remove(LOG_FILE)
                 return 100
             else: # something occurred after get data-count, doesn't matter
@@ -79,7 +79,7 @@ def github_reminder():
             line = re.sub('</a>', '', line) # remove </a>
             pushed_detail += line
 
-    # fw.close() # discard by zhanglin 2014.11.20 stop write log
+    fw.close()
 
     send_content = "You have pushed {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
@@ -97,6 +97,10 @@ def github_reminder():
     if time.localtime().tm_hour == 23 and count == '0':
         send_command = auto_commit()
     ##########################################
+
+    # if don't want to see log file, use the code next line
+    # if want to see log file, then comment the code below
+    os.remove(LOG_FILE) # remove log file any way, zhanglin 2014.11.20
 
     if count != None: # if count is initialized, do command
         print("sending...\n")
