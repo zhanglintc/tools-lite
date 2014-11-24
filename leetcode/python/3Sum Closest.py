@@ -13,6 +13,36 @@
 class Solution:
     # @return an integer
     def threeSumClosest(self, num, target):
-        pass
+        length = len(num)
+        min_bias = None
 
+        num.sort()
+
+        for i in range(1, length - 1):
+            left = 0
+            right = length - 1
+
+            while left < right:
+                this_sum = num[left] + num[i] + num[right]
+                bias = abs(this_sum - target)
+
+                if bias < min_bias or min_bias == None:
+                    min_bias = bias
+                    threesum = this_sum
+
+                if threesum == target:
+                        return threesum
+
+                elif threesum < target:
+                    left += 1
+
+                else:
+                    right -= 1
+
+
+        return threesum
+
+
+s = Solution()
+print s.threeSumClosest([1,1,-1,-1,3], 3)
 
