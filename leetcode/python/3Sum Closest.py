@@ -18,8 +18,8 @@ class Solution:
 
         num.sort()
 
-        for i in range(1, length - 1):
-            left = 0
+        for i in range(length):
+            left = i + 1
             right = length - 1
 
             while left < right:
@@ -30,10 +30,10 @@ class Solution:
                     min_bias = bias
                     threesum = this_sum
 
-                if threesum == target:
+                if this_sum == target:
                         return threesum
 
-                elif threesum < target:
+                elif this_sum < target:
                     left += 1
 
                 else:
@@ -42,7 +42,4 @@ class Solution:
 
         return threesum
 
-
-s = Solution()
-print s.threeSumClosest([1,1,-1,-1,3], 3)
 
