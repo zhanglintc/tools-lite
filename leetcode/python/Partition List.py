@@ -23,6 +23,28 @@ class Solution:
     # @param x, an integer
     # @return a ListNode
     def partition(self, head, x):
-        pass
+        dummy_smaller = ListNode(0)
+        dummy_bigger  = ListNode(0)
+        smaller = dummy_smaller
+        bigger  = dummy_bigger
+
+        while head:
+            if head.val < x:
+                smaller.next = head # append head to the end of smaller
+                smaller = smaller.next # smaller point to next
+                head = head.next # head point to next
+                smaller.next = None # cut the end of smaller
+
+            else: # head.val >= x
+                bigger.next = head # append head to the end of bigger
+                bigger = bigger.next # bigger point to next
+                head = head.next # head point to next
+                bigger.next = None # cut the end of bigger
+
+        smaller.next = dummy_bigger.next # concatenate smaller and bigger
+
+        return dummy_smaller.next # return the new linked_list
+
+
 
 
