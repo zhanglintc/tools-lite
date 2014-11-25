@@ -24,6 +24,33 @@ class Solution:
     # @param target, integer
     # @return a list of lists of integers
     def combinationSum2(self, candidates, target):
-        pass
+        fina_lst = []
+        this_lst = []
 
+        candidates.sort() # make it non-descending order
+        self.combinationSum2_helper(candidates, target, 0, this_lst, fina_lst)
 
+        return fina_lst
+
+    def combinationSum2_helper(self, candidates, target, cur_sum, this_lst, fina_lst):
+        for i in range(len(candidates)):
+            # not enough to target, recursive
+            if cur_sum + candidates[i] < target:
+                this_lst.append(candidates[i])
+                self.combinationSum2_helper(candidates[i + 1:], target, cur_sum + candidates[i], this_lst, fina_lst)
+                this_lst.pop() # must pop() after append()
+
+            # meet the target, append to fina_lst
+            elif cur_sum + candidates[i] == target:
+                this_lst.append(candidates[i])
+                if this_lst not in fina_lst:
+                    fina_lst.append(this_lst[:])
+                this_lst.pop() # must pop() after append()
+                return
+
+            # overflow, just return
+            else:
+                return
+
+s = Solution()
+print s.combinationSum2([10,1,2,7,6,1,5], 8)
