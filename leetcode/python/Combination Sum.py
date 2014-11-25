@@ -41,8 +41,9 @@ class Solution:
             # meet the target, append to fina_lst
             elif cur_sum + candidates[i] == target:
                 this_lst.append(candidates[i])
-                fina_lst.append(this_lst[:])
-                this_lst.pop() # must pop() after append()
+                if this_lst not in fina_lst:
+                    fina_lst.append(this_lst[:]) # must pop() after append()
+                this_lst.pop()
                 return
 
             # overflow, just return
