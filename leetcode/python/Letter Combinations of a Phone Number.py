@@ -7,7 +7,18 @@
 
 # A mapping of digit to letters (just like on the telephone buttons) is given below.
 
-# image see: https://oj.leetcode.com/problems/letter-combinations-of-a-phone-number/
+# Image see: https://oj.leetcode.com/problems/letter-combinations-of-a-phone-number/
+# Or the sketch by zhanglin:
+# ----------------------- #
+#  1       2       3      #
+# ($_$)   (abc)   (def)   #
+#                         #
+#  4       5       6      #
+# (ghi)   (jkl)   (mno)   #
+#                         #
+#  7       8       9      #
+# (pqrs)  (tuv)   (wxyz)  #
+# ----------------------- #
 
 # Input:Digit string "23"
 # Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
