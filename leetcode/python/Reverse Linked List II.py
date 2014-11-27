@@ -29,6 +29,19 @@ class Solution:
     # @param n, an integer
     # @return a ListNode
     def reverseBetween(self, head, m, n):
-        pass
+        dummy_head = ListNode(0)
+        before_reverse = dummy_head
+
+        idx = 1
+        while idx != m:
+            head = head.next
+            before_reverse = before_reverse.next
+            idx += 1
+
+        pre_in_reverse = head
+        while idx != n:
+            pass
+
+        return dummy_head.next
 
 
