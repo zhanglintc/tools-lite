@@ -31,44 +31,33 @@ class Solution:
     def reverseBetween(self, head, m, n):
         dummy_head = ListNode(0)
         dummy_head.next = head
-        before_reverse = dummy_head
-
-        if m == n:
-            return head
+        last = dummy_head # always point position m - 1
 
         idx = 1
+
+        # find beginning
         while idx < m:
             head = head.next
-            before_reverse = before_reverse.next
+            last = last.next
             idx += 1
 
-        p_prev = before_reverse
-        p_this = head
-        p_next = head.next
+        # set the three pointer
+        headPrev = last
+        headNext = head.next
 
-        while idx <= n and p_next:
-            p_this.next = p_prev
-            p_prev = p_this
-            p_this = p_next
-            p_next = p_next.next
+        # find the end, make head point to position n
+        while idx < n:
+            head.next = headPrev
+            headPrev = head
+            head = headNext
+            headNext = headNext.next
             idx += 1
 
-        before_reverse.next.next = p_next
-        before_reverse.next = p_this
-        p_this.next = p_prev
+        # reconnect three linked list
+        head.next = headPrev
+        last.next.next = headNext
+        last.next = head
 
         return dummy_head.next
 
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
-head = ListNode(3)
-head.next = ListNode(5)
-
-s = Solution()
-head = s.reverseBetween(head, 1, 2)
-
-print head.next.next
 
