@@ -13,11 +13,27 @@
 # Note:
 # The solution is guaranteed to be unique.
 
+# Refer to: http://www.cnblogs.com/felixfang/p/3814463.html
+# Similar to Maximum Subarray.py
 class Solution:
     # @param gas, a list of integers
     # @param cost, a list of integers
     # @return an integer
     def canCompleteCircuit(self, gas, cost):
-        pass
+        total_remain = 0
+        car_remain  = 0
+        start = 0
+
+        for i in range(len(gas)):
+            total_remain += (gas[i] - cost[i]) # always calculate total remain
+
+            if car_remain < 0: # if car's remain less than 0, restart from this station
+                car_remain = gas[i] - cost[i]
+                start = i
+
+            else: # else only calculate car's remain
+                car_remain += (gas[i] - cost[i])
+
+        return start if total_remain >= 0 else -1 # total_remain no less than 0, means must can go circuit
 
 
