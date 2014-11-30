@@ -36,6 +36,38 @@ class Solution:
     # @param two ListNodes
     # @return the intersected ListNode
     def getIntersectionNode(self, headA, headB):
-        pass
+        lenA = 0
+        lenB = 0
+        position = None
+
+        p = headA
+        while p:
+            p = p.next
+            lenA += 1
+
+        p = headB
+        while p:
+            p = p.next
+            lenB += 1
+
+        while lenA > lenB:
+            headA = headA.next
+            lenA -= 1
+
+        while lenB > lenA:
+            headB = headB.next
+            lenB -= 1
+
+        while headA and headB:
+            if headA != headB:
+                position = None
+
+            if headA == headB and position == None:
+                position = headA
+
+            headA = headA.next
+            headB = headB.next
+
+        return position
 
 
