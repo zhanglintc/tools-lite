@@ -17,6 +17,29 @@ class Solution:
     # @param s, a string
     # @return a list of lists of string
     def partition(self, s):
-        pass
+        fina_lst = []
+        self.partition_helper(s, [], fina_lst)
+        return fina_lst
+
+    def partition_helper(self, s, this_lst, fina_lst):
+        if len(s) == 0:
+            fina_lst.append(this_lst)
+
+        for i in range(1, len(s) + 1):
+            if self.isPartition(s[:i]):
+                self.partition_helper(s[i:], this_lst + [s[:i]], fina_lst)
+
+    def isPartition(self, s):
+        left  = 0
+        right = len(s) - 1
+
+        while left < right:
+            if s[left] != s[right]:
+                return False
+
+            left  += 1
+            right -= 1
+
+        return True
 
 
