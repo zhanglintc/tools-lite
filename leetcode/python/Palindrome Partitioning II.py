@@ -14,7 +14,29 @@ class Solution:
     # @param s, a string
     # @return an integer
     def minCut(self, s):
-        pass
+        fina_lst = []
+        self.partition_helper(s, [], fina_lst)
+        return min(fina_lst) - 1 # return min length - 1
 
+    def partition_helper(self, s, this_lst, fina_lst):
+        if len(s) == 0:
+            fina_lst.append(len(this_lst)) # append length to lst
+
+        for i in range(1, len(s) + 1):
+            if self.isPartition(s[:i]):
+                self.partition_helper(s[i:], this_lst + [s[:i]], fina_lst)
+
+    def isPartition(self, s):
+        left  = 0
+        right = len(s) - 1
+
+        while left < right:
+            if s[left] != s[right]:
+                return False
+
+            left  += 1
+            right -= 1
+
+        return True
 
 
