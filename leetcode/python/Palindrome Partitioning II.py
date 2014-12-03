@@ -14,7 +14,7 @@ class Solution:
     # @param s, a string
     # @return an integer
     def minCut(self, s):
-        return self.partition_helper(s, 0)
+        return min(self.partition_helper(s, 0), self.partition_helper(s[::-1], 0))
 
     def partition_helper(self, s, cuts):
         for i in range(len(s) + 1, 0, -1):
