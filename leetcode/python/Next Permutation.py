@@ -18,6 +18,24 @@ class Solution:
     # @param num, a list of integer
     # @return a list of integer
     def nextPermutation(self, num):
-        pass
+        for i in range(len(num) - 2, -1, -1):
+            # find a number smaller than successor, called partition
+            if num[i] < num[i + 1]:
+                for j in range(len(num) - 1, i, -1):
+                    # find first number greater than partition
+                    if num[i] < num[j]:
+                        num[i], num[j] = num[j], num[i] # swap
+                        re = num[i + 1:] # and reverse numbers behind partition
+                        re.reverse()
+                        return num[:i + 1] + re
+
+                    else: # Newton's third law. You gotta leave something behind! (behind if)
+                        pass
+
+            else: # Newton's third law. You gotta leave something behind! (behind if)
+                pass
+
+        num.reverse()
+        return num
 
 
