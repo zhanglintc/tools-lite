@@ -17,6 +17,16 @@ class Solution:
     # @param A, a list of integers
     # @return an integer
     def jump(self, A):
-        pass
+        dp = [i for i in range(len(A))]
+
+        for i in range(len(A)):
+            for j in range(1, A[i] + 1):
+                if i + j < len(A) and dp[i] + 1 < dp[i + j]:
+                    dp[i + j] = dp[i] + 1
+
+        return dp[-1]
+
+s = Solution()
+print s.jump([2,3,1,1,4])
 
 
