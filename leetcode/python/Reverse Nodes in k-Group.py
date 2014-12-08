@@ -25,20 +25,23 @@ class Solution:
     # @param k, an integer
     # @return a ListNode
     def reverseKGroup(self, head, k):
+        # get linked list length
         p = head
         length = 0
-
         while p:
             length += 1
             p = p.next
 
+        # set a dummy_head
         dummy_head = ListNode(0)
         dummy_head.next = head
-        last = dummy_head # always point position n * k - 1
+        before_rev_end = dummy_head
 
+        # reversing
         while length >= k:
-            headPrev = last
+            headPrev = before_rev_end
             headNext = head.next
+            to_be_rev_head = before_rev_end.next
 
             idx = 1
             while idx < k:
@@ -49,40 +52,15 @@ class Solution:
                 idx += 1
 
             head.next = headPrev
-            last.next.next = headNext
-            tmp = last.next
-            last.next = head
+            to_be_rev_head.next = headNext
+            before_rev_end.next = head
 
             # reset
-            last = tmp
-            headPrev = last
-            head = tmp.next
-            if head:
-                headNext = head.next
+            before_rev_end = to_be_rev_head
+            head = to_be_rev_head.next
 
             length -= k
 
         return dummy_head.next
 
-
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
-head = ListNode(1)
-head.next = ListNode(2)
-head.next.next = ListNode(3)
-head.next.next.next = ListNode(4)
-head.next.next.next.next = ListNode(5)
-
-
-s = Solution()
-head = s.reverseKGroup(head, 5)
-
-print head.val
-print head.next.val
-print head.next.next.val
-print head.next.next.next.val
-print head.next.next.next.next.val
 
