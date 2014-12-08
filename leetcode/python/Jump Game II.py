@@ -16,7 +16,7 @@
 class Solution:
     # @param A, a list of integers
     # @return an integer
-    def jump(self, A):    
+    def jump(self, A):
         steps = 0 # steps to reach the end
         from_prev_step = 0 # longest position from previous check point
         can_be_reached = 0 # longest position can be reached from the very start
