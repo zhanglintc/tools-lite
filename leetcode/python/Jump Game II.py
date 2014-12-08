@@ -16,17 +16,18 @@
 class Solution:
     # @param A, a list of integers
     # @return an integer
-    def jump(self, A):
-        dp = [i for i in range(len(A))]
+    def jump(self, A):    
+        steps = 0 # steps to reach the end
+        from_prev_step = 0 # longest position from previous check point
+        can_be_reached = 0 # longest position can be reached from the very start
 
         for i in range(len(A)):
-            for j in range(1, A[i] + 1):
-                if i + j < len(A) and dp[i] + 1 < dp[i + j]:
-                    dp[i + j] = dp[i] + 1
+            if i > from_prev_step: # if you want to go further, you should take 'steps + 1' steps
+                from_prev_step = can_be_reached
+                steps += 1
 
-        return dp[-1]
+            can_be_reached = max(can_be_reached, i + A[i])
 
-s = Solution()
-print s.jump([2,3,1,1,4])
+        return steps
 
 
