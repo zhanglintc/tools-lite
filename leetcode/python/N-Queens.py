@@ -29,17 +29,22 @@
 class Solution:
     # @return a list of lists of string
     def solveNQueens(self, n):
+        # board's Nth value M represents
+        # a Queen is put in M line in the N row
         board = [0 for i in range(n)]
         fina_lst = []
 
+        # get all solutions
         self.dfs(0, n, board, fina_lst)
 
+        # parse board to visible type
         for solution in fina_lst:
             for row in range(len(solution)):
                 solution[row] = '.' * solution[row] + 'Q' + '.' * (n - 1 - solution[row])
 
         return fina_lst
 
+    # check if target_row and target_line if valid or not
     def isValid(self, target_row, target_line, board):
         for row in range(target_row):
             if board[row] == target_line or abs(row - target_row) == abs(board[row] - target_line):
@@ -47,9 +52,10 @@ class Solution:
 
         return True
 
+    # recursive
     def dfs(self, start_row, n, board, fina_lst):
         if start_row == n:
-            fina_lst.append(board[:])
+            fina_lst.append(board[:]) # don't forget "[:]" after board
 
         for row in range(start_row, n):
             for line in range(n):
@@ -57,11 +63,11 @@ class Solution:
                     board[row] = line
                     self.dfs(row + 1, n, board, fina_lst)
 
-                else:
-                    continue
+                else: # not necessary
+                    pass
 
-            return
+            return # necessary
 
-        return
+        return # not necessary
 
 
