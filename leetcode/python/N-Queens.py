@@ -3,7 +3,7 @@
 # 2014.12.08 by zhanglin
 
 # Problem:
-# The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+# The n-queens puzzle is the problem of placing n queens on an n*n chessboard such that no two queens attack each other.
 
 # Picture see: https://oj.leetcode.com/problems/n-queens/
 
@@ -29,6 +29,39 @@
 class Solution:
     # @return a list of lists of string
     def solveNQueens(self, n):
-        pass
+        board = [0 for i in range(n)]
+        fina_lst = []
+
+        self.dfs(0, n, board, fina_lst)
+
+        for solution in fina_lst:
+            for row in range(len(solution)):
+                solution[row] = '.' * solution[row] + 'Q' + '.' * (n - 1 - solution[row])
+
+        return fina_lst
+
+    def isValid(self, target_row, target_line, board):
+        for row in range(target_row):
+            if board[row] == target_line or abs(row - target_row) == abs(board[row] - target_line):
+                return False
+
+        return True
+
+    def dfs(self, start_row, n, board, fina_lst):
+        if start_row == n:
+            fina_lst.append(board[:])
+
+        for row in range(start_row, n):
+            for line in range(n):
+                if self.isValid(row, line, board):
+                    board[row] = line
+                    self.dfs(row + 1, n, board, fina_lst)
+
+                else:
+                    continue
+
+            return
+
+        return
 
 
