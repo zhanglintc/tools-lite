@@ -30,7 +30,7 @@ class Solution:
             pt.next = newNode
             pt = pt.next.next
 
-        # step 2, set each now node's random pointer
+        # step 2, set each new node's random pointer
         pt = head
         while pt:
             if pt.random:
