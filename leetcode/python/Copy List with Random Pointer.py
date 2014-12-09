@@ -19,6 +19,42 @@ class Solution:
     # @param head, a RandomListNode
     # @return a RandomListNode
     def copyRandomList(self, head):
-        pass
+        if not head:
+            return head
+
+        # step 1, add new node to each oldN node
+        pt = head
+        while pt:
+            newNode = RandomListNode(pt.label)
+            newNode.next = pt.next
+            pt.next = newNode
+            pt = pt.next.next
+
+        # step 2, set each now node's random pointer
+        pt = head
+        while pt:
+            if pt.random:
+                pt.next.random = pt.random.next
+            else:
+                pt.next.random = None
+
+            pt = pt.next.next
+
+        # step 3, separate two lists
+        newHead = head.next
+        ptOld = head
+        ptNew = newHead
+
+        while ptNew.next:
+            ptOld.next = ptOld.next.next
+            ptOld = ptOld.next
+            ptNew.next = ptNew.next.next
+            ptNew = ptNew.next
+            
+        ptOld.next = None
+        ptNew.next = None
+
+        # return result
+        return newHead
 
 
