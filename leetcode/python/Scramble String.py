@@ -43,6 +43,33 @@
 class Solution:
     # @return a boolean
     def isScramble(self, s1, s2):
-        pass
+        if s1 == s2:
+            return True
 
+        if len(s1) == 2:
+            if s1[0] == s2[1] and s1[1] == s2[0]:
+                return True
 
+        for i in range(1, len(s1) - 1):
+            if self.count(s1[:i]) == self.count(s2[:i]) and self.count(s1[i:]) == self.count(s2[i:]):
+                return True
+
+        return False
+
+    def count(self, string):
+        times = {}
+
+        for ch in string:
+            if ch not in times:
+                times[ch] = 0
+
+            else:
+                times[ch] += 1
+
+        return times
+
+s = Solution()
+print s.isScramble('abb', 'bab')
+
+print 'abb'[:2]
+print 'abb'[2:]
