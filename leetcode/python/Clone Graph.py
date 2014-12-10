@@ -36,6 +36,21 @@ class Solution:
     # @param node, a undirected graph node
     # @return a undirected graph node
     def cloneGraph(self, node):
-        pass
+        if not node:
+            return node
+
+        return self.dfs(node, {})
+
+    def dfs(self, node, visited):
+        if node in visited:
+            return visited[node]
+
+        newNode = UndirectedGraphNode(node.label)
+        visited[node] = newNode
+
+        for neighbor in node.neighbors:
+            newNode.neighbors.append(self.dfs(neighbor, visited))
+
+        return newNode
 
 
