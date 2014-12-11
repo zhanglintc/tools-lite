@@ -11,7 +11,7 @@ class Solution:
     # @param x, an integer
     # @return an integer
     def sqrt(self, x):
-        guess = 0x5f375a86
+        guess = 0x5f3759df # 0x5f375a86
 
         while True:
             result = (guess + x / guess) / 2.0
