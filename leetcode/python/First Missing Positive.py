@@ -15,6 +15,18 @@ class Solution:
     # @param A, a list of integers
     # @return an integer
     def firstMissingPositive(self, A):
-        pass
+        if not A:
+            return 1
+
+        maxmum = max(A)
+
+        for i in range(1, maxmum):
+            if i not in A:
+                return i
+
+        return maxmum + 1
+
+s = Solution()
+print s.firstMissingPositive([2])
 
 
