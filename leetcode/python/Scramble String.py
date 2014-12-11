@@ -43,33 +43,22 @@
 class Solution:
     # @return a boolean
     def isScramble(self, s1, s2):
+        # without this judgment, input "a", "a" will be TLE
+        # WTF? it works fine on my local machine without this judgment!
+        if sorted(s1) != sorted(s2):
+            return False
+
         if s1 == s2:
             return True
 
-        if len(s1) == 2:
-            if s1[0] == s2[1] and s1[1] == s2[0]:
+        length = len(s1)
+        for i in range(1, length):
+            if self.isScramble(s1[:i], s2[:i]) and self.isScramble(s1[i:], s2[i:]):
                 return True
 
-        for i in range(1, len(s1) - 1):
-            if self.count(s1[:i]) == self.count(s2[:i]) and self.count(s1[i:]) == self.count(s2[i:]):
+            if self.isScramble(s1[:i], s2[length - i:]) and self.isScramble(s1[i:], s2[:length - i]):
                 return True
 
         return False
 
-    def count(self, string):
-        times = {}
 
-        for ch in string:
-            if ch not in times:
-                times[ch] = 0
-
-            else:
-                times[ch] += 1
-
-        return times
-
-s = Solution()
-print s.isScramble('abb', 'bab')
-
-print 'abb'[:2]
-print 'abb'[2:]
