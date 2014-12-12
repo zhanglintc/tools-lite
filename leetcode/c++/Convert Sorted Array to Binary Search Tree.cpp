@@ -2,14 +2,9 @@
 // for leetcode problems
 // 2014.08.28 by zhanglin
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+// Problem:
+// Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+
 /**
  * Definition for binary tree
  * struct TreeNode {
