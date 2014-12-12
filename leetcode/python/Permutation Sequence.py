@@ -22,31 +22,18 @@ class Solution:
     # @return a string
     def getPermutation(self, n, k):
         sequence = ['1', '2', '3', '4', '5','6','7', '8', '9'][:n]
+        fac = [1, 2, 6, 24, 120, 720, 5040, 40320, 362880]
 
         for i in range(k - 1):
             sequence = self.nextPermutation(sequence)
 
         return ''.join(sequence)
 
-    def nextPermutation(self, num):
-        for i in range(len(num) - 2, -1, -1):
-            # find a number smaller than successor, called partition
-            if num[i] < num[i + 1]:
-                for j in range(len(num) - 1, i, -1):
-                    # find first number greater than partition
-                    if num[i] < num[j]:
-                        num[i], num[j] = num[j], num[i] # swap
-                        re = num[i + 1:] # and reverse numbers behind partition
-                        re.reverse()
-                        return num[:i + 1] + re
+    def factorial(self, n):
+        fac = 1
+        for i in range(n):
+            fac *= (i + 1)
 
-                    else: # Newton's third law. You gotta leave something behind! (behind if)
-                        pass
-
-            else: # Newton's third law. You gotta leave something behind! (behind if)
-                pass
-
-        num.reverse()
-        return num
+        return fac
 
 
