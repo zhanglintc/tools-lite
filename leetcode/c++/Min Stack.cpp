@@ -13,20 +13,35 @@
 class MinStack {
 public:
     void push(int x) {
-        
+        element.push(x);
+        if(minimum.empty() || x <= minimum.top()) {
+            minimum.push(x);
+        }
     }
 
     void pop() {
-        
+        if(minimum.empty()) {
+            return;
+        }
+
+        if(element.top() == minimum.top()) {
+            minimum.pop();
+        }
+
+        element.pop();
     }
 
     int top() {
-        
+        return element.top();
     }
 
     int getMin() {
-        
+        return minimum.top();
     }
+
+private:
+    stack<int> element;
+    stack<int> minimum;
 };
 
 
