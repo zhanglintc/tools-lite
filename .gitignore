@@ -22,3 +22,5 @@ misc/.tags
 misc/.tags_sorted_by_file
 
 misc/Garbage_Collector
+
+misc/hash
