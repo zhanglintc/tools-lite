@@ -11,25 +11,34 @@ static int (**hget(int (**t)[2], int k))[2] {
     return t;
 }
 static void hset(int (**t)[2], int k, int v) {
-    for (int (**a)[2] = hget(t, k); !*a && (*a=(int (*)[2])malloc(sizeof(**t))); (**a)[0]=k,(**a)[1]=v);
+    //for (int (**a)[2] = hget(t, k); !*a && (*a=(int (*)[2])malloc(sizeof(**t))); (**a)[0]=k,(**a)[1]=v);
+    int (**a)[2] = hget(t, k);
+    if(!*a && (*a=(int (*)[2])malloc(sizeof(**t)))) {
+        (**a)[0]=k,(**a)[1]=v;
+    }
+    else {
+        (**a)[0]=k,(**a)[1]=v;
+    }
 }
 
 // TEST DRIVER
 #include <stdio.h>
 int main() {
     int (**table)[2] = hnew();
+    int (**ssp)[2] = NULL;
 
-    hset(table, 10, 20);
-    hset(table, 20, 30);
-    hset(table, 30, 40);
+    hset(table, 10, 90);
+    hset(table, 10, 30);
+    hset(table, 10, 1000);
 
     int (**a)[2] = hget(table, 10);
-    int (**b)[2] = hget(table, 20);
-    int (**c)[2] = hget(table, 30);
+    int (**b)[2] = hget(table, 10);
+    int (**c)[2] = hget(table, 10);
 
     printf("%d:%d\n", (**a)[0], (**a)[1]);
     printf("%d:%d\n", (**b)[0], (**b)[1]);
     printf("%d:%d\n", (**c)[0], (**c)[1]);
 
     hdel(table);
+    getchar();
 }
