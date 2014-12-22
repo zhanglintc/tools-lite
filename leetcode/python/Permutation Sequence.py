@@ -21,19 +21,27 @@
 class Solution:
     # @return a string
     def getPermutation(self, n, k):
-        sequence = ['1', '2', '3', '4', '5','6','7', '8', '9'][:n]
-        fac = [1, 2, 6, 24, 120, 720, 5040, 40320, 362880]
+        numberlist = ['1', '2', '3', '4', '5','6','7', '8', '9']
+        sequence = ''
 
-        for i in range(k - 1):
-            sequence = self.nextPermutation(sequence)
+        k -= 1 # don't know why...
+        while n:
+            facto = self.factorial(n - 1) # (n - 1)th factorial
+            this = numberlist[k / facto] # number to be added to final sequence
 
-        return ''.join(sequence)
+            sequence += this # add this number
+            numberlist.remove(this) # remove it
+            k %= facto # remaining k
+            n -= 1 # n - 1 numbers remaining
+
+        return sequence
 
     def factorial(self, n):
-        fac = 1
-        for i in range(n):
-            fac *= (i + 1)
+        facto = 1
 
-        return fac
+        for i in range(n):
+            facto *= (i + 1)
+
+        return facto
 
 
