@@ -14,6 +14,13 @@ class Solution:
     # @param num, a list of integers
     # @return an integer
     def majorityElement(self, num):
-        pass
+        dikt = {}
+
+        for i in num:
+            dikt[i] = dikt.get(i, 0) + 1
+
+        for i in dikt:
+            if dikt[i] > len(num) / 2:
+                return i
 
 
