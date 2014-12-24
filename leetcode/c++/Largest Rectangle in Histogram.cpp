@@ -1,6 +1,6 @@
 // Largest Rectangle in Histogram
 // for leetcode problems
-// 2014.12.23 by zhanglin
+// 2014.12.24 by zhanglin
 
 // Problem:
 // Given n non-negative integers representing the histogram's bar height where the width of each bar is 1,
