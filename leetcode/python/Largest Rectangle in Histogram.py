@@ -39,21 +39,25 @@ class Solution:
     # @return an integer
     def largestRectangleArea(self, height):
         if not height:
-            return height
+            return 0
 
-        area = [height[0]]
+        stk = []
+        area = height[0]
+        height.append(0)
+
         for i in range(len(height)):
-            width = 1
-            for j in range(i + 1, len(height)):
-                if height[i] < height[j]:
-                    width += 1
+            if not stk or height[stk[-1]] <= height[i]:
+                stk.append(i)
 
-                elif height[i] > height[j] or j == len(height) - 1:
-                    area.append(height[i] * width)
+            while height[stk[-1]] > height[i]:
+                thisIdx = stk.pop()
+                stk.append(i)
+                thisArea = height[thisIdx] * (i if not stk else (i - thisIdx))
+                area = thisArea if thisArea > area else area
 
-        return max(area)
+        return area
 
 s = Solution()
-print s.largestRectangleArea([])
+print s.largestRectangleArea([2,1,5,6,2,3])
 
 
