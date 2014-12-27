@@ -44,13 +44,13 @@ class Solution:
         i = 0
         height.append(0) # append a 0 makes the code more elegant
         while i < len(height):
-            if not stk or height[i] > height[stk[-1]]: # ascending chain
+            if not stk or height[i] >= height[stk[-1]]: # ascending chain
                 stk.append(i)
                 i += 1
 
             else: # descending chain
-                this = stk.pop()
-                width = i if not stk else i - stk[-1] - 1
+                this = stk.pop() # use this height
+                width = i if not stk else i - stk[-1] - 1 # but use the previous check point(don't forget 1 offset)
                 area = max(area, width * height[this]) # upadate max area
 
         return area
