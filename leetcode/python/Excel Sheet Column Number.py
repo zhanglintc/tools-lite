@@ -33,7 +33,4 @@ class Solution:
 
         return ColNum
 
-s = Solution()
-print s.titleToNumber('AA')
-
 
