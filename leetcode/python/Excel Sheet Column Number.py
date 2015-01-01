@@ -15,7 +15,8 @@
 #     ...
 #     Z -> 26
 #     AA -> 27
-#     AB -> 28 
+#     AB -> 28
+
 # Credits:
 # Special thanks to @ts for adding this problem and creating all test cases.
 
@@ -23,6 +24,16 @@ class Solution:
     # @param s, a string
     # @return an integer
     def titleToNumber(self, s):
-        pass
+        ConvStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        ColNum = 0
+
+        while s:
+            ColNum += (ConvStr.index(s[0]) + 1) * (26 ** (len(s) - 1))
+            s = s[1:]
+
+        return ColNum
+
+s = Solution()
+print s.titleToNumber('AA')
 
 
