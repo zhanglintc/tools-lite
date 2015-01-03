@@ -13,6 +13,12 @@
 class Solution:
     # @return an integer
     def trailingZeroes(self, n):
-        pass
+        zeroes = 0
+
+        while n:
+            n /= 5
+            zeroes += 1
+
+        return zeroes
 
 
