@@ -22,15 +22,30 @@
 class BSTIterator:
     # @param root, a binary search tree's root node
     def __init__(self, root):
-        
+        self.stk = []
+
+        while root:
+            self.stk.append(root)
+            root = root.left
+
+        self.this = root
 
     # @return a boolean, whether we have a next smallest number
     def hasNext(self):
-        
+        return not self.stk == []
 
     # @return an integer, the next smallest number
     def next(self):
-        
+        if not self.this:
+            self.this = self.stk.pop()
+            val = self.this.val
+            self.this = self.this.right
+
+        while self.this:
+            self.stk.append(self.this)
+            self.this = self.this.left
+
+        return val
 
 # Your BSTIterator will be called like this:
 # i, v = BSTIterator(root), []
