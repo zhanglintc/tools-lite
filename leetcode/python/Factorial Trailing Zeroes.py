@@ -16,8 +16,8 @@ class Solution:
         zeroes = 0
 
         while n:
+            zeroes += n / 5
             n /= 5
-            zeroes += 1
 
         return zeroes
 
