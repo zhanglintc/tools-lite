@@ -36,16 +36,14 @@ class BSTIterator:
 
     # @return an integer, the next smallest number
     def next(self):
-        if not self.this:
-            self.this = self.stk.pop()
-            val = self.this.val
-            self.this = self.this.right
+        node = self.stk.pop()
+        this = node.right
 
-        while self.this:
-            self.stk.append(self.this)
-            self.this = self.this.left
+        while this:
+            self.stk.append(this)
+            this = this.left
 
-        return val
+        return node.val
 
 # Your BSTIterator will be called like this:
 # i, v = BSTIterator(root), []
