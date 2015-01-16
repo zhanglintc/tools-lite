@@ -24,3 +24,7 @@ misc/.tags_sorted_by_file
 misc/Garbage_Collector
 
 misc/hash
+
+python/.tags
+
+python/.tags_sorted_by_file
