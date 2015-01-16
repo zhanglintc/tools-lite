@@ -1,6 +1,10 @@
-'''
-count lines in given folder
-'''
+"""
+Description:
+    Count lines in given folder
+
+Author:
+    Lane(zhanglintc)
+"""
 
 import os
 import sys
@@ -11,64 +15,86 @@ cnt_blank_lines = True
 # judge your python version
 version = sys.version[0]
 
-fExt = ["c",'cpp','h','py']
-target_folder = r"F:\SVN-Workspace\sanguosha\trunk\src"
+ext_list = ['c','cpp','h','java','py']
+target_folder = r"/Users/lane/Github"
 
 def QuotationStrip(target_folder):
+    """
+    Strip quotation mark of given path
+    """
+
     if target_folder[0] == '\"':
         target_folder = target_folder[1:-1]
+
     return target_folder
 
 def line_count(target_file):
-    '''
-    count and return given files
-    '''
-    f = open(target_file,"rb")
-    datas = f.readline()
-    cnt = 0
-    while datas:
-        datas = f.readline()
-        if cnt_blank_lines == False: # if not count blank lines, jump it
-            if datas == b'\r\n':     # data in blank lines is b'\r\n'
-                continue             # so jump it
-        #print(datas)
-        cnt += 1
-    #print(cnt)
-    return cnt
+    """
+    Count lines of given file
+    """
 
-def IsTargetFile(target_file):
-    ''' to judge input file is target file type or not.
-        True for is target_file
-        False for not target_file
-    '''
-    sufix = os.path.splitext(target_file)[1][1:]    
-    if sufix.lower() in fExt:
-        return True
+    fr = open(target_file,"rb")
+    data = fr.readline()
+    lines = 0
+
+    while data:
+        data = fr.readline()
+        if cnt_blank_lines == False:                # if not count blank lines, jump it
+            if data == b'\r\n' or data == '\n':       # blank lines is b'\r\n' or b'\n'
+                continue                              # so jump it
+
+        lines += 1
+
+    fr.close()
+ 
+    return lines
+
+def getExtension(target_file):
+    """
+    Get extension of target_file
+    If not target extension, return None
+    """
+
+    extension = os.path.splitext(target_file)[1][1:].lower()
+
+    if extension in ext_list:
+        return extension
+
     else:
-        return False
+        return None
 
 def traverse(target_folder):
-    '''
-    traverse given target and return lines of all the files
-    '''
+    """
+    Traverse given target and return lines of all the files
+    """
+
     FTuple = os.walk(target_folder)
-    result = 0
+    result = {}
+
     for root,dirs,files in FTuple:
         for tmp_file in files:
-            if IsTargetFile(tmp_file):
+            extension = getExtension(tmp_file)
+            if extension:
                 target_file = os.path.join(root,tmp_file)
-                result += line_count(target_file)
-    return str(result)
+                result[extension] = result.get(extension, 0) + line_count(target_file)
 
+    # print result
+    print("")
+    print("all  -> {} lines\n".format(sum(result.values())))
+    for key in result:
+        print("{:<4} -> {} lines".format(key, result[key]))
 
 if __name__ == '__main__':
     if version == '2':
         target_folder = raw_input("Drag target folder here to count:\n")
         target_folder = QuotationStrip(target_folder)
-        print(traverse(target_folder) + ' lines')
+        traverse(target_folder)
+        print("")
         raw_input("Press any key to close")
+
     elif version == '3':
-        target_folder = input("Drag target folder here count:\n")
+        target_folder = input("Drag target folder here count:\n\n")
         target_folder = QuotationStrip(target_folder)
-        print(traverse(target_folder) + ' lines')
+        traverse(target_folder)
+        print("")
         input("Press any key to close")
