@@ -18,6 +18,13 @@ class Solution:
     # @param num, a list of integer
     # @return an integer
     def maximumGap(self, num):
-        pass
+        gap = 0
+
+        num.sort()
+
+        for i in range(len(num) - 1):
+            gap = max(gap, num[i + 1] - num[i])
+
+        return gap
 
 
