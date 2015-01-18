@@ -11,7 +11,7 @@ pip安装方法
 
 ## 如何安装pip：
 
-把本文件夹下的东西下载到本地。
+点击[这里](http://115.29.192.240/get_pip.py.tar)下载`get_pip.py.tar`, 解压得到`get_pip.py`.
 
 #### Linux/Mac平台:
 
