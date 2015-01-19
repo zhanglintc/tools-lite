@@ -5,14 +5,14 @@ import fileinput
 import TxtFileHandle
 
 OrgFileName = """
-
+thi_is_a_string_that_make_sure_no_content_can_match
 """.split(",")
 
 for i in range(len(OrgFileName)):
     OrgFileName[i] = OrgFileName[i].strip()
     
 NewFileName = """
-
+whatever_strings_here
 """.split(",")
 
 for i in range(len(NewFileName)):
@@ -37,54 +37,59 @@ def ProcessFile(fPathName):
     """
 
     TxtFile = TxtFileHandle.TxtFileHandle()
-    fStr = TxtFile.ReadTxtFile(fPathName) # todo: try to meke ReadTxtFile return one line each time
+    generator = TxtFile.ReadTxtFile(fPathName)
 
-    if fStr == "":
+    if generator == "":
         print("Error Read file:{}".format(fPathName))
         return
     
-    idx = 0
+    to_be_wirtten = ""
     IsReplace = False
-    # No.1 replace by key word
-    for keyword in OrgFileName:
-        keywordstrip  = keyword.strip()
+    for line in generator:
+        idx = 0
+        # No.1 replace by key word
+        for keyword in OrgFileName:
+            keywordstrip  = keyword.strip()
 
-        if fStr.find(keywordstrip) != -1:
-            fStr = fStr.replace(keywordstrip, NewFileName[idx])
+            if line.find(keywordstrip) != -1:
+                line = line.replace(keywordstrip, NewFileName[idx])
+                IsReplace = True
+            idx = idx + 1
+
+        # No.2 KOAYC*_*.***  ->  KOAYC*A*.*** 
+        if re.search('(KOAYC.).(.)', line): # try to use (KOAY..).(.) instead of (KOAYC.).(.)
+            line = re.sub('(KOAYC.).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
             IsReplace = True
-        idx = idx + 1
 
-    # No.2 KOAYC*_*.***  ->  KOAYC*A*.*** 
-    if re.search('(KOAYC.).(.)', fStr):
-        fStr = re.sub('(KOAYC.).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), fStr)
-        IsReplace = True
+        # No.3 deal with KONICA MINOLTA
+        # need to be optimized
+        if line.find("KONICA MINOLTA") != -1 and "INC" not in line:
+            line = line.replace("KONICA MINOLTA", "Generic")
+            IsReplace = True
 
-    # No.3 deal with KONICA MINOLTA
-    # need to be optimized
-    if fStr.find("KONICA MINOLTA") != -1:
-        fStr = fStr.replace("KONICA MINOLTA", "Generic")
-        IsReplace = True
+        # No.4 KOPROFDL -> GNPROFDL
+        if line.find("KOPROFDL") != -1:
+            line = line.replace("KOPROFDL", "GNPROFDL")
+            IsReplace = True
 
-    # No.4 KOPROFDL -> GNPROFDL
-    if fStr.find("KOPROFDL") != -1:
-        fStr = fStr.replace("KOPROFDL", "GNPROFDL")
-        IsReplace = True
+        # inf & unf !!!
+        # inf [OEM URLS] %KM%="http://konicaminolta.jp/"
+        # ppd
 
-    # inf & unf !!!
-    # inf [OEM URLS] %KM%="http://konicaminolta.jp/"
-    # ppd
+        # deal with c368
+        if line.find("C368") != -1:
+            line = line.replace("C368", "36C-9")
+            IsReplace = True
 
-    # deal with c368
-    if fStr.find("C368") != -1:
-        fStr = fStr.replace("C368", "36C-9")
-        IsReplace = True
+
+        to_be_wirtten += line
 
     # do replace
     if IsReplace:
-        TxtFile.WriteTxtFile(fStr)
+        print TxtFile.WriteTxtFile(to_be_wirtten)
         print("replced file: {}".format(fPathName))
     
-FTuple = os.walk(r"E:\ZDS_Working_SVN\trunk\ZeusS_v2.1\KMSrc_2.06.10\Driver\Model\C368_3")
+FTuple = os.walk(r"/Users/lane/Github/wb")
 for root,dirs,files in FTuple:
     for Tmpfile in files:
         # replace file content
