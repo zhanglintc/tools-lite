@@ -4,6 +4,15 @@ import re
 import fileinput
 import TxtFileHandle
 
+"""
+known bugs:
+1. encoding in PPD & GPD is incorrect(maybe reorder encoding_list)
+
+to-dos:
+1. ignore cst.ini, localize.ini
+
+"""
+
 OrgFileName = """
 thi_is_a_string_that_make_sure_no_content_can_match
 """.split(",")
