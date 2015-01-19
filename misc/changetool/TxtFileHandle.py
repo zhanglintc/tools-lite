@@ -54,8 +54,8 @@ class TxtFileHandle:
                 except ValueError:
                     continue
 
-                self._filePathName = filePathName
-                self._encoding = encoding
+            self._filePathName = filePathName
+            self._encoding = encoding
 
             yield line
 
