@@ -6,10 +6,8 @@ import TxtFileHandle
 
 """
 known bugs:
-1. encoding in PPD & GPD is incorrect(maybe reorder encoding_list)
+1. some change won't occure until you do it twice
 
-to-dos:
-1. ignore cst.ini, localize.ini
 
 """
 
@@ -44,6 +42,11 @@ def ProcessFile(fPathName):
     """
     Replace content in files.
     """
+
+	# ingore files
+    file_name = fPathName.split('\\')[-1].lower()
+    if file_name == "localize.ini" or file_name == "cst.ini":
+        return
 
     TxtFile = TxtFileHandle.TxtFileHandle()
     generator = TxtFile.ReadTxtFile(fPathName)
@@ -90,15 +93,22 @@ def ProcessFile(fPathName):
             line = line.replace("C368", "36C-9")
             IsReplace = True
 
+        # deal with [OEM URLS]
+        if "JA" in fPathName:
+            if "[OEM URLS]" in line:
+                line = ""
+
+            if "http://konicaminolta.jp/" in line:
+                line = ""
 
         to_be_wirtten += line
 
     # do replace
     if IsReplace:
-        print TxtFile.WriteTxtFile(to_be_wirtten)
+        TxtFile.WriteTxtFile(to_be_wirtten)
         print("replced file: {}".format(fPathName))
     
-FTuple = os.walk(r"/Users/lane/Github/wb")
+FTuple = os.walk(r"E:\ZDS_Working_SVN\trunk\ZeusS_v2.1\KMSrc_2.06.10\Driver\Model\C368_3")
 for root,dirs,files in FTuple:
     for Tmpfile in files:
         # replace file content
