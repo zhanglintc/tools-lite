@@ -68,9 +68,9 @@ def ProcessFile(fPathName):
                 IsReplace = True
             idx = idx + 1
 
-        # No.2 KOAYC*_*.***  ->  KOAYC*A*.*** 
-        if re.search('(KOAYC.).(.)', line): # try to use (KOAY..).(.) instead of (KOAYC.).(.)
-            line = re.sub('(KOAYC.).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
+        # No.2 KOAY**_*.***  ->  KOAY**A*.*** 
+        if re.search('(KOAY..).(.)', line): # old pattern: (KOAYC.).(.)
+            line = re.sub('(KOAY..).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
             IsReplace = True
 
         # No.3 deal with KONICA MINOLTA
@@ -118,8 +118,8 @@ for root,dirs,files in FTuple:
             ProcessFile(of)
 
         # replace file name
-        if re.search('(KOAYC.).(.)', Tmpfile):
-            replaced_file = re.sub('(KOAYC.).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), Tmpfile)
+        if re.search('(KOAY..).(.)', Tmpfile):
+            replaced_file = re.sub('(KOAY..).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), Tmpfile)
             old_file = os.path.join(root, Tmpfile)
             new_file = os.path.join(root, replaced_file)
             os.rename(old_file, new_file)
