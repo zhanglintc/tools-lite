@@ -21,8 +21,6 @@ GenName = "36C-9"
 
 OrgFileName = """
 thi_is_a_string_that_make_sure_no_content_can_match,
-12/08/2014,3.0.0.0,
-KONICA_MINOLTA36C-9Se6AA6
 """.split(",")
 
 for i in range(len(OrgFileName)):
@@ -30,8 +28,6 @@ for i in range(len(OrgFileName)):
     
 NewFileName = """
 whatever_strings_here,
-11/25/2014,2.0.8.0,
-Generic36C-9SeriesB942
 """.split(",")
 ################################
 # Need to be update -E
