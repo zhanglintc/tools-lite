@@ -1,34 +1,5 @@
 import codecs
 import os
-# import chardet
-
-# written by zhanglin
-def GetEncodingInfo(data):
-    '''
-    return data' encoding info and relevant confidence
-    '''
-    # result_dict = chardet.detect(data)
-    encoding_type = result_dict['encoding'] # get encoding
-    confidence = result_dict['confidence'] # get confidence
-    return encoding_type, confidence
-
-def ReadTxtFile(filePathName):
-    encodingList = ["utf8", "utf_8_sig", "utf16", "cp932", "mbcs", "ascii", "cp936", "cp1252"]
-    
-    f = open(filePathName, "rb")
-    data = f.read()
-    
-    for encoding in encodingList: # encoding_type, encodingList:
-        try:
-            strs = codecs.decode(data, encoding)
-
-        except ValueError:
-            continue
-
-        f.close()
-        return strs, encoding
-
-    return "",""
 
 class TxtFileHandle:
     def __init__(self):

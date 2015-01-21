@@ -58,7 +58,7 @@ def ProcessFile(fPathName):
 ################################
 	# ingore files
     file_name = fPathName.split('\\')[-1].lower()
-    if file_name == "localize.ini" or file_name == "cst.ini":
+    if "localize" in file_name or file_name == "cst.ini":
         return
 ################################
     # get language folder
