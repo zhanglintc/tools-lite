@@ -17,6 +17,7 @@ f_log = open('not_utf8.log', 'w')
 for root,dirs,files in FTuple:
     for Tmpfile in files:
         if IsTargetFile(Tmpfile):
+			print(Tmpfile) # print something makes user know program is running
             line_number = 1
             try:
                 of = os.path.join(root,Tmpfile)
