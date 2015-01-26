@@ -20,7 +20,7 @@ OwnName = "C368"
 GenName = "36C-9"
 
 OrgFileName = """
-thi_is_a_string_that_make_sure_no_content_can_match,
+thi_is_a_string_that_no_content_can_match,
 """.split(",")
 
 for i in range(len(OrgFileName)):
@@ -92,7 +92,6 @@ def ProcessFile(fPathName):
             IsReplace = True
 ################################################################
         # No.3 deal with KONICA MINOLTA
-        # need to be optimized
         if line.find("KONICA MINOLTA") != -1 and "INC" not in line:
             line = line.replace("KONICA MINOLTA", "Generic")
             IsReplace = True
