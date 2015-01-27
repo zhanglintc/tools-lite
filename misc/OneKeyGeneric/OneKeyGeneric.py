@@ -16,26 +16,28 @@ known bugs:
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP"]
 langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
 
+# model name
 OwnName = "C368"
 GenName = "36C-9"
 
-OrgFileName = """
-thi_is_a_string_that_no_content_can_match,
-""".split(",")
+# this string is in *.INF
+oldINFStr = "KONICA_MINOLTAC368Se6AA6"
+newINFStr = "Generic36C-9SeriesB942"
 
-for i in range(len(OrgFileName)):
-    OrgFileName[i] = OrgFileName[i].strip()
-    
-NewFileName = """
-whatever_strings_here,
-""".split(",")
 ################################
 # Need to be update -E
 ################################
 
+OrgFileName = """
+thi_is_a_string_that_no_content_can_match,
+""".split(",")
+for i in range(len(OrgFileName)):
+    OrgFileName[i] = OrgFileName[i].strip()    
+NewFileName = """
+whatever_strings_here,
+""".split(",")
 for i in range(len(NewFileName)):
     NewFileName[i] = NewFileName[i].strip()
-
 for i in range(len(fExt)):
     fExt[i] = fExt[i].strip().upper()
 
@@ -77,7 +79,7 @@ def ProcessFile(fPathName):
     for line in generator:
         idx = 0
 ################################################################
-        # No.1 replace by key word
+        # No.0 replace by key word
         for keyword in OrgFileName:
             keywordstrip  = keyword.strip()
 
@@ -85,6 +87,11 @@ def ProcessFile(fPathName):
                 line = line.replace(keywordstrip, NewFileName[idx])
                 IsReplace = True
             idx = idx + 1
+################################################################
+        # No.1 deal with *INF String
+        if line.find(oldINFStr) != -1:
+            line = line.replace(oldINFStr, newINFStr)
+            IsReplace = True
 ################################################################
         # No.2 KOAY**_*.***  ->  KOAY**A*.*** 
         if re.search('(KOAY..).(.)', line): # old pattern: (KOAYC.).(.)
@@ -137,7 +144,6 @@ for root,dirs,files in FTuple:
         # replace file content
         if IsTargetFile(Tmpfile):
             of = os.path.join(root,Tmpfile)
-            #print("process:{}".format(of))
             ProcessFile(of)
 ################################################################
         # replace file name
