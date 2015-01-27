@@ -5,16 +5,15 @@ import fileinput
 import TxtFileHandle
 
 """
-known bugs:
-1. some change won't occure until you do it twice
-
-
+Nothing here...
 """
 ################################
 # Need to be update -S
 ################################
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP"]
 langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
+
+target_folder = r"E:\ZDS_Working_SVN\trunk\KMSrc_2.06.10\Driver\Model\C368"
 
 # model name
 OwnName = "C368"
@@ -138,7 +137,7 @@ def ProcessFile(fPathName):
         TxtFile.WriteTxtFile(to_be_wirtten)
         print("replced file: {}".format(fPathName))
 ################################################################
-FTuple = os.walk(r"E:\ZDS_Working_SVN\trunk\ZeusS_v2.1\KMSrc_2.06.10\Driver\Model\C368_3")
+FTuple = os.walk(target_folder)
 for root,dirs,files in FTuple:
     for Tmpfile in files:
         # replace file content
@@ -153,3 +152,5 @@ for root,dirs,files in FTuple:
             new_file = os.path.join(root, replaced_file)
             os.rename(old_file, new_file)
 ################################################################
+
+
