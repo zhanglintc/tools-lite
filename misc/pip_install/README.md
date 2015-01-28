@@ -11,6 +11,8 @@ pip安装方法
 
 ## 如何安装pip：
 
+**方法一:**
+
 点击[这里](http://115.29.192.240/get_pip.py.tar)下载`get_pip.py.tar`, 解压得到`get_pip.py`.
 
 #### Linux/Mac平台:
@@ -26,5 +28,9 @@ pip安装方法
     python get_pip.py
 
 以外，`Windows`平台下还需要将这个路径`C:\Python27\Scripts`（具体根据你的Python安装路径决定）放入你的系统变量中。这样你就可以使用`pip`命令轻松的安装`Python`模块了。
+
+**方法二:**
+
+下载本文件夹下的`auto_install_pip.py`, 双击运行即可.
 
 
