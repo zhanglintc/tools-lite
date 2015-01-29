@@ -17,6 +17,21 @@ class Solution:
     # @param dict, a set of string
     # @return a boolean
     def wordBreak(self, s, dict):
-        pass
+        if not s and dict:
+            return True
+
+        word = ""
+        for i in range(len(s)):
+            word += s[i]
+            if word in dict:
+                return self.wordBreak(s[i + 1:], dict)
+
+        return False
+
+s = "aaaaaaa"
+dict = ["aaaa", "aaa"]
+
+ss = Solution()
+print ss.wordBreak(s, dict)
 
 
