@@ -9,8 +9,8 @@ mailto = "349655336@qq.com"
 
 def sendmail(type):
     if type == "bingo":
-        send_content = "11.1 inches MacBook Air available now\nPlease check official site as soon as possible"
-        send_command = 'echo "{0}" | mutt -s "MacBook Air Available!!!" {1}'.format(send_content, mailto)
+        send_content = "11.1 inches MacBook Air available now\nPlease check official site as soon as possible\nBuy now!!!"
+        send_command = 'echo "{0}" | mutt -s "Buy Now!!! MacBook Air Available!!!" {1}'.format(send_content, mailto)
 
         sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
         sp.communicate()
