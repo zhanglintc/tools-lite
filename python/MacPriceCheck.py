@@ -4,26 +4,29 @@ import os, re
 import urllib
 import subprocess
 
-# mailto = "zhanglintc623@foxmail.com"
-mailto = "349655336@qq.com"
+mail_list = [
+    "zhanglintc623@foxmail.com",
+    "349655336@qq.com",
+    ]
 
 def sendmail(type):
-    if type == "bingo":
-        send_content = "11.1 inches MacBook Air available now\nPlease check official site as soon as possible\nBuy now!!!"
-        send_command = 'echo "{0}" | mutt -s "Buy Now!!! MacBook Air Available!!!" {1}'.format(send_content, mailto)
+    for mailto in mail_list:
+        if type == "bingo":
+            send_content = "11.1 inches MacBook Air available now\nPlease check official site as soon as possible\nBuy now!!!"
+            send_command = 'echo "{0}" | mutt -s "Buy Now!!! MacBook Air Available!!!" {1}'.format(send_content, mailto)
 
-        sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
-        sp.communicate()
+            sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+            sp.communicate()
 
-    elif type == "normal":
-        send_content = "this is hourly report\n11.1 inches MacBook Air is NOT available right now\nwe'll continue monitoring"
-        send_command = 'echo "{0}" | mutt -s "Mac Price Hourly Report" {1}'.format(send_content, mailto)
+        elif type == "normal":
+            send_content = "this is hourly report\n11.1 inches MacBook Air is NOT available right now\nwe'll continue monitoring"
+            send_command = 'echo "{0}" | mutt -s "Mac Price Hourly Report" {1}'.format(send_content, mailto)
 
-        sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
-        sp.communicate()
+            sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+            sp.communicate()
 
-    else:
-        pass
+        else:
+            pass
 
 count = '0'
 
