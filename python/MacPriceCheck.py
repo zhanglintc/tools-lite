@@ -4,7 +4,8 @@ import os, re
 import urllib
 import subprocess
 
-mailto = "zhanglintc623@foxmail.com"
+# mailto = "zhanglintc623@foxmail.com"
+mailto = "349655336@qq.com"
 
 def sendmail(type):
     if type == "bingo":
@@ -35,6 +36,7 @@ with open("/home/lane/tools-lite/python/MacCnt.txt", "rb") as fr:
         count = '0'
     elif int(read) % 120 == 0:
         print("normal")
+        count = str(int(read) + 1)
         sendmail("normal")
     else:
         count = str(int(read) + 1)
