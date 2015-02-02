@@ -40,7 +40,7 @@ with open("/home/lane/tools-lite/python/MacCnt.txt", "rb") as fr:
     elif int(read) % 120 == 0:
         print("normal")
         count = str(int(read) + 1)
-        sendmail("normal")
+        # sendmail("normal")
     else:
         count = str(int(read) + 1)
 
