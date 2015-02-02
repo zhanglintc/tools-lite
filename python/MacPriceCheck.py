@@ -4,18 +4,19 @@ import os, re
 import urllib
 import subprocess
 
-mailto = ""
+mailto = "zhanglintc623@foxmail.com"
+
 def sendmail(type):
     if type == "bingo":
         send_content = "11.1 inches MacBook Air available now\nPlease check official site as soon as possible"
-        send_command = 'echo "{0}" | mutt -s "Mac Price Report" {1}'.format(send_content, mailto)
+        send_command = 'echo "{0}" | mutt -s "MacBook Air Available!!!" {1}'.format(send_content, mailto)
 
         sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
         sp.communicate()
 
     elif type == "normal":
         send_content = "this is hourly report\n11.1 inches MacBook Air is NOT available right now\nwe'll continue monitoring"
-        send_command = 'echo "{0}" | mutt -s "Mac Price Report" {1}'.format(send_content, mailto)
+        send_command = 'echo "{0}" | mutt -s "Mac Price Hourly Report" {1}'.format(send_content, mailto)
 
         sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
         sp.communicate()
@@ -32,7 +33,8 @@ with open("MacCnt.txt", "rb") as fr:
     read = fr.read()
     if not read:
         count = '0'
-    elif read == "60" or read = "0":
+    elif int(read) % 120 == 0:
+        print("normal")
         sendmail("normal")
     else:
         count = str(int(read) + 1)
@@ -40,6 +42,7 @@ with open("MacCnt.txt", "rb") as fr:
 with open("MacCnt.txt", "wb") as fw:
     fw.write(count)
 
+recv = urllib.urlopen("http://store.apple.com/hk-zh/browse/home/specialdeals/mac")
 recv = urllib.urlopen("http://store.apple.com/hk-zh/browse/home/specialdeals/mac")
 content = recv.read()
 
@@ -53,8 +56,7 @@ for match in matches:
 
 for price in prices:
     if 5000 < price < 6000:
+        print("bingo")
         sendmail("bingo")
     else:
         print("not target")
-
-
