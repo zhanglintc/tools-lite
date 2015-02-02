@@ -26,10 +26,10 @@ def sendmail(type):
 
 count = '0'
 
-with open("MacCnt.txt", "ab") as fa:
+with open("/home/lane/tools-lite/python/MacCnt.txt", "ab") as fa:
     pass
 
-with open("MacCnt.txt", "rb") as fr:
+with open("/home/lane/tools-lite/python/MacCnt.txt", "rb") as fr:
     read = fr.read()
     if not read:
         count = '0'
@@ -39,7 +39,7 @@ with open("MacCnt.txt", "rb") as fr:
     else:
         count = str(int(read) + 1)
 
-with open("MacCnt.txt", "wb") as fw:
+with open("/home/lane/tools-lite/python/MacCnt.txt", "wb") as fw:
     fw.write(count)
 
 recv = urllib.urlopen("http://store.apple.com/hk-zh/browse/home/specialdeals/mac")
