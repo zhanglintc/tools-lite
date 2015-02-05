@@ -42,6 +42,7 @@ def github_reminder():
     sys.setdefaultencoding('utf8')
 
     web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # open website
+    web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # do it twice
 
     line  = True
     error = True
