@@ -17,12 +17,21 @@ import subprocess
 import platform
 import re
 
+MailList = [
+    "zhanglintc623@foxmail.com",
+    "0801jcjhz@163.com",
+]
+
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
 CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
 LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
 
 def auto_commit():
-    """auto push a commit to GitHub"""
+    """
+    auto push a commit to GitHub
+
+    return send_commands: a list of commands
+    """
 
     cd_command = "cd {} &&".format(sys.path[0])
 
@@ -33,9 +42,11 @@ def auto_commit():
     os.system('{} git push'.format(cd_command))
 
     send_content = "You haven't pushed any commit today\nso we did a auto-commit for you\n\n#GitHub reminder#"
-    send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content)
+    send_commands = []
+    for mailto in MailList:
+        send_commands.append('echo "{0}" | mutt -s "GitHub Report" {1}'.format(send_content, mailto))
 
-    return send_command
+    return send_commands
 
 def github_reminder():
     reload(sys)
@@ -89,14 +100,16 @@ def github_reminder():
             CUR_TIME,
             pushed_detail,
         )
-    send_command = 'echo "{}" | mutt -s "GitHub Report" zhanglintc623@foxmail.com'.format(send_content) # for mail
+    send_commands = []
+    for mailto in MailList:
+        send_commands.append('echo "{0}" | mutt -s "GitHub Report" {1}'.format(send_content, mailto)) # for mail
 
     ##########################################
     # if localtime is between 23:00 and 24:00 but still no commit
     # do automatically commit function
 
     if time.localtime().tm_hour == 23 and count == '0':
-        send_command = auto_commit()
+        send_commands = auto_commit()
     ##########################################
 
     # if don't want to see log file, use the code next line
@@ -106,13 +119,14 @@ def github_reminder():
     if count != None: # if count is initialized, do command
         print("sending...\n")
 
-        if 'Linux' in platform.platform():
-            sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
-            sp.communicate()
-        else:
-            os.system(send_command)
+        for send_command in send_commands:
+            if 'Linux' in platform.platform():
+                sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+                sp.communicate()
+            else:
+                os.system(send_command)
 
-        print(send_command + '\n')
+            print(send_command + '\n')
 
         return 0
 
