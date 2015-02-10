@@ -9,6 +9,7 @@ and show it directly.
 import os, urllib
 import datetime, time
 import re
+from ColorfulPrint import cprint
 
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
 CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
@@ -56,7 +57,7 @@ def github_reminder():
 
     fw.close()
 
-    send_content = "You have pushed {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
+    send_content = "You have pushed [{}, red] {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
             count,
             "commit" if int(count) < 2 else "commits",
@@ -71,7 +72,7 @@ def github_reminder():
     return send_content
 
 if __name__ == '__main__':
-    print github_reminder()
+    cprint(github_reminder())
 
     try:
         raw_input()
