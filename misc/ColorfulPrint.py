@@ -24,6 +24,19 @@
          佛祖保佑    iii    永无BUG 
 """
 
+"""
+Knowing bugs:
+
+You have pushed 10   ->   here become line break, don't know why
+ commits until now
+2015-02-10 23:06:52
+
+Pushed 9 commits to zhanglintc/tools-lite
+Pushed 1 commit to zhanglintc/wb
+
+#GitHub reminder#
+"""
+
 # print('\033[91m' + "123" + '\033[0m')
 # '\033[91m' -> red color
 # '\033[0m'  -> cancel all
@@ -31,6 +44,7 @@
 from __future__ import print_function
 import ctypes
 import re
+import platform
 
 STD_INPUT_HANDLE = -10
 STD_OUTPUT_HANDLE= -11
@@ -53,7 +67,11 @@ class Color:
     for information on Windows APIs. - www.sharejs.com
     """
 
-    std_out_handle = ctypes.windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
+    if 'Windows' in platform.platform():
+        std_out_handle = ctypes.windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
+
+    else:
+        std_out_handle = None
     
     def set_cmd_color(self, color, handle=std_out_handle):
         """
@@ -68,9 +86,13 @@ class Color:
         self.set_cmd_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
     
     def print_red_text(self, print_text):
-        self.set_cmd_color(FOREGROUND_RED | FOREGROUND_INTENSITY)
-        print(print_text, end = '')
-        self.reset_color()
+        if 'Windows' in platform.platform():
+            self.set_cmd_color(FOREGROUND_RED | FOREGROUND_INTENSITY)
+            print(print_text, end = '')
+            self.reset_color()
+
+        else:
+            print('\033[91m' + print_text + '\033[0m')
         
     def print_green_text(self, print_text):
         self.set_cmd_color(FOREGROUND_GREEN | FOREGROUND_INTENSITY)
