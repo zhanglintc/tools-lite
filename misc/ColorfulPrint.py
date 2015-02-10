@@ -90,7 +90,7 @@ def cprint(s, c = None):
     if not c:
         c = Color()
 
-    mc = re.search('(.*?)(\[.*?\])(.*)', s)
+    mc = re.search('(.*?)(\[.*?\])(.*)', s, re.DOTALL)
     if not mc:
         print(s, end = '')
 
