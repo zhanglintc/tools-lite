@@ -97,14 +97,10 @@ def cprint(s, c = None):
     else:
         print(mc.group(1), end = '')
 
-        command = mc.group(2)
+        command = mc.group(2)[1:-1] # strip '[' and ']'
 
-        command = command.replace('[', '')
-        command = command.replace(']', '')
-        command = command.replace(' ', '')
-
-        to_p  = command.split(',')[0]
-        color = command.split(',')[1]
+        to_p  = command.split(',')[0] # raw string to be print
+        color = command.split(',')[1].replace(' ', '') # remove spaces in parameter
 
         if color == 'red':
             c.print_red_text(to_p)
