@@ -24,7 +24,9 @@
          佛祖保佑    iii    永无BUG 
 """
 
+from __future__ import print_function
 import ctypes
+import re
 
 STD_INPUT_HANDLE = -10
 STD_OUTPUT_HANDLE= -11
@@ -63,30 +65,59 @@ class Color:
     
     def print_red_text(self, print_text):
         self.set_cmd_color(FOREGROUND_RED | FOREGROUND_INTENSITY)
-        print print_text
+        print(print_text, end = '')
         self.reset_color()
         
     def print_green_text(self, print_text):
         self.set_cmd_color(FOREGROUND_GREEN | FOREGROUND_INTENSITY)
-        print print_text
+        print(print_text, end = '')
         self.reset_color()
     
     def print_blue_text(self, print_text): 
         self.set_cmd_color(FOREGROUND_BLUE | FOREGROUND_INTENSITY)
-        print print_text
+        print(print_text, end = '')
         self.reset_color()
           
     def print_red_text_with_blue_bg(self, print_text):
         self.set_cmd_color(FOREGROUND_RED | FOREGROUND_INTENSITY| BACKGROUND_BLUE | BACKGROUND_INTENSITY)
-        print print_text
-        self.reset_color()    
+        print(print_text, end = '')
+        self.reset_color()
+
+def cprint(s, c = None):
+    if not s:
+        return
+
+    if not c:
+        c = Color()
+
+    mc = re.search('(.*?)(\[.*?\])(.*)', s)
+    if not mc:
+        print(s, end = '')
+
+    else:
+        print(mc.group(1), end = '')
+
+        command = mc.group(2)
+
+        command = command.replace('[', '')
+        command = command.replace(']', '')
+        command = command.replace(' ', '')
+
+        to_p  = command.split(',')[0]
+        color = command.split(',')[1]
+
+        if color == 'red':
+            c.print_red_text(to_p)
+
+        cprint(mc.group(3), c)
 
 if __name__ == "__main__":
-    clr = Color()
-    clr.print_red_text('red')
-    clr.print_green_text('green')
-    clr.print_blue_text('blue')
-    clr.print_red_text_with_blue_bg('background')
+    # clr = Color()
+    # clr.print_red_text('red')
+    # clr.print_green_text('green')
+    # clr.print_blue_text('blue')
+    # clr.print_red_text_with_blue_bg('background')
+    cprint("this is: [red, red]")
 
     try:
         input()
