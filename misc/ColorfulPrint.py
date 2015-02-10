@@ -24,6 +24,10 @@
          佛祖保佑    iii    永无BUG 
 """
 
+# print('\033[91m' + "123" + '\033[0m')
+# '\033[91m' -> red color
+# '\033[0m'  -> cancel all
+
 from __future__ import print_function
 import ctypes
 import re
