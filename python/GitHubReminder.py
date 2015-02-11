@@ -19,7 +19,7 @@ import re
 
 MailList = [
     "zhanglintc623@foxmail.com",
-    "0801jcjhz@163.com",
+    "jcjhz89@gmail.com",
 ]
 
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
