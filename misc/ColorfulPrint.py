@@ -22,18 +22,6 @@
                    `=---=' 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
          佛祖保佑    iii    永无BUG
-
-
-Knowing bugs:
-
-You have pushed 10   ->   here become line break, don't know why
- commits until now
-2015-02-10 23:06:52
-
-Pushed 9 commits to zhanglintc/tools-lite
-Pushed 1 commit to zhanglintc/wb
-
-#GitHub reminder#
 """
 
 # print('\033[91m' + "123" + '\033[0m')
@@ -91,7 +79,7 @@ class Color:
             self.reset_color()
 
         else:
-            print('\033[91m' + print_text + '\033[0m')
+            print('\033[91m' + print_text + '\033[0m', end = '')
         
     def print_green_text(self, print_text):
         self.set_cmd_color(FOREGROUND_GREEN | FOREGROUND_INTENSITY)
