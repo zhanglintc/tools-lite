@@ -82,14 +82,22 @@ class Color:
             print('\033[91m' + print_text + '\033[0m', end = '')
         
     def print_green_text(self, print_text):
-        self.set_cmd_color(FOREGROUND_GREEN | FOREGROUND_INTENSITY)
-        print(print_text, end = '')
-        self.reset_color()
+        if 'Windows' in platform.platform():
+            self.set_cmd_color(FOREGROUND_GREEN | FOREGROUND_INTENSITY)
+            print(print_text, end = '')
+            self.reset_color()
+
+        else:
+            print('\033[92m' + print_text + '\033[0m', end = '')
     
-    def print_blue_text(self, print_text): 
-        self.set_cmd_color(FOREGROUND_BLUE | FOREGROUND_INTENSITY)
-        print(print_text, end = '')
-        self.reset_color()
+    def print_blue_text(self, print_text):
+        if 'Windows' in platform.platform():
+            self.set_cmd_color(FOREGROUND_BLUE | FOREGROUND_INTENSITY)
+            print(print_text, end = '')
+            self.reset_color()
+
+        else:
+            print('\033[96m' + print_text + '\033[0m', end = '')
           
     def print_red_text_with_blue_bg(self, print_text):
         self.set_cmd_color(FOREGROUND_RED | FOREGROUND_INTENSITY| BACKGROUND_BLUE | BACKGROUND_INTENSITY)
@@ -103,13 +111,21 @@ def cprint(s, c = None):
     if not c:
         c = Color()
 
+    # mc.group(1): text before []
+    # mc.group(2): text in []
+    # mc.group(3): text after []
     mc = re.search('(.*?)(\[.*?\])(.*)', s, re.DOTALL)
+
+    # no control parameter, print normally
     if not mc:
         print(s, end = '')
 
+    # else color print
     else:
+        # deal with text before []
         print(mc.group(1), end = '')
 
+        # deal with text in []
         command = mc.group(2)[1:-1] # strip '[' and ']'
 
         to_p  = command.split(',')[0] # raw string to be print
@@ -118,14 +134,19 @@ def cprint(s, c = None):
         if color == 'red':
             c.print_red_text(to_p)
 
+        elif color == 'green':
+            c.print_green_text(to_p)
+
+        elif color == 'blue':
+            c.print_blue_text(to_p)
+
+        else:
+            print(to_p, end = '')
+
+        # deal with text after []
         cprint(mc.group(3), c)
 
 if __name__ == "__main__":
-    # clr = Color()
-    # clr.print_red_text('red')
-    # clr.print_green_text('green')
-    # clr.print_blue_text('blue')
-    # clr.print_red_text_with_blue_bg('background')
     cprint("this is: [red, red]")
 
     try:
