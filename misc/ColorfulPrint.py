@@ -21,10 +21,9 @@
 ======`-.____`-.___\_____/___.-`____.-'====== 
                    `=---=' 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
-         佛祖保佑    iii    永无BUG 
-"""
+         佛祖保佑    iii    永无BUG
 
-"""
+
 Knowing bugs:
 
 You have pushed 10   ->   here become line break, don't know why
