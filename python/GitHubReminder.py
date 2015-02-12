@@ -22,8 +22,8 @@ with open('.smpass', 'rb') as fr:
 
 MailType = 'sendemail' # 'mutt'
 
-SENDFROM = "bigboos@tom.com"
-USERNAME = "bigboos@tom.com"
+SENDFROM = "zhanglintc@163.com"
+USERNAME = "zhanglintc@163.com"
 
 if not PASSWORD:
     PASSWORD = "YOURPASSWORD"
@@ -32,7 +32,7 @@ else:
 
 MailList = [
     "zhanglintc623@foxmail.com",
-    "jcjhz89@gmail.com",
+    "0801jcjhz@163.com",
 ]
 
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
@@ -45,7 +45,7 @@ def make_commands(send_content):
     for mailto in MailList:
         if MailType == 'sendemail':
             send_commands.append(
-                'sendEmail -f {0} -t {1} -s smtp.tom.com -xu {2} -xp {3} -u "GitHub Report" -m "{4}"'.format(
+                'sendEmail -f {0} -t {1} -s smtp.163.com -xu {2} -xp {3} -u "GitHub Report" -m "{4}"'.format(
                     SENDFROM, # 0
                     mailto,   # 1
                     USERNAME, # 2
@@ -154,8 +154,9 @@ def github_reminder():
 
         for send_command in send_commands:
             if 'Linux' in platform.platform():
-                sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
-                sp.communicate()
+                # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+                # sp.communicate()
+                os.system(send_command)
 
             else:
                 os.system(send_command)
