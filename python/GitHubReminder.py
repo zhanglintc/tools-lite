@@ -153,13 +153,9 @@ def github_reminder():
         print("sending...\n")
 
         for send_command in send_commands:
-            if 'Linux' in platform.platform():
-                # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
-                # sp.communicate()
-                os.system(send_command)
-
-            else:
-                os.system(send_command)
+            # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+            # sp.communicate()
+            os.system(send_command)
 
             print(send_command + '\n')
 
