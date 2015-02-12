@@ -17,6 +17,12 @@ import subprocess
 import platform
 import re
 
+MailType = 'sendemail' # 'mutt'
+
+SENDFROM = githubreminder@hotmail.com
+USERNAME = githubreminder@hotmail.com
+PASSWORD = HubRemind
+
 MailList = [
     "zhanglintc623@foxmail.com",
     "jcjhz89@gmail.com",
@@ -25,6 +31,30 @@ MailList = [
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
 CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
 LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
+
+def make_commands(send_content):
+    send_commands = []
+
+    for mailto in MailList:
+        if MailType == 'sendemail':
+            send_commands.append(
+                'sendEmail -f {0} -t {1} -s smtp.hotmail.com -xu {2} -xp {3} -u "GitHub Report" -m {4}'.format(
+                    SENDFROM, # 0
+                    mailto,   # 1
+                    USERNAME, # 2
+                    PASSWORD, # 3
+                    send_content, # 4
+                    )
+                )
+
+        elif MailType == 'mutt':
+            send_commands.append('echo "{0}" | mutt -s "GitHub Report" {1}'.format(send_content, mailto))
+
+        else:
+            pass
+
+    return send_commands
+
 
 def auto_commit():
     """
@@ -42,9 +72,7 @@ def auto_commit():
     os.system('{} git push'.format(cd_command))
 
     send_content = "You haven't pushed any commit today\nso we did a auto-commit for you\n\n#GitHub reminder#"
-    send_commands = []
-    for mailto in MailList:
-        send_commands.append('echo "{0}" | mutt -s "GitHub Report" {1}'.format(send_content, mailto))
+    send_commands = make_commands()
 
     return send_commands
 
@@ -100,9 +128,7 @@ def github_reminder():
             CUR_TIME,
             pushed_detail,
         )
-    send_commands = []
-    for mailto in MailList:
-        send_commands.append('echo "{0}" | mutt -s "GitHub Report" {1}'.format(send_content, mailto)) # for mail
+    send_commands = make_commands()
 
     ##########################################
     # if localtime is between 23:00 and 24:00 but still no commit
