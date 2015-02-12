@@ -1,6 +1,8 @@
 
 *.pyc
 
+.*
+
 misc/weiboClient/.tags
 
 misc/weiboClient/.tags_sorted_by_file

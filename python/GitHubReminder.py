@@ -17,11 +17,18 @@ import subprocess
 import platform
 import re
 
+with open('.smpass', 'rb') as fr:
+    PASSWORD = fr.read().strip()
+
 MailType = 'sendemail' # 'mutt'
 
-SENDFROM = githubreminder@hotmail.com
-USERNAME = githubreminder@hotmail.com
-PASSWORD = HubRemind
+SENDFROM = "bigboos@tom.com"
+USERNAME = "bigboos@tom.com"
+
+if not PASSWORD:
+    PASSWORD = "YOURPASSWORD"
+else:
+    pass
 
 MailList = [
     "zhanglintc623@foxmail.com",
@@ -38,7 +45,7 @@ def make_commands(send_content):
     for mailto in MailList:
         if MailType == 'sendemail':
             send_commands.append(
-                'sendEmail -f {0} -t {1} -s smtp.hotmail.com -xu {2} -xp {3} -u "GitHub Report" -m {4}'.format(
+                'sendEmail -f {0} -t {1} -s smtp.tom.com -xu {2} -xp {3} -u "GitHub Report" -m "{4}"'.format(
                     SENDFROM, # 0
                     mailto,   # 1
                     USERNAME, # 2
@@ -72,7 +79,7 @@ def auto_commit():
     os.system('{} git push'.format(cd_command))
 
     send_content = "You haven't pushed any commit today\nso we did a auto-commit for you\n\n#GitHub reminder#"
-    send_commands = make_commands()
+    send_commands = make_commands(send_content)
 
     return send_commands
 
@@ -128,7 +135,7 @@ def github_reminder():
             CUR_TIME,
             pushed_detail,
         )
-    send_commands = make_commands()
+    send_commands = make_commands(send_content)
 
     ##########################################
     # if localtime is between 23:00 and 24:00 but still no commit
@@ -149,6 +156,7 @@ def github_reminder():
             if 'Linux' in platform.platform():
                 sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
                 sp.communicate()
+
             else:
                 os.system(send_command)
 
