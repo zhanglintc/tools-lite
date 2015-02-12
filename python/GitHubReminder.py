@@ -17,7 +17,8 @@ import subprocess
 import platform
 import re
 
-with open(os.path.abspath('.') + '/.smpass', 'rb') as fr:
+PASSWORD = None
+with open('/home/lane/tools-lite/python/.smpass', 'rb') as fr:
     PASSWORD = fr.read().strip()
 
 MailType = 'sendemail' # 'mutt'
