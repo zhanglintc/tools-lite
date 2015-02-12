@@ -17,7 +17,7 @@ import subprocess
 import platform
 import re
 
-with open('.smpass', 'rb') as fr:
+with open(os.path.abspath('.') + '/.smpass', 'rb') as fr:
     PASSWORD = fr.read().strip()
 
 MailType = 'sendemail' # 'mutt'
