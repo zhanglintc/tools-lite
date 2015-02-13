@@ -18,18 +18,31 @@ import platform
 import re
 
 PASSWORD = None
-with open('/home/lane/tools-lite/python/.smpass', 'rb') as fr:
-    PASSWORD = fr.read().strip()
 
-MailType = 'sendemail' # 'mutt'
+# try to get password in your user folder
+try:
+    with open(os.path.expanduser('~') + '/.smpass', 'rb') as fr:
+        PASSWORD = fr.read().strip()
+except:
+    pass
 
-SENDFROM = "zhanglintc@163.com"
-USERNAME = "zhanglintc@163.com"
+# if failed, try to get password in the script's folder
+if not PASSWORD:
+    try:
+        with open(sys.path[0] + '/.smpass', 'rb') as fr:
+            PASSWORD = fr.read().strip()
+    except:
+        pass
 
+# if still failed, use password in the script
 if not PASSWORD:
     PASSWORD = "YOURPASSWORD"
 else:
     pass
+
+MailType = 'sendemail' # 'mutt'
+SENDFROM = "zhanglintc@163.com"
+USERNAME = "zhanglintc@163.com"
 
 MailList = [
     "zhanglintc623@foxmail.com",
