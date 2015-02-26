@@ -192,6 +192,8 @@ def github_reminder():
                     content = send_content
                 )
 
+            print(send_content)
+
         return 0
 
     else: # else exit as 100
