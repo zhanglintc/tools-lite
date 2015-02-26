@@ -6,12 +6,6 @@ from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 import smtplib
 
-def _format_addr(s):
-    name, addr = parseaddr(s)
-    return formataddr(( \
-        Header(name, 'utf-8').encode(), \
-        addr.encode('utf-8') if isinstance(addr, unicode) else addr))
-
 to_addr = [
     "mailto@domain.com",
 ]
@@ -24,14 +18,31 @@ smtp_server = "smtp.domain.com"
 subject = "Python Email Tool"
 content = "hello, send by Python..."
 
-msg = MIMEText(content, 'plain', 'utf-8')
-msg['From']    = _format_addr(u'{0} <{1}>'.format(alias, from_addr))
-msg['Subject'] = Header(subject, 'utf-8').encode()
+def _format_addr(s):
+    name, addr = parseaddr(s)
+    return formataddr(( \
+        Header(name, 'utf-8').encode(), \
+        addr.encode('utf-8') if isinstance(addr, unicode) else addr))
 
-if __name__ == '__main__':
+def sendEmail(
+        to_addr = to_addr,
+        from_addr = from_addr,
+        alias = alias,
+        password = password,
+        smtp_server = smtp_server,
+        subject = subject,
+        content = content):
+
+    msg = MIMEText(content, 'plain', 'utf-8')
+    msg['From']    = _format_addr(u'{0} <{1}>'.format(alias, from_addr))
+    msg['Subject'] = Header(subject, 'utf-8').encode()
+
     server = smtplib.SMTP(smtp_server, 25)
     server.login(from_addr, password)
     server.sendmail(from_addr, to_addr, msg.as_string())
     server.quit()
+
+if __name__ == '__main__':
+    sendEmail()
 
 
