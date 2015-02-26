@@ -17,6 +17,8 @@ import subprocess
 import platform
 import re
 
+import python_send
+
 PASSWORD = None
 
 # try to get password in your user folder
@@ -43,6 +45,7 @@ else:
 MailType = 'sendemail' # 'mutt'
 SENDFROM = "zhanglintc@163.com"
 USERNAME = "zhanglintc@163.com"
+SMTPSERV = "smtp.163.com"
 
 MailList = [
     "zhanglintc623@foxmail.com",
@@ -61,12 +64,13 @@ def make_commands(send_content):
     for mailto in MailList:
         if MailType == 'sendemail':
             send_commands.append(
-                'sendEmail -f {0} -t {1} -s smtp.163.com -xu {2} -xp {3} -u "GitHub Report" -m "{4}"'.format(
+                'sendEmail -f {0} -t {1} -s {2} -xu {3} -xp {4} -u "GitHub Report" -m "{5}"'.format(
                     SENDFROM, # 0
                     mailto,   # 1
-                    USERNAME, # 2
-                    PASSWORD, # 3
-                    send_content, # 4
+                    SMTPSERV, # 2
+                    USERNAME, # 3
+                    PASSWORD, # 4
+                    send_content, # 5
                     )
                 )
 
@@ -168,12 +172,25 @@ def github_reminder():
     if count != None: # if count is initialized, do command
         print("sending...\n")
 
-        for send_command in send_commands:
-            # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
-            # sp.communicate()
-            os.system(send_command)
+        if 0: # currently disable
+            for send_command in send_commands:
+                # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+                # sp.communicate()
+                os.system(send_command)
 
-            print(send_command + '\n')
+                print(send_command + '\n')
+
+        else: # currently enable
+            # sendEmail(to_addr, from_addr, alias, password, smtp_server, subject, contents)
+            python_send.sendEmail(
+                    to_addr = MailList,
+                    from_addr = SENDFROM,
+                    alias = "Lane-Aliyun",
+                    password = PASSWORD,
+                    smtp_server = SMTPSERV,
+                    subject = "GitHub Report",
+                    content = send_content
+                )
 
         return 0
 

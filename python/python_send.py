@@ -24,6 +24,7 @@ def _format_addr(s):
         Header(name, 'utf-8').encode(), \
         addr.encode('utf-8') if isinstance(addr, unicode) else addr))
 
+# sendEmail(to_addr, from_addr, alias, password, smtp_server, subject, content)
 def sendEmail(
         to_addr = to_addr,
         from_addr = from_addr,
