@@ -47,7 +47,7 @@ def github_reminder():
         if line and count == None: # readline isn't None means urlopen success, initialize count as 0
             count = 0
 
-        if TODAY in line: # find today
+        if '"{}"'.format(TODAY) in line: # find TODAY, TODAY must surrounded with quotation marks like "2014-11-10"
             count = line.split('\"')[11] # today's commit is in 11th position
 
         if 'Pushed' in line:
