@@ -146,6 +146,11 @@ def github_reminder():
             line = re.sub('</a>', '', line) # remove </a>
             pushed_detail += line
 
+        if "/issues/" in line and '"title"' in line:
+            line = re.sub('</a>', '', line) # remove </a>
+            line = line.split('>')[-1] # issue detail is in last position
+            pushed_detail += ("Issues: " + line)
+
     fw.close()
 
     send_content = "You have pushed {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
