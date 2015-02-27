@@ -55,10 +55,15 @@ def github_reminder():
             line = re.sub('</a>', '', line) # remove </a>
             pushed_detail += line
 
+        if "/pull/" in line and '"title"' in line:
+            line = re.sub('</a>', '', line) # remove </a>
+            line = line.split('>')[-1] # pull request detail is in last position
+            pushed_detail += ("Pull request: " + line)
+
         if "/issues/" in line and '"title"' in line:
             line = re.sub('</a>', '', line) # remove </a>
             line = line.split('>')[-1] # issue detail is in last position
-            pushed_detail += ("Issues: " + line)
+            pushed_detail += ("Issue: " + line)
 
     fw.close()
 
