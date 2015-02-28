@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 """
-Check https://github.com/zhanglintc and get the day's commit's count
+Check https://github.com/zhanglintc and get the day's contributions
 and show it directly.
 """
 
@@ -67,10 +67,10 @@ def github_reminder():
 
     fw.close()
 
-    send_content = "You have pushed [{}, red] {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
+    send_content = "You have made [{}, red] {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
             count,
-            "commit" if int(count) < 2 else "commits",
+            "contribution" if int(count) < 2 else "contributions",
             CUR_TIME,
             pushed_detail,
         )

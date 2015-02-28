@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 """
-Check https://github.com/zhanglintc and get the day's commit's count,
+Check https://github.com/zhanglintc and get the day's contributions,
 if everything goes right, send a mail to foxmail and exit with code 0.
 Otherwise exit with code 100.
 
@@ -85,7 +85,7 @@ def make_commands(send_content):
 
 def auto_commit():
     """
-    auto push a commit to GitHub
+    make an auto-commit to GitHub
 
     return send_commands: a list of commands
     """
@@ -98,7 +98,7 @@ def auto_commit():
     os.system('{} git commit -m "{} auto commit"'.format(cd_command, CUR_TIME))
     os.system('{} git push'.format(cd_command))
 
-    send_content = "You haven't pushed any commit today\nso we did a auto-commit for you\n\n#GitHub reminder#"
+    send_content = "You have not made any contribution today\nso we did a auto-commit for you\n\n#GitHub reminder#"
     send_commands = make_commands(send_content)
 
     return send_commands
@@ -158,10 +158,10 @@ def github_reminder():
 
     fw.close()
 
-    send_content = "You have pushed {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
+    send_content = "You have made {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
         (
             count,
-            "commit" if int(count) < 2 else "commits",
+            "contribution" if int(count) < 2 else "contributions",
             CUR_TIME,
             pushed_detail,
         )
