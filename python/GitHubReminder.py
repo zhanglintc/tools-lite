@@ -172,7 +172,7 @@ def github_reminder():
     # do automatically commit function
 
     if time.localtime().tm_hour == 23 and count == '0':
-        send_commands = auto_commit()
+        send_content = send_commands = auto_commit()
     ##########################################
 
     # if don't want to see log file, use the code next line
