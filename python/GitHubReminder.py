@@ -47,11 +47,13 @@ SENDFROM = "zhanglintc@163.com"
 USERNAME = "zhanglintc@163.com"
 SMTPSERV = "smtp.163.com"
 
+GITHUB_URL = "https://github.com/zhanglintc?period=daily"
+
 MailList = [
     "zhanglintc623@foxmail.com",
-    "0801jcjhz@163.com",
-    "lvregen@163.com",
-    "gaominxiaoqiu@163.com",
+    #"0801jcjhz@163.com",
+    #"lvregen@163.com",
+    #"gaominxiaoqiu@163.com",
 ]
 
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
@@ -101,7 +103,7 @@ def auto_commit():
     os.system('{} git commit -m "{} auto commit"'.format(cd_command, CUR_TIME))
     os.system('{} git push'.format(cd_command))
 
-    send_content = "You have not made any contribution today\nso we did a auto-commit for you\n\n#GitHub reminder#"
+    send_content = "You have not made any contribution today\nso we did a auto-commit for you\n\n{0}\n\n#GitHub reminder#".format(GITHUB_URL)
     send_commands = make_commands(send_content)
 
     return send_commands
@@ -110,8 +112,8 @@ def github_reminder():
     reload(sys)
     sys.setdefaultencoding('utf8')
 
-    web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # open website
-    web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # do it twice
+    web_cotent = urllib.urlopen(GITHUB_URL) # open website
+    web_cotent = urllib.urlopen(GITHUB_URL) # do it twice
 
     line  = True
     error = True
@@ -161,12 +163,13 @@ def github_reminder():
 
     fw.close()
 
-    send_content = "You have made {} {} until now\n{}\n\n{}\n#GitHub reminder#\n".format\
+    send_content = "You have made {0} {1} until now\n{2}\n\n{3}\n{4}\n\n#GitHub reminder#\n".format\
         (
             count,
             "contribution" if int(count) < 2 else "contributions",
             CUR_TIME,
             pushed_detail,
+            GITHUB_URL,
         )
     send_commands = make_commands(send_content)
 
