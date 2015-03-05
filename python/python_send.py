@@ -36,7 +36,8 @@ def sendEmail(
 
     msg = MIMEText(content, 'plain', 'utf-8')
     msg['From']    = _format_addr(u'{0} <{1}>'.format(alias, from_addr))
-    msg['To']      = ','.join(to_addr)
+    msg['To']      = to_addr[0]
+    msg['Bcc']     = ','.join(to_addr[1:])
     msg['Subject'] = Header(subject, 'utf-8').encode()
 
     server = smtplib.SMTP(smtp_server, 25)
