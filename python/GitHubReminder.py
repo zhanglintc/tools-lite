@@ -42,7 +42,7 @@ if not PASSWORD:
 else:
     pass
 
-MailType = 'sendemail' # 'mutt'
+MailType = 'python' # 'sendemail' # 'mutt'
 SENDFROM = "zhanglintc@163.com"
 USERNAME = "zhanglintc@163.com"
 SMTPSERV = "smtp.163.com"
@@ -76,6 +76,9 @@ def make_commands(send_content):
 
         elif MailType == 'mutt':
             send_commands.append('echo "{0}" | mutt -s "GitHub Report" {1}'.format(send_content, mailto))
+
+        elif MailType == 'python':
+            send_commands = send_content
 
         else:
             pass
@@ -171,7 +174,7 @@ def github_reminder():
     # if localtime is between 23:00 and 24:00 but still no commit
     # do automatically commit function
 
-    if time.localtime().tm_hour == 23 and count == '0':
+    if time.localtime().tm_hour == 23 and int(count) == 0:
         send_content = send_commands = auto_commit()
     ##########################################
 
@@ -182,7 +185,7 @@ def github_reminder():
     if count != None: # if count is initialized, do command
         print("sending...\n")
 
-        if 0: # currently disable
+        if not MailType == 'python':
             for send_command in send_commands:
                 # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
                 # sp.communicate()
@@ -190,7 +193,7 @@ def github_reminder():
 
                 print(send_command + '\n')
 
-        else: # currently enable
+        else:
             # sendEmail(to_addr, from_addr, alias, password, smtp_server, subject, contents)
             python_send.sendEmail(
                     to_addr = MailList,
