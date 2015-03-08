@@ -129,7 +129,7 @@ def auto_commit():
 
     return send_commands
 
-def github_reminder():
+def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Flag = True):
     reload(sys)
     sys.setdefaultencoding('utf8')
 
@@ -198,7 +198,7 @@ def github_reminder():
     # if localtime is between 23:00 and 24:00 but still no commit
     # do automatically commit function
 
-    if time.localtime().tm_hour == 23 and int(count) == 0:
+    if time.localtime().tm_hour == 23 and int(count) == 0 and Auto_Commit_Flag:
         send_content = send_commands = auto_commit()
     ##########################################
 
