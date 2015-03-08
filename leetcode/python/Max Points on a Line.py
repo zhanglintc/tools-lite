@@ -2,6 +2,9 @@
 # for leetcode problems
 # 2014.08.11 by zhanglin
 
+# Problem:
+# Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
+
 # Definition for a point
 # class Point:
 #     def __init__(self, a=0, b=0):
