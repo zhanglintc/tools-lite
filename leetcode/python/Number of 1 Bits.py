@@ -24,7 +24,4 @@ class Solution:
 
         return cnt
 
-s = Solution()
-print s.hammingWeight(00001011)
-
 
