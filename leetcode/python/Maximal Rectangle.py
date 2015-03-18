@@ -32,11 +32,11 @@ class Solution:
 
     def transformMatrix(self, matrix):
         """
-        Input:                  Output:
-            matrix = [              matrix = [
-                "111",                  [1,1,1],
-                "111",                  [1,1,1],
-                "101"]                  [1,0,1]]
+        Input:                  Middle:                  Output:
+            matrix = [              matrix = [              matrix = [
+                "111",                  [1,1,1],                  [1,1,1],
+                "111",                  [1,1,1],                  [2,2,2],
+                "101"]                  [1,0,1]]                  [3,0,3]]
         """
         # make string to list, and make string to int
         for row in range(len(matrix)):
