@@ -14,6 +14,17 @@ class Solution:
     # @param n, an integer
     # @return an integer
     def hammingWeight(self, n):
-        pass
+        cnt = 0
+
+        while n:
+            if n & 1:
+                cnt += 1
+
+            n >>= 1
+
+        return cnt
+
+s = Solution()
+print s.hammingWeight(00001011)
 
 
