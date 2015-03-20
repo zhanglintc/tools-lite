@@ -19,7 +19,15 @@
 class Solution {
 public:
     uint32_t reverseBits(uint32_t n) {
-        
+        int mask = 0;
+
+        for(int i = 1; i <= 31; i++) {
+            mask |= (n & 1);
+            mask <<= 1;
+            n >>= 1;
+        }
+
+        return n | mask;
     }
 };
 
