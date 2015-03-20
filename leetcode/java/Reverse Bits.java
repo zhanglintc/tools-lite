@@ -19,7 +19,15 @@
 public class Solution {
     // you need treat n as an unsigned value
     public int reverseBits(int n) {
-        
+        int mask = 0;
+
+        for(int i = 1; i <= 31; i++) {
+            mask |= (n & 1);
+            mask <<= 1;
+            n >>>= 1;
+        }
+
+        return n | mask;
     }
 }
 
