@@ -17,21 +17,14 @@
 # Special thanks to @ts for adding this problem and creating all test cases.
 
 class Solution: 
-    # @param n, an integer 
-    # @return an integer 
-    def reverseBits(self, n): 
-        ans = 0 
-        for i in range(0,32): 
-            #get information 
-            x = 1 & n 
-            # shift the input num by 1 
-            n >>= 1 
-            # set the leftmost bit in input num to 0 becuase python shift is arithmetic 
-            n &= 0x7fffffff 
-            #move the x to correct location 
-            x <<= (31- i) 
-            # set the bit in the answer 
-            ans |= x 
-        return ans
+    # @param n, an integer
+    # @return an integer
+    def reverseBits(self, n):
+        mask = 0
+        for i in range(31):
+            mask |= (n & 1)
+            mask <<= 1
+            n >>= 1
+        return n | mask
 
 
