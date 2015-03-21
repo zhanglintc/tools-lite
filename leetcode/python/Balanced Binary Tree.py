@@ -25,7 +25,6 @@ class Solution:
         return max(self.helper(root.left), self.helper(root.right)) + 1
 
     def isBalanced(self, root):
-        # return True if self.helper(root) else False # set depth as anything except 0 is OK
         if not root:
             return True
 
