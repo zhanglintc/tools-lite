@@ -18,19 +18,21 @@
 class Solution:
     # @param root, a tree node
     # @return a boolean
-    def helper(self, root, depth):
+    def helper(self, root):
         if not root:
-            return depth
+            return 0
 
-        left  = self.helper(root.left,  depth)
-        right = self.helper(root.right, depth)
-
-        if not left or not right or abs(left - right) > 1:
-            return False
-
-        return max(left, right) + 1
+        return max(self.helper(root.left), self.helper(root.right)) + 1
 
     def isBalanced(self, root):
-        return True if self.helper(root, 1) else False # set depth as anything except 0 is OK
+        # return True if self.helper(root) else False # set depth as anything except 0 is OK
+        if not root:
+            return True
+
+        if abs(self.helper(root.left) - self.helper(root.right)) <= 1:
+            return self.isBalanced(root.left) and self.isBalanced(root.right)
+
+        else:
+            return False
 
 
