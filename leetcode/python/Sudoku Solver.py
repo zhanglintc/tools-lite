@@ -37,6 +37,44 @@ class Solution:
     # @param board, a 9x9 2D array
     # Solve the Sudoku by modifying the input board in-place.
     # Do not return any value.
+    def isValidSudoku(self, board):
+        # check row
+        for row in range(9):
+            occurred = []
+            for column in range(9):
+                if board[row][column] not in occurred or board[row][column] == '.':
+                    occurred.append(board[row][column])
+
+                else:
+                    return False
+
+        # check column
+        for column in range(9):
+            occurred = []
+            for row in range(9):
+                if board[row][column] not in occurred or board[row][column] == '.':
+                    occurred.append(board[row][column])
+
+                else:
+                    return False
+
+        # check sub-box
+        for base_row in range(3):
+            for base_column in range(3):
+                occurred = []
+                for sub_row in range(3):
+                    for sub_column in range(3):
+                        real_row    = base_row * 3 + sub_row
+                        real_column = base_column * 3 + sub_column
+                        if board[real_row][real_column] not in occurred or board[real_row][real_column] == '.':
+                            occurred.append(board[real_row][real_column])
+
+                        else:
+                            return False
+
+        # all well, return True
+        return True
+
     def solveSudoku(self, board):
         pass
 
