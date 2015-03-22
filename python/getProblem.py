@@ -11,6 +11,7 @@ STATUS = {
 }
 
 site = urllib.urlopen(WEB_URL)
+site = urllib.urlopen(WEB_URL)
 content = site.read()
 
 fw = open(LOG_FILE, "wb")
@@ -58,5 +59,14 @@ for file_name in STATUS["INIT"]:
 
 for file_name in STATUS["MIDDLE"]:
     print("MIDDLE: {}".format(file_name))
+
+print("")
+print("Mission Completed...")
+
+
+try:
+    input()
+except:
+    pass
 
 
