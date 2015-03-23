@@ -26,7 +26,4 @@ class Solution:
 
         return maxmum + 1
 
-s = Solution()
-print s.firstMissingPositive([2])
-
 

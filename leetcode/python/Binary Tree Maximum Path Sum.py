@@ -2,6 +2,19 @@
 # for leetcode problems
 # 2014.08.20 by zhanglin
 
+# Problem:
+# Given a binary tree, find the maximum path sum.
+
+# The path may start and end at any node in the tree.
+
+# For example:
+# Given the below binary tree,
+
+#        1
+#       / \
+#      2   3
+# Return 6.
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -30,3 +43,5 @@ class Solution:
             return max(lst)
         # other: (means lst == [])
         #   return None
+
+

@@ -2,6 +2,24 @@
 # for leetcode problems
 # 2014.08.24 by zhanglin
 
+# Problem:
+# Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+# For example:
+# Given the below binary tree and sum = 22,
+#               5
+#              / \
+#             4   8
+#            /   / \
+#           11  13  4
+#          /  \    / \
+#         7    2  5   1
+# return
+# [
+#    [5,4,11,2],
+#    [5,8,4,5]
+# ]
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -35,4 +53,5 @@ class Solution:
             self.pahtSum_helper(root, sum, 0, thisList, mainList)
 
         return mainList
+
 

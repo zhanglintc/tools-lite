@@ -2,6 +2,11 @@
 # for leetcode problems
 # 2014.08.16 by zhanglin
 
+# Problem:
+# There are two sorted arrays A and B of size m and n respectively.
+# Find the median of the two sorted arrays.
+# The overall run time complexity should be O(log (m+n)).
+
 class Solution:
     # @return a float
     def findMedianSortedArrays(self, A, B):
@@ -25,9 +30,4 @@ class Solution:
             right = new_list[len(new_list) // 2]
             return (float(left) + float(right)) // 2
 
-A = [1]
-B = [1]
 
-S = Solution()
-
-S.findMedianSortedArrays(A, B)

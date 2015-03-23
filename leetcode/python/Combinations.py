@@ -39,5 +39,4 @@ class Solution:
 
                 self.combine_helper(n, k, fina_lst, this_lst, depth + 1, i + 1)
 
-s = Solution()
-print s.combine(10, 10)
+

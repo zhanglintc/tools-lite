@@ -49,6 +49,4 @@ class Solution:
 
             self.subsetsWithDup_helper(S, req_depth, this_depth + 1, i + 1, fina_lst, this_lst) # must be i + 1, not start + 1
 
-s = Solution()
-print s.subsetsWithDup([1,2,3])
 

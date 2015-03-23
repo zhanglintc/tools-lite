@@ -1,6 +1,18 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Reorder List
 # for leetcode problems
 # 2014.08.17 by zhanglin
+
+# Problem:
+# Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+# reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+# You must do this in-place without altering the nodes' values.
+
+# For example,
+# Given {1,2,3,4}, reorder it to {1,4,2,3}.
 
 # Definition for singly-linked list.
 # class ListNode:
@@ -34,39 +46,4 @@ class Solution:
 
         return head
 
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
 
-lst = [10,223,88,1,3,11]
-
-head = ListNode(0)
-pt = head # point to the head
-for i in lst:
-    node = ListNode(i) # new a node
-    if head.next == None:
-        head.next = node
-    else:
-        pt.next = node
-    pt = pt.next
-
-# pt = head.next
-# while pt != None:
-#     print (pt.val)
-#     pt = pt.next
-
-def debug_print(lst):
-    while lst != None:
-        print (lst.val)
-        lst = lst.next
-
-pt = head.next
-
-S = Solution()
-
-pt = S.reorderList(pt)
-
-while pt != None:
-    print (pt.val)
-    pt = pt.next

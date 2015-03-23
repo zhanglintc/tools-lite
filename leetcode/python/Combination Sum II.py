@@ -52,5 +52,4 @@ class Solution:
             else:
                 return
 
-s = Solution()
-print s.combinationSum2([10,1,2,7,6,1,5], 8)
+

@@ -69,19 +69,4 @@ class Solution:
 
         return max_counter
 
-class Point:
-    def __init__(self, a=0, b=0):
-        self.x = a
-        self.y = b
 
-points = []
-# the case below has been passed, by changing float(A / B) to float(A) / float(B)
-lst = [(84,250),(0,0),(1,0),(0,-70),(0,-70),(1,-1),(21,10),(42,90),(-42,-230)]
-
-for i in lst:
-    point = Point()
-    point.x, point.y = i
-    points.append(point)
-
-S = Solution()
-print(S.maxPoints(points))

@@ -2,6 +2,20 @@
 # for leetcode problems
 # 2014.08.17 by zhanglin
 
+# Problem:
+# Given a binary tree, return the postorder traversal of its nodes' values.
+
+# For example:
+# Given binary tree {1,#,2,3},
+#    1
+#     \
+#      2
+#     /
+#    3
+# return [3,2,1].
+
+# Note: Recursive solution is trivial, could you do it iteratively?
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -30,11 +44,4 @@ class TreeNode:
         self.left = None
         self.right = None
 
-root = TreeNode(1)
-left = TreeNode(2)
 
-root.left = left
-
-S = Solution()
-output = S.postorderTraversal(root)
-print (output)

@@ -48,9 +48,3 @@ class Solution:
         return dp[len(s)][len(p)]
 
 
-
-
-
-s = Solution()
-print (s.isMatch('aab','c*a*b'))
-

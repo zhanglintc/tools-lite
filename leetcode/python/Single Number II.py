@@ -2,6 +2,12 @@
 # for leetcode problems
 # 2014.08.20 by zhanglin
 
+# Problem:
+# Given an array of integers, every element appears three times except for one. Find that single one.
+
+# Note:
+# Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
 class Solution:
     # @param A, a list of integer
     # @return an integer
@@ -17,6 +23,4 @@ class Solution:
             if val == 1:
                 return key
 
-input = [1,1,11,11]
-S = Solution()
-print(S.singleNumber(input))
+

@@ -2,6 +2,30 @@
 # for leetcode problems
 # 2014.08.25 by zhanglin
 
+# Problem:
+# Given a binary tree, flatten it to a linked list in-place.
+
+# For example,
+# Given
+
+#          1
+#         / \
+#        2   5
+#       / \   \
+#      3   4   6
+# The flattened tree should look like:
+#    1
+#     \
+#      2
+#       \
+#        3
+#         \
+#          4
+#           \
+#            5
+#             \
+#              6
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -31,4 +55,5 @@ class Solution:
     def flatten(self, root):
         pointer = TreeNode(0)
         self.flatten_helper(root, pointer)
-        
+
+

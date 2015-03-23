@@ -2,6 +2,20 @@
 # for leetcode problems
 # 2014.08.17 by zhanglin
 
+# Problem:
+# Given a binary tree, return the preorder traversal of its nodes' values.
+
+# For example:
+# Given binary tree {1,#,2,3},
+#    1
+#     \
+#      2
+#     /
+#    3
+# return [1,2,3].
+
+# Note: Recursive solution is trivial, could you do it iteratively?
+
 # Definition for a  binary tree node
 # class TreeNode:
 #     def __init__(self, x):
@@ -22,3 +36,5 @@ class Solution:
             lst.append(root.val)
             self.helper(root.left,  lst)
             self.helper(root.right, lst)
+
+
