@@ -34,31 +34,34 @@
 // Given height = [2,1,5,6,2,3],
 // return 10.
 
+// See Largest Rectangle in Histogram.py
 class Solution {
 public:
     int largestRectangleArea(vector<int> &height) {
-        if(height.empty()) {
-            return 0;
-        }
+        vector<int> stk; // store every start of ascending chain
+        int area = 0;    // result
+        int this_one = 0;
+        int width = 0;
 
-        int width;
-        vector<int> area;
-        area.push_back(height[0]);
+        int i = 0;
+        height.push_back(0); // append a 0 makes the code more elegant
+        while(i < height.size()) {
+            // ascending chain
+            if(stk.empty() || height[i] >= height[stk[stk.size() - 1]]) {
+                stk.push_back(i);
+                i += 1;
+            }
 
-        for(int i = 0; i < height.size(); i++) {
-            width = 1;
-            for(int j = i + 1; j < height.size(); j++) {
-                if(height[i] <= height[j]) {
-                    width += 1;
-                }
-
-                else if(height[i] > height[j] || j == height.size() - 1) {
-                    area.push_back(height[i] * width);
-                }
+            //descending chain
+            else {
+                this_one = stk.back(); // get last element
+                stk.pop_back(); // remove last element
+                width = stk.empty() ? i : i - stk[stk.size() - 1] - 1;
+                area = area > width * height[this_one] ? area : width * height[this_one];
             }
         }
 
-        return *max_element(area.begin(),area.end());
+        return area;
     }
 };
 
