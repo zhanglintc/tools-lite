@@ -10,6 +10,11 @@ LOG_FILE = CUR_TIME + '.log' # 20141110_151240.log
 
 TARGET_URL = "http://photo.163.com/foreverse@126/pp/slide/12703047.html#pid=38152323"
 
+class AppURLopener(urllib.FancyURLopener):
+    version = "Mozilla/5.0"
+ 
+urllib._urlopener = AppURLopener()
+
 mc = re.search("http.?://(.*?)/.*", TARGET_URL + "/")
 siteName = mc.group(1)
 folderName = "{}_{}".format(siteName, CUR_TIME)
