@@ -46,6 +46,7 @@ if __name__ == '__main__':
     print("The function has run: %.03f seconds" %(end - start))
 
     print("maximal is: {}".format(max(globalList)))
+    print("thread_quantity is: {}".format(thread_quantity))
     # End !!!
 
     try:
