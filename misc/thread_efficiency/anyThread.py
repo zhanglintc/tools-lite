@@ -29,7 +29,14 @@ if __name__ == '__main__':
 
     base = MULTIPLE * 10 / thread_quantity
     for i in range(thread_quantity):
-        threadList.append(myTread(dataList[base * i : base * (i + 1)]))
+        if i == 0:
+            threadList.append(myTread(dataList[: base * (i + 1)]))
+
+        elif i == thread_quantity - 1:
+            threadList.append(myTread(dataList[base * i :]))
+
+        else:
+            threadList.append(myTread(dataList[base * i : base * (i + 1)]))
 
     # Start !!!
     print("Counting...")
