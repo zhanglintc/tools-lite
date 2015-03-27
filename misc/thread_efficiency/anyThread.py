@@ -23,7 +23,7 @@ class myTread(threading.Thread):
 
         globalList.append(maximal)
 
-if __name__ == '__main__':
+def anyThread(thread_quantity):
     with open(dataFileName, "rb") as fr:
         dataList = fr.read().split(",")
 
@@ -50,11 +50,18 @@ if __name__ == '__main__':
         pass
 
     end = time.clock()
-    print("The function has run: %.03f seconds" %(end - start))
+    timeCost = end - start
+
+    print("The function has run: %.03f seconds" %(timeCost))
 
     print("maximal is: {}".format(max(globalList)))
     print("thread_quantity is: {}".format(thread_quantity))
+
+    return timeCost
     # End !!!
+
+if __name__ == '__main__':
+    anyThread(thread_quantity)
 
     try:
         input()
