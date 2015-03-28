@@ -25,13 +25,16 @@ if not os.path.exists(folderName):
 web_cotent = urllib.urlopen(TARGET_URL) # open website
 
 content = web_cotent.read()
-mc = re.findall("http.//[^ ]*?jpg", content)
+mc = re.findall('src="(.*?jpg)"', content) # old pattern: http.//[^ ]*?jpg
 
 picNumbers = len(mc)
 print("download start...\n")
 
 idx = 1
 for url in mc:
+    if "http" not in url:
+        url = "http://" + siteName + url
+
     picName = url.split("/")[-1]
     print("{} --- {}/{}".format(picName, idx, picNumbers))
     idx += 1
