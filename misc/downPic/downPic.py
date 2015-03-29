@@ -22,29 +22,44 @@ folderName = "{}_{}".format(siteName, CUR_TIME)
 if not os.path.exists(folderName):
     os.system("mkdir {}".format(folderName))
 
-web_cotent = urllib.urlopen(TARGET_URL) # open website
+print("download start...\n")
 
+web_cotent = urllib.urlopen(TARGET_URL) # open website
 content = web_cotent.read()
 mc = re.findall('src="(.*?jpg)"', content) # old pattern: http.//[^ ]*?jpg
 
-picNumbers = len(mc)
-print("download start...\n")
+nextURL = True
+while nextURL:
+    picNumbers = len(mc)
+    idx = 1
+    for url in mc:
+        if "http" not in url:
+            url = "http://" + siteName + url
 
-idx = 1
-for url in mc:
-    if "http" not in url:
-        url = "http://" + siteName + url
+        picName = url.split("/")[-1]
+        print("{} --- {}/{}".format(picName, idx, picNumbers))
+        idx += 1
 
-    picName = url.split("/")[-1]
-    print("{} --- {}/{}".format(picName, idx, picNumbers))
-    idx += 1
+        file_path, headers = urllib.urlretrieve(url)
+        with open(file_path, "rb") as fr:
+            data = fr.read()
 
-    file_path, headers = urllib.urlretrieve(url)
-    with open(file_path, "rb") as fr:
-        data = fr.read()
+        with open("{}/{}".format(folderName, picName), "wb") as fw:
+            fw.write(data)
 
-    with open("{}/{}".format(folderName, picName), "wb") as fw:
-        fw.write(data)
+    try:
+        nextURL = re.search('<a class="next" href="(.*?)">', content).group(1)
+        if "http" not in nextURL:
+            nextURL = "http://" + siteName + nextURL
+
+        web_cotent = urllib.urlopen(nextURL) # open website
+        content = web_cotent.read()
+        mc = re.findall('src="(.*?jpg)"', content) # old pattern: http.//[^ ]*?jpg
+
+        print("next page")
+
+    except:
+        nextURL = False
 
 print("")
 print("download completed...")
