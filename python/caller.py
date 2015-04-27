@@ -14,7 +14,7 @@ while GitHubReminder.github_reminder(Auto_Commit_Flag = True):
 # below is WuHong special process...
 Wuhong_Mail_List = [
     "yaodao5000@yahoo.co.jp",
-    "zhanglintc623@foxmail.com",
+    # "zhanglintc623@foxmail.com",
 ]
 
 Wuhong_Github_URL = "https://github.com/sheriseanes?period=daily"
