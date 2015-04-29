@@ -1,10 +1,17 @@
 @echo off
 for /d %%i in (*) do (
     cd %%~fi
-    echo updating %%~fi
-    svn update > nul
+
+    echo Updating: %%~fi
+    echo ==================
+    svn cleanup
+    svn update
+    echo ==================
+    echo.
+    echo.
+
     cd ..
 )
 echo.
-echo completed...
+echo Completed...
 pause > nul
