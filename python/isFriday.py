@@ -7,7 +7,8 @@ os.system("date > tmp")
 
 with open("tmp", "rb") as fr:
     if "Fri" not in fr.read():
-        os.system('/home/lane/wb/src/wb.py -t "今天是星期五吗？不是…"')
+        # os.system('/home/lane/wb/src/wb.py -t "今天是星期五吗？不是…"')
+        pass
 
     else:
         os.system('/home/lane/wb/src/wb.py -t "今天是星期五吗？是！"')
