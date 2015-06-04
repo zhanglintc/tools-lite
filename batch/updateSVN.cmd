@@ -1,4 +1,8 @@
 @echo off
+
+title Powered by Lane at ZDS
+color 3e
+
 for /d %%i in (*) do (
     cd %%~fi
 
@@ -13,5 +17,5 @@ for /d %%i in (*) do (
     cd ..
 )
 echo.
-echo Completed...
+echo Press any key to close...
 pause > nul
