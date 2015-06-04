@@ -1,5 +1,8 @@
 @echo off
 
+title Powerd by Lane at ZDS
+color 3e
+
 REM set the file path here
 echo Drag target file here:
 set /p file=
