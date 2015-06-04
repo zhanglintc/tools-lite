@@ -17,5 +17,4 @@ goto loop
 
 :end
 REM if loop finished then start the file
-REM this command could get optimize
-start %file%
+"%file%"
