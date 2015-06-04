@@ -1,9 +1,10 @@
 @echo off
 
-title Powered by Lane at ZDS
 color 3e
 
 for /d %%i in (*) do (
+    title Updating...  %%~fi
+
     cd %%~fi
 
     echo Updating: %%~fi
@@ -16,6 +17,9 @@ for /d %%i in (*) do (
 
     cd ..
 )
+
+title Competed...  Powered by Lane at ZDS
+
 echo.
 echo Press any key to close...
 pause > nul
