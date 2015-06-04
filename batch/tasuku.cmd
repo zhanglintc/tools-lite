@@ -63,7 +63,7 @@ pause>nul
 cls
 
 for /f "usebackq delims=" %%i in (tmp.dat) do (
-for /f "usebackq delims=" %%z in (%%i) do (
+for /f "usebackq delims=" %%z in ("%%i") do (
 set /a line_count=!line_count!+1
 )
 cls
