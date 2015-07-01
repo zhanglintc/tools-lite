@@ -14,7 +14,7 @@ set /p target=Drag JPEG file here:
 if %target%==NULL goto del
 
 :add
-del C:\Windows\System32\oobe\info\backgrounds\*.jpg
+del C:\Windows\System32\oobe\info\backgrounds\*.jpg > nul
 xcopy /y %target% C:\Windows\System32\oobe\info\backgrounds\ > nul
 rename C:\Windows\System32\oobe\info\backgrounds\*.jpg BackgroundDefault.jpg
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background /v OEMBackground /t REG_DWORD /d 00000001 /f > nul
