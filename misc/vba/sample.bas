@@ -374,7 +374,43 @@ Private Sub CopyToCodeReviewBook_Click()
         End If
 nextWBS:
     Next i
+    
+'2015.07.16 ZhangLin auto statistics -S
+    'write 合計
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Cells(lineNumber + 1, 21) = "合計"
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Range("U" & (lineNumber + 1) & ":X" & (lineNumber + 1)).Select
+    With Selection
+        .MergeCells = True
+        .HorizontalAlignment = Excel.xlCenter
+    End With
 
+    'write lines count
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Cells(lineNumber + 1, 25) = "=SUM(Y56:Y" & (lineNumber - 1) & ")"
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Range("Y" & (lineNumber + 1) & ":Z" & (lineNumber + 1)).Select
+    With Selection
+        .MergeCells = True
+        .HorizontalAlignment = Excel.xlCenter
+        '.Font.Underline = xlUnderlineStyleDoubleAccounting
+        .Borders(xlEdgeBottom).LineStyle = xlDouble
+    End With
+    
+    'write 行
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Cells(lineNumber + 1, 27) = "行"
+    
+    'write indicate
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Cells(lineNumber + 1, 29) = "=SUM(AC56:AC" & (lineNumber - 1) & ")"
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Range("AC" & (lineNumber + 1) & ":AD" & (lineNumber + 1)).Select
+    With Selection
+        .MergeCells = True
+        .HorizontalAlignment = Excel.xlCenter
+        '.Font.Underline = xlUnderlineStyleDoubleAccounting
+        .Borders(xlEdgeBottom).LineStyle = xlDouble
+    End With
+    
+    'write 件
+    Workbooks(WBSNoBookName).Sheets("表紙_集計").Cells(lineNumber + 1, 31) = "件"
+'2015.07.16 ZhangLin auto statistics -E
+    
 End Sub
 
 
