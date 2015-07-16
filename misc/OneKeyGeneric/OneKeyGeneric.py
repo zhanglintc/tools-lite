@@ -10,7 +10,7 @@ Nothing here...
 ################################
 # Need to be update -S
 ################################
-fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP"]
+fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP", "BAT"]
 langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
 
 target_folder = r"E:\ZDS_Working_SVN\trunk\KMSrc_2.06.10\Driver\Model\C368"
@@ -93,8 +93,8 @@ def ProcessFile(fPathName):
             IsReplace = True
 ################################################################
         # No.2 KOAY**_*.***  ->  KOAY**A*.*** 
-        if re.search('(KOAY..).(.)', line): # old pattern: (KOAYC.).(.)
-            line = re.sub('(KOAY..).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
+        if re.search('(KOAY..)[^A](.)', line): # old pattern: (KOAYC.).(.)
+            line = re.sub('(KOAY..)[^A](.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
             IsReplace = True
 ################################################################
         # No.3 deal with KONICA MINOLTA
@@ -146,8 +146,8 @@ for root,dirs,files in FTuple:
             ProcessFile(of)
 ################################################################
         # replace file name
-        if re.search('(KOAY..).(.)', Tmpfile):
-            replaced_file = re.sub('(KOAY..).(.)', lambda mc: mc.group(1) + 'A' + mc.group(2), Tmpfile)
+        if re.search('(KOAY..)[^A](.)', Tmpfile):
+            replaced_file = re.sub('(KOAY..)[^A](.)', lambda mc: mc.group(1) + 'A' + mc.group(2), Tmpfile)
             old_file = os.path.join(root, Tmpfile)
             new_file = os.path.join(root, replaced_file)
             os.rename(old_file, new_file)
