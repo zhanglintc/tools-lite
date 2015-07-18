@@ -14,11 +14,19 @@ while GitHubReminder.github_reminder(Auto_Commit_Flag = True):
 # below is WuHong special process...
 Wuhong_Mail_List = [
     "yaodao5000@yahoo.co.jp",
-    # "zhanglintc623@foxmail.com",
-]
-
+    # "zhanglintc623@foxmail.com",]
 Wuhong_Github_URL = "https://github.com/sheriseanes?period=daily"
-
 while GitHubReminder.github_reminder(MailList = Wuhong_Mail_List, GITHUB_URL = Wuhong_Github_URL, Auto_Commit_Flag = False):
     print('wuhong failed, try again\n')
+
+
+# below is Houliyuan special process...
+Houliyuan_Mail_List = [
+    "349655336@qq.com",
+    "zhanglintc623@foxmail.com",]
+Houliyuan_Github_URL = "https://github.com/Pang327?period=daily"
+while GitHubReminder.github_reminder(MailList = Houliyuan_Mail_List, GITHUB_URL = Houliyuan_Github_URL, Auto_Commit_Flag = False):
+    print('houliyuan failed, try again\n')
+
+
 
