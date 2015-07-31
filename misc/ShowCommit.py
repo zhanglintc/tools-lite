@@ -15,9 +15,10 @@ TODAY = str(datetime.date.today()) # something like: 2014-11-10
 CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
 LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
 
-def github_reminder():
-    web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # open website
-    web_cotent = urllib.urlopen("https://github.com/zhanglintc?period=daily") # do it twice
+def github_reminder(targetURL):
+    cprint("[" + targetURL.split("/")[-1].split("?")[0] + ":, red]\n")
+    web_cotent = urllib.urlopen(targetURL) # open website
+    web_cotent = urllib.urlopen(targetURL) # do it twice
 
     line  = True
     error = True
@@ -82,7 +83,8 @@ def github_reminder():
     return send_content
 
 if __name__ == '__main__':
-    cprint(github_reminder())
+    cprint(github_reminder("https://github.com/zhanglintc?period=daily") + "\n")
+    cprint(github_reminder("https://github.com/pang327?period=daily") + "\n")
 
     try:
         raw_input()
