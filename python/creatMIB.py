@@ -3,9 +3,21 @@
 
 __author__="ZhangLin"
 
-import os
+import os, sys
 
-targetFolder = r"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.31\Driver\Model"
+version = sys.version[0]
+
+targetFolder = r""
+
+def QuotationStrip(targetFolder):
+    """
+    Strip quotation mark of given path
+    """
+
+    if targetFolder[0] == '\"':
+        targetFolder = targetFolder[1:-1]
+
+    return targetFolder
 
 def process(givenPath):
     toBeWriten = ""
@@ -23,12 +35,37 @@ def process(givenPath):
     fw.write(toBeWriten)
     fw.close()
 
-tup = os.walk(targetFolder)
-for root,dirs,files in tup:
-    for f in files:
-        if f.lower() == "basic.ini":
-            fullPath = os.path.join(root, f)
-            process(fullPath)
+if __name__ == '__main__':
+    if not targetFolder:
+        if version == '2':
+            targetFolder = raw_input("Drag target folder here:\n")
+        if version == '3':
+            targetFolder = input("Drag target folder here:\n")
 
-print("DeviceInfoCache Enable => Disable")
+        if not targetFolder:
+            print('"targetFolder" not set. Script is going to terminate.')
+
+            try:
+                input()
+            except:
+                pass
+
+            sys.exit(0)
+
+        targetFolder = QuotationStrip(targetFolder)
+
+    tup = os.walk(targetFolder)
+    for root,dirs,files in tup:
+        for f in files:
+            if f.lower() == "basic.ini":
+                fullPath = os.path.join(root, f)
+                process(fullPath)
+
+    print("")
+    print("DeviceInfoCache Enable => Disable")
+
+    try:
+        input()
+    except:
+        pass
 
