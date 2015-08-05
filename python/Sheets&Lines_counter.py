@@ -1,13 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, xlrd
+__author__="ZhangLin"
+
+import os, sys, xlrd
+
+version = sys.version[0]
 
 fExt = ["XLS", "XLSX"]
 reviewerAttendTimes = {}
 creatorAttendTimes  = {}
 
-targetFolder = ur"D:\KMWinDrv_VSS\011.IT5Color_v2.2\20150720-0723_FVT-1 Re\02.Coding_[PG作成]_PR_PM\code_review\Common"
+targetFolder = ur""
+
+def QuotationStrip(targetFolder):
+    """
+    Strip quotation mark of given path
+    """
+
+    if targetFolder[0] == '\"':
+        targetFolder = targetFolder[1:-1]
+
+    return targetFolder
 
 def IsTargetFile(FileName):
     sufix = os.path.splitext(FileName)[1][1:]
@@ -19,7 +33,7 @@ def IsTargetFile(FileName):
         return False
 
 def countSheets(targetFile):
-    print("Openning: " + targetFile.split("\\")[-1].encode("cp932"))
+    print("Counting: " + targetFile.split("\\")[-1].encode("cp932"))
     xlsfile = xlrd.open_workbook(targetFile)
 
     try:
@@ -63,6 +77,24 @@ def everyFile(targetFolder):
     return sheets, lines
 
 if __name__ == '__main__':
+    if not targetFolder:
+        if version == '2':
+            targetFolder = raw_input("Drag target folder here:\n").decode("cp932")
+        if version == '3':
+            targetFolder = input("Drag target folder here:\n").decode("cp932")
+
+        if not targetFolder:
+            print('"targetFolder" not set. Script is going to terminate.')
+
+            try:
+                input()
+            except:
+                pass
+
+            sys.exit(0)
+
+        targetFolder = QuotationStrip(targetFolder)
+
     ret = everyFile(targetFolder)
     print("")
     print("Creator:")
@@ -71,8 +103,15 @@ if __name__ == '__main__':
     print("Reviewer:")
     for p, t in reviewerAttendTimes.items():
         print p.encode("cp932"), t
-    print("※TXTのCreatorとReviewerを統計しないのでご注意下さい\n")
+    print(u"※TXTのCreatorとReviewerを統計しないのでご注意下さい\n")
     print("All: " + str(sum(ret[0])) + " sheets")
     print("All: " + str(sum(ret[1]) / 1000.0) + "k lines\n")
+
+    print("")
+    print("Press any key to close...")
+    try:
+        input()
+    except:
+        pass
 
 
