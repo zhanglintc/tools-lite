@@ -7,7 +7,7 @@ fExt = ["XLS", "XLSX"]
 reviewerAttendTimes = {}
 creatorAttendTimes  = {}
 
-targetFolder = ur"D:\KMWinDrv_VSS\011.IT5Color_v2.2\20150713-0716_FVT-1\02.Coding_[PG作成]_PR_PM\code_review\Common"
+targetFolder = ur"D:\KMWinDrv_VSS\011.IT5Color_v2.2\20150720-0723_FVT-1 Re\02.Coding_[PG作成]_PR_PM\code_review\Common"
 
 def IsTargetFile(FileName):
     sufix = os.path.splitext(FileName)[1][1:]
@@ -21,12 +21,19 @@ def IsTargetFile(FileName):
 def countSheets(targetFile):
     print("Openning: " + targetFile.split("\\")[-1].encode("cp932"))
     xlsfile = xlrd.open_workbook(targetFile)
-    lines = int(xlsfile.sheets()[0].cell(44 - 1, 38 - 1).value)
-    participator = xlsfile.sheets()[0].cell(44 - 1, 17 - 1).value
+
+    try:
+        lines = int(xlsfile.sheets()[0].cell(44 - 1, 38 - 1).value)
+        participator = xlsfile.sheets()[0].cell(44 - 1, 17 - 1).value
+    except:
+        lines = 0
+        participator = ""
+
     for p in participator.split("/")[0]:
         creatorAttendTimes[p] = creatorAttendTimes.get(p, 0) + 1
     for p in participator.split("/")[1:]:
         reviewerAttendTimes[p] = reviewerAttendTimes.get(p, 0) + 1
+
     table = True
     idx = 0
     while (table):
