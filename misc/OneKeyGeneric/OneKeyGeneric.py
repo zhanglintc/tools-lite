@@ -72,7 +72,7 @@ def ProcessFile(fPathName):
         print("Error Read file:{}".format(fPathName))
         return
 ################################
-    to_be_wirtten = ""
+    to_be_written = ""
     IsReplace = False
     jumpOneLine = False
     for line in generator:
@@ -130,11 +130,11 @@ def ProcessFile(fPathName):
                 jumpOneLine = True
 ################################################################
         # append this line to the end
-        to_be_wirtten += line
+        to_be_written += line
 ################################################################
     # do replace
     if IsReplace:
-        TxtFile.WriteTxtFile(to_be_wirtten)
+        TxtFile.WriteTxtFile(to_be_written)
         print("replced file: {}".format(fPathName))
 ################################################################
 FTuple = os.walk(target_folder)
