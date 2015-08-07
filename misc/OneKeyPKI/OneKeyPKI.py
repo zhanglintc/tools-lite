@@ -6,8 +6,8 @@ import os, re
 
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP", "BAT", "DEF"]
 
-theComment = u"2015.08.06 ZhangLin PKI対応テスト"
-targetFolder = r"C:\Users\Lane\Desktop\958"
+theComment = u"2015.08.06 ZhangLin WBS No.55 PKI対応テスト"
+targetFolder = r"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.31\Driver\Model\C658"
 
 
 def processFile(targetFile):
@@ -66,7 +66,7 @@ def processFile(targetFile):
     """
     3. Basic.ini (PCL/PS共通)
 
-    [Version]                                   
+    [Version]
     修正前:    Ver_Basic=          *00             ※"*"の値は任意
             ↓
     修正後:    Ver_Basic=          *10
@@ -106,8 +106,8 @@ def processFile(targetFile):
 
         for line in generator:
             if re.search("Ver_Basic.*\d(0)0", line):
-                doReplace = True
                 line = re.sub("(Ver_Basic.*?\d)0(0)", lambda mc: mc.group(1) + '1' + mc.group(2), line)
+                doReplace = True
 
             if re.search("AuthenticationVerify.*Enable", line) and ";//" not in line:
                 toBeWritten += ";// " + theComment + " -S\r\n"
@@ -127,8 +127,10 @@ def processFile(targetFile):
                 doReplace = True
                 continue
 
-            # [EasySetPreset], not completed
-            pass
+            for n in ["05", "06", "07", "12", "13", "14", "19", "20", "21"]:
+                if re.search("ES_0" + n, line) and ";//" not in line:
+                    line = ";// " + line
+                    doReplace = True
 
             toBeWritten += line
 
@@ -141,7 +143,7 @@ def processFile(targetFile):
 
     [Version]
     修正前:    Ver_Command=            *00             ※"*"の値は任意
-            ↓                                   
+            ↓
     修正後:    Ver_Command=            *10
 
     [PJL_StartCommand]
@@ -153,11 +155,11 @@ def processFile(targetFile):
     修正後:                                　（先頭以外に追加しても機能しないので注意）
     修正前:     SubSection=            NonUI1, …, SingleSignOn
                                         2015/1/15侯リ園補足
-            ↓                                   
+            ↓
     修正後:     SubSection=            Pki, NonUI1, …, SingleSignOn
 
     追加: ; ---------------------------                           ※以下、[PJL_StartCommand]と[NonUI1]の間に追加
-    追加: ; for PKI 
+    追加: ; for PKI
     追加: ; ---------------------------
     追加: [Pki]
     追加: PkiStartJob=            "\x1B%-12345X@PJL JOB\r\n"
@@ -181,8 +183,8 @@ def processFile(targetFile):
 
         for line in generator:
             if re.search("Ver_Command.*\d(0)0", line):
-                doReplace = True
                 line = re.sub("(Ver_Command.*?\d)0(0)", lambda mc: mc.group(1) + '1' + mc.group(2), line)
+                doReplace = True
 
             if re.search("Order.*NonUI1.*SingleSignOn,NonUI2", line) and ";//" not in line:
                 toBeWritten += ";// " + theComment + " -S\r\n"
@@ -203,15 +205,266 @@ def processFile(targetFile):
                 doReplace = True
                 continue
 
+            if re.search("\[NonUI1\]", line) and ";//" not in line:
+                toBeWritten += "    ;// " + theComment + " -S\r\n"
+                toBeWritten += "    ; ---------------------------\r\n"
+                toBeWritten += "    ; for PKI\r\n"
+                toBeWritten += "    ; ---------------------------\r\n"
+                toBeWritten += "    [Pki]\r\n"
+                toBeWritten += '    PkiStartJob=            "\\x1B%-12345X@PJL JOB\\r\\n"' + "\r\n"
+                toBeWritten += '    PkiCoe=                 "@PJL SET KMPKICOE = %s{API(PkiCoe),321,UTF8,None}\\r\\n"' + "\r\n"
+                toBeWritten += '    PkiUserName=            "@PJL SET KMPKIUSERNAME = \\"%s{API(PkiUserName),64,UTF8,None}\\"\\r\\n"' + "\r\n"
+                toBeWritten += '    PkiCertServType=        "@PJL SET KMPKICERTSERVTYPE = %s{API(PkiCertServType),64,UTF8,None}\\r\\n"' + "\r\n"
+                toBeWritten += '    PkiCertServNum=         "@PJL SET KMPKICERTSERVNUM = %s{UI(PkiCertServNum),4,,None}\\r\\n"' + "\r\n"
+                toBeWritten += "    ;// " + theComment + " -E\r\n\r\n"
+                toBeWritten += line
+                # doReplace = True
+                continue
+
+            if re.search("Comment=", line) and ";//" not in line:
+                toBeWritten += line
+                toBeWritten += "    ;// " + theComment + " -S\r\n"
+                toBeWritten += '    PkiComment=             "@PJL COMMENT = \\"PKIPrintData\\"\\r\\n"' + "\r\n"
+                toBeWritten += "    ;// " + theComment + " -E\r\n"
+                # doReplace = True
+                continue
+
             toBeWritten += line
 
         if doReplace:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
+    """
+    6. UISetup.ini (PCL/PS共通)
+
+    [Version]
+    修正前:    Ver_UISetup=            *00             ※"*"の値は任意
+            ↓
+    修正後:    Ver_UISetup=            *10
+
+    [DeviceOption] 
+    修正前:    Order=          OpMachine, …, DevUserAuthentication, …, OpWLAN_ErpRet
+            ↓
+    修正後:    Order=          OpMachine, …, DevTPMStatus, …, OpWLAN_ErpRet                ※DevUserAuthenticationを削除し、DevTPMStatusを追加
+
+    修正前:    LinkSection=            OpMachine, …,  …, OpWLAN_ErpRet
+                                            2015/7/16 張麟補足
+    修正後:    LinkSection=            OpMachine, …, DevTPMStatus, …, OpWLAN_ErpRet                ※DevTPMStatusを追加
+
+    [DevUserAuthentication]
+    修正前:    DefaultItem=            DevUserAuthentic_Dis
+            ↓
+    修正後:    DefaultItem=            DevUserAuthentic_GeneralSV
+
+    [EasySet] 
+    修正前:    Count=          7
+    修正前:    Order=          ES_001,ES_002,ES_003,ES_004,ES_005,ES_006,ES_007
+            ↓
+    修正後:    ;// Count=          7
+    修正後:    ;// Order=          ES_001,ES_002,ES_003,ES_004,ES_005,ES_006,ES_007
+    修正後:    Count=          4
+    修正後:    Order=          ES_001,ES_002,ES_003,ES_004
+
+    [OutputMethod] 
+    修正前:    Count=          6
+    修正前:    Order=          NormalPrint,SecurePrint,SaveBox,SaveBoxAndPrint,ProofAndPrint,TouchAndPrint
+    修正前:    SubSection=             NormalPrint,SecurePrint,SaveBox,SaveBoxAndPrint,WaitMode,ProofAndPrint,TouchAndPrint
+            ↓
+    修正後:    Count=          7
+    修正後:    Order=          NormalPrint,SecurePrint,SaveBox,SaveBoxAndPrint,ProofAndPrint,TouchAndPrint,PKICardPrint
+    修正後:    SubSection=             NormalPrint,SecurePrint,SaveBox,SaveBoxAndPrint,WaitMode,ProofAndPrint,TouchAndPrint,PKICardPrint
+
+    追加: [PKICardPrint]                          ※以下、[TouchAndPrint]の下に追加
+
+    追加: dmID=           18                  この行を使用する（2014.10.21から）
+    追加: PJLValue=           NOSET
+
+    追加: [ICCardUsed]                            ※以下、[UserAuthentic_NoPassWord]の下に追加
+    追加: Count=          2
+    追加: Order=          ICCardUsedOFF,ICCardUsedON
+    追加: DefaultItem=            ICCardUsedON
+    """
+    if fName.lower() == "uisetup.ini":
+        TxtFile = TxtFileHandle.TxtFileHandle()
+        generator = TxtFile.ReadTxtFile(targetFile)
+
+        toBeWritten = ""
+        doReplace = False
+
+        if generator == "":
+            print("Error Read file: {0}".format(fPathName))
+            return
+
+        for line in generator:
+            if re.search("Ver_UISetup.*\d(0)0", line):
+                line = re.sub("(Ver_UISetup.*?\d)0(0)", lambda mc: mc.group(1) + '1' + mc.group(2), line)
+                doReplace = True
+
+            if re.search("Order.*DevUserAuthentication", line) and ";//" not in line:
+                toBeWritten += ";// " + theComment + " -S\r\n"
+                toBeWritten += ";// " + line
+                toBeWritten += line.replace("DevUserAuthentication", "DevTPMStatus")
+                toBeWritten += ";// " + theComment + " -E\r\n"
+                # doReplace = True
+                continue
+
+            if re.search("LinkSection.*OpWLAN_ErpRet", line) and ";//" not in line:
+                toBeWritten += ";// " + theComment + " -S\r\n"
+                toBeWritten += ";// " + line
+                toBeWritten += line.replace("OpWLAN_ErpRet", "OpWLAN_ErpRet,DevTPMStatus")
+                toBeWritten += ";// " + theComment + " -E\r\n"
+                # doReplace = True
+                continue
+
+            if re.search("DefaultItem.*DevUserAuthentic_Dis", line) and ";//" not in line:
+                toBeWritten += ";// " + theComment + " -S\r\n"
+                toBeWritten += ";// " + line
+                toBeWritten += line.replace("DevUserAuthentic_Dis", "DevUserAuthentic_GeneralSV")
+                toBeWritten += ";// " + theComment + " -E\r\n"
+                doReplace = True
+                continue
+
+            # [EasySet]
+            pass
+
+            # [OutputMethod]
+            pass
+
+            # [TouchAndPrint]
+            pass
+
+            # [ICCardUsed]
+            pass
+
+            toBeWritten += line
+
+        if doReplace:
+            TxtFile.WriteTxtFile(toBeWritten)
+            print("replced file: {}".format(targetFile))
+
+    """
+    7. Version.ini
+
+    [Version]
+    修正前:    Ver_driver=         a.b.c.0
+            ↓
+    修正後:    Ver_driver=         a.b.c.OSW1_01
+    """
+    if fName.lower() == "version.ini":
+        TxtFile = TxtFileHandle.TxtFileHandle()
+        generator = TxtFile.ReadTxtFile(targetFile)
+
+        toBeWritten = ""
+        doReplace = False
+
+        if generator == "":
+            print("Error Read file: {0}".format(fPathName))
+            return
+
+        for line in generator:
+            if re.search("(Ver_driver.*\d.\d.\d.)0", line):
+                line = re.sub("(Ver_driver.*\d.\d.\d.)0", lambda mc: mc.group(1) + "OSW1_01", line)
+                doReplace = True
+
+            toBeWritten += line
+
+        if doReplace:
+            TxtFile.WriteTxtFile(toBeWritten)
+            print("replced file: {}".format(targetFile))
+
+    """
+    9. *******.inf or ********.unf (PCL/PS共通)
+
+    [Version]
+    修正前:    DriverVer=          mm/dd/yyyy,a.b.c.0
+            ↓
+    修正後:    DriverVer=          mm/dd/yyyy,a.b.c.1
+
+    [KOAYC_COPY] or [G_FILES]
+    削除: ******_E.KMP
+    削除: ******_F.KMP
+    削除: ******_G.KMP
+
+    [SourceDisksFiles] or [SourceDisksFiles.amd64]
+    削除: ******_E.KMP = 4
+    削除: ******_F.KMP = 4
+    削除: ******_G.KMP = 4
+    """
+    if fExt.lower() == "inf":
+        TxtFile = TxtFileHandle.TxtFileHandle()
+        generator = TxtFile.ReadTxtFile(targetFile)
+
+        toBeWritten = ""
+        doReplace = False
+
+        if generator == "":
+            print("Error Read file: {0}".format(fPathName))
+            return
+
+        for line in generator:
+            if re.search("(DriverVer.*\d\.\d\.\d\.)0", line):
+                line = re.sub("(DriverVer.*\d\.\d\.\d\.)0", lambda mc: mc.group(1) + "OSW1_01", line)
+                doReplace = True
+
+            for s in ["_E", "_F", "_G", "_L", "_M", "_N", "_S", "_T", "_U"]:
+                if re.search("^KOAY.*{0}\.KMP".format(s), line) and ";//" not in line:
+                    line = ""
+                    doReplace = True
+
+            toBeWritten += line
+
+        if doReplace:
+            TxtFile.WriteTxtFile(toBeWritten)
+            print("replced file: {}".format(targetFile))
+
+    """
+    10. KMPファイル （2014.12.17 張麟補足）
+                
+    [Version]
+    修正前:    version=            "a.b.c.0"
+            ↓
+    修正後:    version=            "a.b.c.OSW1_01"
+        ※即ちVersion.iniの値と同じ
+
+    KMPフォルダ中、下記不要なKMPファイルを削除：
+    削除: ******_E.KMP
+    削除: ******_F.KMP
+    削除: ******_G.KMP
+    """
+    if fExt.lower() == "kmp":
+        TxtFile = TxtFileHandle.TxtFileHandle()
+        generator = TxtFile.ReadTxtFile(targetFile)
+
+        toBeWritten = ""
+        doReplace = False
+
+        if generator == "":
+            print("Error Read file: {0}".format(fPathName))
+            return
+
+        for line in generator:
+            if re.search("(version.*\d\.\d\.\d\.)0", line):
+                line = re.sub("(version.*\d\.\d\.\d\.)0", lambda mc: mc.group(1) + "OSW1_01", line)
+                doReplace = True
+
+            toBeWritten += line
+
+        if doReplace:
+            TxtFile.WriteTxtFile(toBeWritten)
+            print("replced file: {}".format(targetFile))
+
+def deleteFolderFile():
+    tup = os.walk(targetFolder)
+    for root, dirs, files in tup:
+        for f in files:
+            if isTargetFile(f):
+                targetFile = os.path.join(root, f)
+                print root
+
 def isTargetFile(FileName):
     sufix = os.path.splitext(FileName)[1][1:]
-    
+
     if sufix.upper() in fExt:
         return True
 
@@ -219,9 +472,10 @@ def isTargetFile(FileName):
         return False
 
 if __name__ == '__main__':
-    tup = os.walk(targetFolder)
-    for root, dirs, files in tup:
-        for f in files:
-            if isTargetFile(f):
-                targetFile = os.path.join(root, f)
-                processFile(targetFile)
+    deleteFolderFile()
+    # tup = os.walk(targetFolder)
+    # for root, dirs, files in tup:
+    #     for f in files:
+    #         if isTargetFile(f):
+    #             targetFile = os.path.join(root, f)
+    #             processFile(targetFile)
