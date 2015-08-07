@@ -3,6 +3,9 @@
 
 import TxtFileHandle
 import os, re
+import shutil
+
+doReplace = False
 
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP", "BAT", "DEF"]
 
@@ -42,7 +45,7 @@ def processFile(targetFile):
         generator = TxtFile.ReadTxtFile(targetFile)
 
         toBeWritten = ""
-        doReplace = False
+        isFind = False
 
         if generator == "":
             print("Error Read file: {0}".format(fPathName))
@@ -54,12 +57,12 @@ def processFile(targetFile):
                 toBeWritten += "#// " + line
                 toBeWritten += line.replace("0", "2")
                 toBeWritten += "#// " + theComment + " -E\r\n"
-                doReplace = True
+                isFind = True
                 continue
 
             toBeWritten += line
 
-        if doReplace:
+        if doReplace and isFind:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
@@ -98,7 +101,7 @@ def processFile(targetFile):
         generator = TxtFile.ReadTxtFile(targetFile)
 
         toBeWritten = ""
-        doReplace = False
+        isFind = False
 
         if generator == "":
             print("Error Read file: {0}".format(fPathName))
@@ -107,7 +110,7 @@ def processFile(targetFile):
         for line in generator:
             if re.search("Ver_Basic.*\d(0)0", line):
                 line = re.sub("(Ver_Basic.*?\d)0(0)", lambda mc: mc.group(1) + '1' + mc.group(2), line)
-                doReplace = True
+                isFind = True
 
             if re.search("AuthenticationVerify.*Enable", line) and ";//" not in line:
                 toBeWritten += ";// " + theComment + " -S\r\n"
@@ -115,7 +118,7 @@ def processFile(targetFile):
                 toBeWritten += "AuthenticationVerify=           Disable\r\n"
                 toBeWritten += "ICCardUsed=                     Enable\r\n"
                 toBeWritten += ";// " + theComment + " -E\r\n"
-                doReplace = True
+                isFind = True
                 continue
 
             if re.search("VerifyAuthentic.*Enable", line) and ";//" not in line:
@@ -124,17 +127,17 @@ def processFile(targetFile):
                 toBeWritten += "VerifyAuthentic=            Disable\r\n"
                 toBeWritten += "PopupAuthentic=             Disable\r\n"
                 toBeWritten += ";// " + theComment + " -E\r\n"
-                doReplace = True
+                isFind = True
                 continue
 
             for n in ["05", "06", "07", "12", "13", "14", "19", "20", "21"]:
                 if re.search("ES_0" + n, line) and ";//" not in line:
                     line = ";// " + line
-                    doReplace = True
+                    isFind = True
 
             toBeWritten += line
 
-        if doReplace:
+        if doReplace and isFind:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
@@ -175,7 +178,7 @@ def processFile(targetFile):
         generator = TxtFile.ReadTxtFile(targetFile)
 
         toBeWritten = ""
-        doReplace = False
+        isFind = False
 
         if generator == "":
             print("Error Read file: {0}".format(fPathName))
@@ -184,7 +187,7 @@ def processFile(targetFile):
         for line in generator:
             if re.search("Ver_Command.*\d(0)0", line):
                 line = re.sub("(Ver_Command.*?\d)0(0)", lambda mc: mc.group(1) + '1' + mc.group(2), line)
-                doReplace = True
+                isFind = True
 
             if re.search("Order.*NonUI1.*SingleSignOn,NonUI2", line) and ";//" not in line:
                 toBeWritten += ";// " + theComment + " -S\r\n"
@@ -193,7 +196,7 @@ def processFile(targetFile):
                 line = line.replace("NonUI1", "Pki,SingleSignOn,NonUI1")
                 toBeWritten += line
                 toBeWritten += ";// " + theComment + " -E\r\n"
-                doReplace = True
+                isFind = True
                 continue
 
             if re.search("SubSection.*NonUI1.*SingleSignOn", line) and ";//" not in line and "Pki," not in line:
@@ -202,7 +205,7 @@ def processFile(targetFile):
                 line = line.replace("NonUI1", "Pki,NonUI1")
                 toBeWritten += line
                 toBeWritten += ";// " + theComment + " -E\r\n"
-                doReplace = True
+                isFind = True
                 continue
 
             if re.search("\[NonUI1\]", line) and ";//" not in line:
@@ -218,7 +221,7 @@ def processFile(targetFile):
                 toBeWritten += '    PkiCertServNum=         "@PJL SET KMPKICERTSERVNUM = %s{UI(PkiCertServNum),4,,None}\\r\\n"' + "\r\n"
                 toBeWritten += "    ;// " + theComment + " -E\r\n\r\n"
                 toBeWritten += line
-                # doReplace = True
+                # isFind = True
                 continue
 
             if re.search("Comment=", line) and ";//" not in line:
@@ -226,12 +229,12 @@ def processFile(targetFile):
                 toBeWritten += "    ;// " + theComment + " -S\r\n"
                 toBeWritten += '    PkiComment=             "@PJL COMMENT = \\"PKIPrintData\\"\\r\\n"' + "\r\n"
                 toBeWritten += "    ;// " + theComment + " -E\r\n"
-                # doReplace = True
+                # isFind = True
                 continue
 
             toBeWritten += line
 
-        if doReplace:
+        if doReplace and isFind:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
@@ -290,7 +293,7 @@ def processFile(targetFile):
         generator = TxtFile.ReadTxtFile(targetFile)
 
         toBeWritten = ""
-        doReplace = False
+        isFind = False
 
         if generator == "":
             print("Error Read file: {0}".format(fPathName))
@@ -299,14 +302,14 @@ def processFile(targetFile):
         for line in generator:
             if re.search("Ver_UISetup.*\d(0)0", line):
                 line = re.sub("(Ver_UISetup.*?\d)0(0)", lambda mc: mc.group(1) + '1' + mc.group(2), line)
-                doReplace = True
+                isFind = True
 
             if re.search("Order.*DevUserAuthentication", line) and ";//" not in line:
                 toBeWritten += ";// " + theComment + " -S\r\n"
                 toBeWritten += ";// " + line
                 toBeWritten += line.replace("DevUserAuthentication", "DevTPMStatus")
                 toBeWritten += ";// " + theComment + " -E\r\n"
-                # doReplace = True
+                # isFind = True
                 continue
 
             if re.search("LinkSection.*OpWLAN_ErpRet", line) and ";//" not in line:
@@ -314,7 +317,7 @@ def processFile(targetFile):
                 toBeWritten += ";// " + line
                 toBeWritten += line.replace("OpWLAN_ErpRet", "OpWLAN_ErpRet,DevTPMStatus")
                 toBeWritten += ";// " + theComment + " -E\r\n"
-                # doReplace = True
+                # isFind = True
                 continue
 
             if re.search("DefaultItem.*DevUserAuthentic_Dis", line) and ";//" not in line:
@@ -322,24 +325,24 @@ def processFile(targetFile):
                 toBeWritten += ";// " + line
                 toBeWritten += line.replace("DevUserAuthentic_Dis", "DevUserAuthentic_GeneralSV")
                 toBeWritten += ";// " + theComment + " -E\r\n"
-                doReplace = True
+                isFind = True
                 continue
 
             # [EasySet]
-            pass
+            # 他の関数処理
 
             # [OutputMethod]
-            pass
+            # 他の関数処理
 
             # [TouchAndPrint]
-            pass
+            # 他の関数処理
 
             # [ICCardUsed]
-            pass
+            # 他の関数処理
 
             toBeWritten += line
 
-        if doReplace:
+        if doReplace and isFind:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
@@ -356,7 +359,7 @@ def processFile(targetFile):
         generator = TxtFile.ReadTxtFile(targetFile)
 
         toBeWritten = ""
-        doReplace = False
+        isFind = False
 
         if generator == "":
             print("Error Read file: {0}".format(fPathName))
@@ -365,11 +368,11 @@ def processFile(targetFile):
         for line in generator:
             if re.search("(Ver_driver.*\d.\d.\d.)0", line):
                 line = re.sub("(Ver_driver.*\d.\d.\d.)0", lambda mc: mc.group(1) + "OSW1_01", line)
-                doReplace = True
+                isFind = True
 
             toBeWritten += line
 
-        if doReplace:
+        if doReplace and isFind:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
@@ -396,7 +399,7 @@ def processFile(targetFile):
         generator = TxtFile.ReadTxtFile(targetFile)
 
         toBeWritten = ""
-        doReplace = False
+        isFind = False
 
         if generator == "":
             print("Error Read file: {0}".format(fPathName))
@@ -405,16 +408,16 @@ def processFile(targetFile):
         for line in generator:
             if re.search("(DriverVer.*\d\.\d\.\d\.)0", line):
                 line = re.sub("(DriverVer.*\d\.\d\.\d\.)0", lambda mc: mc.group(1) + "OSW1_01", line)
-                doReplace = True
+                isFind = True
 
             for s in ["_E", "_F", "_G", "_L", "_M", "_N", "_S", "_T", "_U"]:
                 if re.search("^KOAY.*{0}\.KMP".format(s), line) and ";//" not in line:
                     line = ""
-                    doReplace = True
+                    isFind = True
 
             toBeWritten += line
 
-        if doReplace:
+        if doReplace and isFind:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
@@ -437,7 +440,7 @@ def processFile(targetFile):
         generator = TxtFile.ReadTxtFile(targetFile)
 
         toBeWritten = ""
-        doReplace = False
+        isFind = False
 
         if generator == "":
             print("Error Read file: {0}".format(fPathName))
@@ -446,21 +449,59 @@ def processFile(targetFile):
         for line in generator:
             if re.search("(version.*\d\.\d\.\d\.)0", line):
                 line = re.sub("(version.*\d\.\d\.\d\.)0", lambda mc: mc.group(1) + "OSW1_01", line)
-                doReplace = True
+                isFind = True
 
             toBeWritten += line
 
-        if doReplace:
+        if doReplace and isFind:
             TxtFile.WriteTxtFile(toBeWritten)
             print("replced file: {}".format(targetFile))
 
+        # [KMP削除]
+        # 他の関数処理
+
 def deleteFolderFile():
+    # delete folders
+    tup = os.walk(targetFolder)
+    for root, dirs, files in tup:
+        if "XPS_GPD" in root.split("\\")[-1]:
+            try:
+                shutil.rmtree(root)
+                print("Remove folder: " + root)
+            except WindowsError:
+                print("oops...")
+
+        for l in ["DE", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]: # without "EN"
+            if root.split("\\")[-1] == l:
+                try:
+                    shutil.rmtree(root)
+                    print("Remove folder: " + root)
+                except WindowsError:
+                    print("oops...")
+
+    # delete files
     tup = os.walk(targetFolder)
     for root, dirs, files in tup:
         for f in files:
-            if isTargetFile(f):
-                targetFile = os.path.join(root, f)
-                print root
+            if f.split(".")[-1].lower() == "kmp":
+                for s in ["_E", "_F", "_G", "_L", "_M", "_N", "_S", "_T", "_U"]:
+                    if re.search("KOAY.*{0}\.KMP".format(s), f):
+                        f = os.path.join(root, f)
+                        try:
+                            os.remove(f)
+                            print("Remove file: " + f)
+                        except WindowsError:
+                            print("oops...")
+
+    print("FOLDERS and FILES are deleted")
+    print("Please make a commit before next step")
+    print("")
+    print("If you are ready to change file content, press ENTER...")
+
+    try:
+        input()
+    except:
+        pass
 
 def isTargetFile(FileName):
     sufix = os.path.splitext(FileName)[1][1:]
@@ -473,9 +514,9 @@ def isTargetFile(FileName):
 
 if __name__ == '__main__':
     deleteFolderFile()
-    # tup = os.walk(targetFolder)
-    # for root, dirs, files in tup:
-    #     for f in files:
-    #         if isTargetFile(f):
-    #             targetFile = os.path.join(root, f)
-    #             processFile(targetFile)
+    tup = os.walk(targetFolder)
+    for root, dirs, files in tup:
+        for f in files:
+            if isTargetFile(f):
+                targetFile = os.path.join(root, f)
+                processFile(targetFile)
