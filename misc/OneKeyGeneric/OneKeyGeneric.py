@@ -4,12 +4,34 @@ import re
 import fileinput
 import TxtFileHandle
 
-"""
-Nothing here...
-"""
-
 _author_  = "ZhangLin"
 _version_ = "1.1"
+
+"""
+                   _ooOoo_ 
+                  o8888888o 
+                  88" . "88 
+                  (| -_- |) 
+                  O\  =  /O 
+               ____/`---'\____ 
+             .'  \\|     |//  `. 
+            /  \\|||  :  |||//  \ 
+           /  _||||| -:- |||||-  \ 
+           |   | \\\  -  /// |   | 
+           | \_|  ''\---/''  |   | 
+           \  .-\__  `-`  ___/-. / 
+         ___`. .'  /--.--\  `. . __ 
+      ."" '<  `.___\_<|>_/___.'  >'"". 
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | | 
+     \  \ `-.   \_ __\ /__ _/   .-` /  / 
+======`-.____`-.___\_____/___.-`____.-'====== 
+                   `=---=' 
+
+Todo:
+1. change folder name
+2. add some comment
+3. ignore PKI
+"""
 
 ################################
 # Need to be update -S
@@ -17,7 +39,7 @@ _version_ = "1.1"
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP", "BAT"]
 langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
 
-target_folder = ur"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.34\Driver\Model\C658\CUSTOM\INSTALL\PCLXL\Win2kXP\JA"
+target_folder = ur"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.34\Driver\Modelxxx"
 
 # model name
 OwnName = """
@@ -139,7 +161,7 @@ def ProcessFile(fPathName):
     # do replace
     if IsReplace:
         TxtFile.WriteTxtFile(to_be_written)
-        print("replced file: {}".format(fPathName))
+        print("replace file: {}".format(fPathName))
 
 if __name__ == '__main__':
     # No.1: replace file content
@@ -162,7 +184,7 @@ if __name__ == '__main__':
                 old_file = os.path.join(root, Tmpfile)
                 new_file = os.path.join(root, replaced_file)
                 os.rename(old_file, new_file)
-                print("{0} => {1}".format(old_file.split("\\")[-1], new_file.split("\\")[-1]))
+                print("change name: {0} => {1}".format(old_file.split("\\")[-1], new_file.split("\\")[-1]))
 
 
 
