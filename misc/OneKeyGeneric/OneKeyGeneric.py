@@ -41,6 +41,10 @@ langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
 
 target_folder = ur"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.34\Driver\Modelxxx"
 
+# folder name
+oldFolder = "C658"
+newFolder = "65C-9"
+
 # model name
 OwnName = """
 C658,
@@ -164,10 +168,10 @@ def ProcessFile(fPathName):
         print("replace file: {}".format(fPathName))
 
 if __name__ == '__main__':
-    # No.1: replace file content
+    # No.1 replace file content
     print("Replace file content:")
     FTuple = os.walk(target_folder)
-    for root,dirs,files in FTuple:
+    for root, dirs, files in FTuple:
         for Tmpfile in files:
             if IsTargetFile(Tmpfile):
                 of = os.path.join(root,Tmpfile)
@@ -175,11 +179,11 @@ if __name__ == '__main__':
 
     print("End of file content")
 
-    # No.2: replace file name
+    # No.2 replace file name
     print("")
     print("Replace file name:")
     FTuple = os.walk(target_folder)
-    for root,dirs,files in FTuple:
+    for root, dirs, files in FTuple:
         for Tmpfile in files:
             if re.search('(KOAY..)[^A](.)', Tmpfile):
                 replaced_file = re.sub('(KOAY..)[^A](.)', lambda mc: mc.group(1) + 'A' + mc.group(2), Tmpfile)
@@ -190,5 +194,36 @@ if __name__ == '__main__':
 
     print("End of file name")
 
+    # No.3 replace folder name
+    print("")
+    print("Replace folder name:")
+    rootContainer = []
+    FTuple = os.walk(target_folder)
+    for root, dirs, files in FTuple:
+        rootContainer.append(root)
+
+    for i in range(len(rootContainer) - 1, -1, -1):
+    root = rootContainer[i]
+
+    if os.path.isdir(root):
+        s = os.path.split(root)
+
+        # Printer folder
+        if s[1] == oldFolder:
+            try:
+                os.rename(root, s[0]+ "\\" + newFolder)
+                print("{0} ---> {1}".format(root, newFolder))
+            except:
+                pass
+
+        # FAX folder
+        if s[1] == oldFolder + "FA":
+            try:
+                os.rename(root, s[0]+ "\\" + newFolder + "FA")
+                print("{0} ---> {1}".format(root, newFolder + "FA"))
+            except:
+                pass
+
+        print("End of folder name")
 
 
