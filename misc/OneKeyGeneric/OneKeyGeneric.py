@@ -7,21 +7,44 @@ import TxtFileHandle
 """
 Nothing here...
 """
+
+_author_  = "ZhangLin"
+_version_ = "1.1"
+
 ################################
 # Need to be update -S
 ################################
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP", "BAT"]
 langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
 
-target_folder = r"E:\ZDS_Working_SVN\trunk\KMSrc_2.06.10\Driver\Model\C368"
+target_folder = ur"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.34\Driver\Model\C658\CUSTOM\INSTALL\PCLXL\Win2kXP\JA"
 
 # model name
-OwnName = "C368"
-GenName = "36C-9"
+OwnName = """
+C658,
+C368,
+C287,
+""".split(",")
+
+GenName = """
+65C-9,
+36C-9,
+28C-8,
+""".split(",")
+
 
 # this string is in *.INF
-oldINFStr = "KONICA_MINOLTAC368Se6AA6"
-newINFStr = "Generic36C-9SeriesB942"
+oldINFStr = """
+KONICA_MINOLTAC658SeEFA0,
+KONICA_MINOLTAC368Se6AA6,
+KONICA_MINOLTAC287Se76D5,
+""".split(",")
+
+newINFStr = """
+Generic65C-9Series7AA3,
+Generic36C-9SeriesB942,
+Generic28C-8Series7037,
+""".split(",")
 
 ################################
 # Need to be update -E
@@ -88,9 +111,10 @@ def ProcessFile(fPathName):
             idx = idx + 1
 ################################################################
         # No.1 deal with *INF String
-        if line.find(oldINFStr) != -1:
-            line = line.replace(oldINFStr, newINFStr)
-            IsReplace = True
+        for i in range(len(oldINFStr)):
+            if line.find(oldINFStr[i].strip()) != -1:
+                line = line.replace(oldINFStr[i].strip(), newINFStr[i].strip())
+                IsReplace = True
 ################################################################
         # No.2 KOAY**_*.***  ->  KOAY**A*.*** 
         if re.search('(KOAY..)[^A](.)', line): # old pattern: (KOAYC.).(.)
@@ -107,10 +131,11 @@ def ProcessFile(fPathName):
             line = line.replace("KOPROFDL", "GNPROFDL")
             IsReplace = True
 ################################################################
-        # No.5 deal with C368
-        if line.find(OwnName) != -1:
-            line = line.replace(OwnName, GenName)
-            IsReplace = True
+        # No.5 deal with C658
+        for i in range(len(OwnName)):
+            if line.find(OwnName[i].strip()) != -1:
+                line = line.replace(OwnName[i].strip(), GenName[i].strip())
+                IsReplace = True
 ################################################################
         # No.6 deal with [OEM URLS]
         if "JA" in fPathName or langFolder not in langList:
