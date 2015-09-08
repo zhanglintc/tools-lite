@@ -28,7 +28,7 @@ _version_ = "v1.1"
                    `=---=' 
 
 Todo:
-1. change folder name
+
 2. add some comment
 3. ignore PKI
 """
@@ -203,27 +203,27 @@ if __name__ == '__main__':
         rootContainer.append(root)
 
     for i in range(len(rootContainer) - 1, -1, -1):
-    root = rootContainer[i]
+        root = rootContainer[i]
 
-    if os.path.isdir(root):
-        s = os.path.split(root)
+        if os.path.isdir(root):
+            s = os.path.split(root)
 
-        # Printer folder
-        if s[1] == oldFolder:
-            try:
-                os.rename(root, s[0]+ "\\" + newFolder)
-                print("{0} ---> {1}".format(root, newFolder))
-            except:
-                pass
+            # Printer folder
+            if s[1] == oldFolder:
+                try:
+                    os.rename(root, s[0]+ "\\" + newFolder)
+                    print("{0} ---> {1}".format(root, newFolder))
+                except:
+                    pass
 
-        # FAX folder
-        if s[1] == oldFolder + "FA":
-            try:
-                os.rename(root, s[0]+ "\\" + newFolder + "FA")
-                print("{0} ---> {1}".format(root, newFolder + "FA"))
-            except:
-                pass
+            # FAX folder
+            if s[1] == oldFolder + "FA":
+                try:
+                    os.rename(root, s[0]+ "\\" + newFolder + "FA")
+                    print("{0} ---> {1}".format(root, newFolder + "FA"))
+                except:
+                    pass
 
-        print("End of folder name")
+    print("End of folder name")
 
 
