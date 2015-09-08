@@ -121,7 +121,10 @@ def ProcessFile(fPathName):
 ################################################################
         # No.2 KOAY**_*.***  ->  KOAY**A*.*** 
         if re.search('(KOAY..)[^A](.)', line): # old pattern: (KOAYC.).(.)
-            line = re.sub('(KOAY..)[^A](.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
+            if re.search('KOAY._COPY', line) or re.search('KOAY._DATA', line): # jump KOAY8_COPY or KOAY8_DATA
+                line = line
+            else:
+                line = re.sub('(KOAY..)[^A](.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
             IsReplace = True
 ################################################################
         # No.3 deal with KONICA MINOLTA
