@@ -5,7 +5,7 @@ import fileinput
 import TxtFileHandle
 
 _author_  = "ZhangLin"
-_version_ = "1.1"
+_version_ = "v1.1"
 
 """
                    _ooOoo_ 
@@ -173,6 +173,8 @@ if __name__ == '__main__':
                 of = os.path.join(root,Tmpfile)
                 ProcessFile(of)
 
+    print("End of file content")
+
     # No.2: replace file name
     print("")
     print("Replace file name:")
@@ -185,6 +187,8 @@ if __name__ == '__main__':
                 new_file = os.path.join(root, replaced_file)
                 os.rename(old_file, new_file)
                 print("change name: {0} => {1}".format(old_file.split("\\")[-1], new_file.split("\\")[-1]))
+
+    print("End of file name")
 
 
 
