@@ -38,7 +38,7 @@ Todo:
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP", "BAT"]
 langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
 
-target_folder = ur"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.34\Driver\Modelxxx"
+target_folder = ur"E:\Subv_Work\IT5_Color_v3.0\KMSrc_2.06.34\Driver\Model"
 
 # folder name
 oldFolder = "C658"
@@ -201,7 +201,7 @@ if __name__ == '__main__':
 
     # No.3 replace folder name
     print("")
-    print("Replace folder name:")
+    print("change folder name:")
     rootContainer = []
     FTuple = os.walk(target_folder)
     for root, dirs, files in FTuple:
