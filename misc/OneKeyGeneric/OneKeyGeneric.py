@@ -28,9 +28,8 @@ _version_ = "v1.1"
                    `=---=' 
 
 Todo:
-
-2. add some comment
-3. ignore PKI
+1. add some comment
+2. ignore DriverName in *.ini
 """
 
 ################################
@@ -172,9 +171,12 @@ if __name__ == '__main__':
     print("Replace file content:")
     FTuple = os.walk(target_folder)
     for root, dirs, files in FTuple:
+        if "PKI" in root:
+            continue
+
         for Tmpfile in files:
             if IsTargetFile(Tmpfile):
-                of = os.path.join(root,Tmpfile)
+                of = os.path.join(root, Tmpfile)
                 ProcessFile(of)
 
     print("End of file content")
@@ -184,6 +186,9 @@ if __name__ == '__main__':
     print("Replace file name:")
     FTuple = os.walk(target_folder)
     for root, dirs, files in FTuple:
+        if "PKI" in root:
+            continue
+
         for Tmpfile in files:
             if re.search('(KOAY..)[^A](.)', Tmpfile):
                 replaced_file = re.sub('(KOAY..)[^A](.)', lambda mc: mc.group(1) + 'A' + mc.group(2), Tmpfile)
@@ -204,6 +209,9 @@ if __name__ == '__main__':
 
     for i in range(len(rootContainer) - 1, -1, -1):
         root = rootContainer[i]
+
+        if "PKI" in root:
+            continue
 
         if os.path.isdir(root):
             s = os.path.split(root)
