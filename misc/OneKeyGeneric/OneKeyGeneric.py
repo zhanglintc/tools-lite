@@ -1,4 +1,4 @@
-import os
+import os, sys
 import shutil
 import re
 import fileinput
@@ -45,6 +45,9 @@ Generic65C-9Series7AA3,
 Generic36C-9SeriesB942,
 Generic28C-8Series7037,
 """.split(",")
+
+if len(OwnName) != len(GenName) or len(OwnName) != len(oldINFStr):
+    sys.exit("Error: Quantity of strings not match(OwnName, GenName, oldINFStr, newINFStr)")
 
 ################################
 # Need to be update -E
