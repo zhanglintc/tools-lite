@@ -2,7 +2,7 @@ import os, sys
 import shutil
 import re
 import fileinput
-import TxtFileHandle
+import TxtFileHandleDev
 
 """
 Description:
@@ -107,7 +107,7 @@ def ProcessFile(fPathName):
         return
 
     # fail to open file
-    if generator == "":
+    if not generator:
         print("Error Read file:{}".format(fPathName))
         return
 
@@ -116,7 +116,13 @@ def ProcessFile(fPathName):
     to_be_written = ""
 
     for line in generator:
-        # add code here
+        # Lang.ini
+        
+        line = line.replace("KONICA MINOLTA ", "")
+        line = line.replace(" KONICA MINOLTA", "")
+        IsReplace = True
+
+
 
         # append this line to the end
         to_be_written += line
@@ -131,9 +137,6 @@ if __name__ == '__main__':
     print("Replace file content:")
     FTuple = os.walk(target_folder)
     for root, dirs, files in FTuple:
-        if "PKI" in root:
-            continue
-
         for Tmpfile in files:
             if IsTargetFile(Tmpfile):
                 of = os.path.join(root, Tmpfile)
