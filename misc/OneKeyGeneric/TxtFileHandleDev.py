@@ -29,6 +29,11 @@ class TxtFileHandle:
         fr.seek(0, os.SEEK_SET)
 
         data = data.split("\n")
+
+        # remove last NULL string
+        if not data[-1]:
+            data.pop(-1)
+
         for line in data:
             yield line + "\n"
 
