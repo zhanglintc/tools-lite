@@ -2,7 +2,7 @@ import os, sys
 import shutil
 import re
 import fileinput
-import TxtFileHandleDev
+import TxtFileHandle
 
 """
 Description:
@@ -129,7 +129,7 @@ def ProcessFile(fPathName):
 
     file_name  = fPathName.split('\\')[-1].lower()
     langFolder = fPathName.split("\\")[-2].upper()
-    TxtFile    = TxtFileHandleDev.TxtFileHandle()
+    TxtFile    = TxtFileHandle.TxtFileHandle()
     generator  = TxtFile.ReadTxtFile(fPathName)
 
     # ignore localize and cst
