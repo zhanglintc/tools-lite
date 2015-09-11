@@ -137,7 +137,7 @@ def ProcessFile(fPathName):
 
         # No.5 deal with C658
         for i in range(len(OwnName)):
-            if line.find(OwnName[i].strip()) != -1 and ("Series" in line or "Mono" in line) and OwnName[i].strip():
+            if line.find(OwnName[i].strip()) != -1 and ("Series" in line or "Mono" in line or "KOAY" in line) and OwnName[i].strip():
                 line = line.replace(OwnName[i].strip(), GenName[i].strip())
                 IsReplace = True
 
