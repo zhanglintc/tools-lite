@@ -40,7 +40,7 @@ _version_ = "v1.0"
 fExt = ["INI", "SUB", "PPD", "INF", "UNF", "GPD", "KMP", "BAT"]
 langList = ["DE", "EN", "ES", "FR", "IT", "JA", "KO", "ZH-CN", "ZH-TW"]
 
-target_folder = ur"E:\Subv_Work\DI_9.2.0.0\IT5_Color_v3.0\KMSrc_2.06.34_5.0.5.0\20150910_IT5Color_v3.0_PS_PCL_FAX_FVT-1_Own_DI"
+target_folder = ur"E:\Subv_Work\DI_9.2.0.0\IT5_Color_v3.0\KMSrc_2.06.34_5.0.5.0"
 
 # folder name
 oldFolder = "C658"
@@ -150,17 +150,20 @@ def ProcessFile(fPathName):
     for line in generator:
         # No.1 deal with Lang.ini
         if "lang.ini" in file_name:
+            # delete KONICA MINOLTA
             if ("KONICA MINOLTA " in line or " KONICA MINOLTA" in line) and StartMenu == False:
                 line = line.replace("KONICA MINOLTA ", "")
                 line = line.replace(" KONICA MINOLTA", "")
                 IsReplace = True
 
+            # delete Publisher=KONICA MINOLTA
             if "Publisher=KONICA MINOLTA" in line:
                 line = line.replace("Publisher=KONICA MINOLTA\r\n", "")
                 line = line.replace("Publisher=KONICA MINOLTA\r", "")
                 line = line.replace("Publisher=KONICA MINOLTA\n", "")
                 IsReplace = True
 
+            # special process after [StartMenu] [PrgMang]
             if "[StartMenu]" in line:
                 StartMenu = True
 
@@ -183,44 +186,53 @@ def ProcessFile(fPathName):
 
         # No.2 deal with Setup.ini
         if "setup.ini" in file_name:
+            # deal with C658
             for i in range(len(OwnName)):
                 if line.find(OwnName[i].strip()) != -1 and ("Series" in line or "Mono" in line) and OwnName[i].strip():
                     line = line.replace(OwnName[i].strip(), GenName[i].strip())
                     IsReplace = True
 
+            # deal with UseSysDesc=0
             if "UseSysDesc=0" in line:
                 line = line.replace("UseSysDesc=0", "UseSysDesc=1")
                 IsReplace = True
 
+            # deal with KONICA MINOLTA
             if "KONICA MINOLTA" in line:
                 line = line.replace("KONICA MINOLTA", "MFP-Printer Utility")
                 IsReplace = True
 
         # No.3 deal with Driver1.ini
         if re.search("driver.*", file_name):
+            # deal with KONICA_MINOLTAC658SeEFA0
             for i in range(len(oldINFStr)):
                 if line.find(oldINFStr[i].strip()) != -1 and oldINFStr[i].strip():
                     line = line.replace(oldINFStr[i].strip(), newINFStr[i].strip())
                     IsReplace = True
 
+            # deal with C658
             for i in range(len(OwnName)):
-                if line.find(OwnName[i].strip()) != -1 and ("Series" in line or "Mono" in line) and OwnName[i].strip():
+                if line.find(OwnName[i].strip()) != -1 and OwnName[i].strip():
                     line = line.replace(OwnName[i].strip(), GenName[i].strip())
                     IsReplace = True
 
+            # deal with ProductID
             for i in range(len(OwnProductID)):
                 if line.find(OwnProductID[i].strip()) != -1 and OwnProductID[i].strip():
                     line = line.replace(OwnProductID[i].strip(), GenproductID[i].strip())
                     IsReplace = True
 
+            # deal with KONICA MINOLTA
             if line.find("KONICA MINOLTA") != -1 and "INC" not in line:
                 line = line.replace("KONICA MINOLTA", "Generic")
                 IsReplace = True
 
+            # KOAY**_*.***  ->  KOAY**A*.***
             if re.search('(KOAY..)[^A](.)', line) and not re.search('KOAY._COPY', line) and not re.search('KOAY._DATA', line):
                 line = re.sub('(KOAY..)[^A](.)', lambda mc: mc.group(1) + 'A' + mc.group(2), line)
                 IsReplace = True
 
+            # deal with SearchSNMPID
             reg = '(\d.\d.\d.\d.\d.\d.\d\d\d\d\d.\d.)1(.\d.\d.\d.\d\d\d.\d.\d)'
             if re.search(reg, line):
                 line = re.sub(reg, lambda mc: mc.group(1) + '2' + mc.group(2), line)
@@ -239,6 +251,9 @@ if __name__ == '__main__':
     print("Replace file content:")
     FTuple = os.walk(target_folder)
     for root, dirs, files in FTuple:
+        if "PKI" in root:
+            continue
+
         for Tmpfile in files:
             if IsTargetFile(Tmpfile):
                 of = os.path.join(root, Tmpfile)
