@@ -222,7 +222,7 @@ if __name__ == '__main__':
                     os.rename(root, s[0]+ "\\" + newFolder)
                     print("{0} ---> {1}".format(root, newFolder))
                 except:
-                    pass
+                    print("Error: {0} ---> {1} failed".format(os.path.join(root, oldFolder), newFolder))
 
             # FAX folder
             if s[1] == oldFolder + "FA":
@@ -230,7 +230,7 @@ if __name__ == '__main__':
                     os.rename(root, s[0]+ "\\" + newFolder + "FA")
                     print("{0} ---> {1}".format(root, newFolder + "FA"))
                 except:
-                    pass
+                    print("Error: {0} ---> {1} failed".format(os.path.join(root, oldFolder + "FA"), newFolder + "FA"))
 
     print("End of folder name")
 
