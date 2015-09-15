@@ -1,93 +1,66 @@
 import codecs
-import os
-# import chardet
+import chardet
 
 # written by zhanglin
-def GetEncodingInfo(data):
+def GetEncodingInfo(datas):
     '''
-    return data' encoding info and relevant confidence
+    return datas' encoding info and relevant confidence
     '''
-    # result_dict = chardet.detect(data)
+    result_dict = chardet.detect(datas)
     encoding_type = result_dict['encoding'] # get encoding
     confidence = result_dict['confidence'] # get confidence
     return encoding_type, confidence
 
-def ReadTxtFile(filePathName):
-    encodingList = ["utf8", "utf_8_sig", "utf16", "cp932", "mbcs", "ascii", "cp936", "cp1252"]
+def ReadTxtFile(FilePathName):
+    encodinglist = ["utf8","utf_8_sig","utf16","cp932","mbcs","ascii","cp936","cp1252"]
     
-    f = open(filePathName, "rb")
-    data = f.read()
+    f = open(FilePathName, "rb")
+    datas = f.read()
     
-    for encoding in encodingList: # encoding_type, encodingList:
+    for EncodingName in encodinglist: # encoding_type, encodinglist:
         try:
-            strs = codecs.decode(data, encoding)
-
+            strs = codecs.decode(datas, EncodingName)
         except ValueError:
             continue
 
         f.close()
-        return strs, encoding
+        return strs,EncodingName
 
     return "",""
 
 class TxtFileHandle:
-    def __init__(self):
-        self._encoding = "utf8"
-        self._encodingList = ["utf8", "utf_8_sig", "cp932", "shift_jis", "ascii", "cp936", "cp1252"]
-        self._filePathName = ""
+    def __init__( self ):
+        self._EncodingName = "utf8"
+        self._encodinglist = ["utf8","utf_8_sig","utf16","cp932","mbcs","ascii","cp936","cp1252"]
+        self._FilePathName = ""
 
-    def ReadTxtFile(self, filePathName):
-        """
-        A generator which return one decoded line each time.
-        """
-
-        fr = codecs.open(filePathName, "rb")
-
-        data = fr.read()
-        for EncodingName in self._encodingList:
+    def ReadTxtFile( self, FilePathName ):
+        f = codecs.open(FilePathName, "rb")
+        datas = f.read()
+        
+        for EncodingName in self._encodinglist:
             try:
-                codecs.decode(data, EncodingName)
-                break
-
+                strs = codecs.decode(datas, EncodingName)
             except ValueError:
                 continue
 
-        self._filePathName = filePathName
-        self._encoding = EncodingName
+            f.close()
+            self._FilePathName = FilePathName
+            self._EncodingName = EncodingName
+            return strs
 
-        fr.seek(0, os.SEEK_SET)
+        return ""
 
-        line = True
-        while line:
-            line = fr.readline()
-            line = codecs.decode(line, self._encoding)
-            
-            # for encoding in self._encodingList:
-            #     try:
-            #         line = codecs.decode(line, encoding)
-            #         break
-
-            #     except ValueError:
-            #         continue
-
-            # self._filePathName = filePathName
-            # self._encoding = encoding
-
-            yield line
-
-        fr.close()
-
-    def WriteTxtFile(self, data):
-        if "" == self._filePathName:
+    def WriteTxtFile( self, strs):
+        if "" == self._FilePathName:
             return False
         
         try:
-            data = codecs.encode(data, self._encoding)
+            datas = codecs.encode( strs, self._EncodingName)
             
-            f = open(self._filePathName, "wb")
-            f.write(data)
+            f = open( self._FilePathName, "wb")
+            f.write( datas )
             f.close()
             return True
-
         except:
             return False
