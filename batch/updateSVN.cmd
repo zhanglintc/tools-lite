@@ -9,6 +9,7 @@ for /d %%i in (*) do (
 
     echo Updating: %%~fi
     echo ==================
+    echo Cleaning...
     svn cleanup
     svn update
     echo ==================
