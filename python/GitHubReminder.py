@@ -137,6 +137,8 @@ def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Fl
     line  = True
     error = True
     count = None
+    longestStreak = False
+    currentStreak = False
     pushed_detail = ""
     fw = open(LOG_FILE, 'w')
     while line:
@@ -179,6 +181,26 @@ def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Fl
             line = re.sub('</a>', '', line) # remove </a>
             line = line.split('>')[-1] # issue detail is in last position
             pushed_detail += ("Issue: " + line)
+
+        # get longest streak
+        if "Longest streak" in line:
+            longestStreak = True
+
+        if longestStreak and "days" in line:
+            longestStreak = False
+            mc = re.search("\d* days", line)
+            days = mc.group()
+            pushed_detail += ("Longest streak: " + days + "\n")
+
+        # get current streak
+        if "Current streak" in line:
+            currentStreak = True
+
+        if currentStreak and "days" in line:
+            currentStreak = False
+            mc = re.search("\d* days", line)
+            days = mc.group()
+            pushed_detail += ("Current streak: " + days + "\n")
 
     fw.close()
 
