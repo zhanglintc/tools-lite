@@ -140,6 +140,7 @@ def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Fl
     longestStreak = False
     currentStreak = False
     pushed_detail = ""
+    streak_detail = ""
     fw = open(LOG_FILE, 'w')
     while line:
         # read each line while not the end
@@ -190,7 +191,7 @@ def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Fl
             longestStreak = False
             mc = re.search("\d* days", line)
             days = mc.group()
-            pushed_detail += ("Longest streak: " + days + "\n")
+            streak_detail += ("Longest streak: " + days + "\n")
 
         # get current streak
         if "Current streak" in line:
@@ -200,16 +201,17 @@ def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Fl
             currentStreak = False
             mc = re.search("\d* days", line)
             days = mc.group()
-            pushed_detail += ("Current streak: " + days + "\n")
+            streak_detail += ("Current streak: " + days + "\n")
 
     fw.close()
 
-    send_content = "You have made {0} {1} until now\n{2}\n\n{3}\n{4}\n\n#GitHub reminder#\n".format\
+    send_content = "You have made {0} {1} until now\n{2}\n\n{3}\n{4}\n{5}\n\n#GitHub reminder#\n".format\
         (
             count,
             "contribution" if int(count) < 2 else "contributions",
             CUR_TIME,
             pushed_detail,
+            streak_detail,
             GITHUB_URL,
         )
     send_commands = make_commands(send_content)
