@@ -20,7 +20,7 @@ for /d %%i in (*) do (
 )
 
 REM copy updateSVN itself to current path
-if exist .\tools-lite xcopy .\tools-lite\trunk\batch\updateSVN.cmd . /c /f /i /y > nul
+if exist .\tools-lite (xcopy .\tools-lite\trunk\batch\updateSVN.cmd . /c /f /i /y > nul)
 
 title Competed...  Powered by Lane at ZDS
 
