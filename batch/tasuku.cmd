@@ -13,7 +13,7 @@ if reg_localevar==JPN goto Japanese
 goto English
 
 :Japanese
-set title_str=タスク カウント ツール
+set title_str=タスク カウント ツール by Lane @PSDCD
 set process_str=処理進度：
 set lines_str1=総行数:
 set lines_str2=有効行数は:
@@ -22,7 +22,7 @@ set end_str=以上です!
 goto begin
 
 :English
-set title_str=Lines count tool
+set title_str=Lines count tool by Lane @PSDCD
 set process_str=processing: 
 set lines_str1=Lines: 
 set lines_str2=Lines is: 

@@ -1,5 +1,5 @@
 @echo off
-title Powered by Lane at ZDS
+title Powered by Lane @ZDS
 color 3E
 echo -------------------------------------------------------------------------------
 echo Intro: This tool helps to chang your Logon image,

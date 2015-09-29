@@ -1,6 +1,6 @@
 @echo off
 
-title Powerd by Lane at ZDS
+title Powerd by Lane @ZDS
 color 3e
 
 REM set the file path here

@@ -1,5 +1,6 @@
 @echo off
 
+title Powered by Lane @PSDCD
 color 3e
 
 setlocal enabledelayedexpansion

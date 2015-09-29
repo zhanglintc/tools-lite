@@ -1,5 +1,5 @@
 @echo off
-Title Lane's Route Switcher
+Title Lane's Route Switcher @NEU
 Color 3E
 echo -------------------------------------------------------------------------------
 echo     此工具可以帮助你选择上网时的路由，可以是网通网，也可以是校园网，还可以

@@ -1,6 +1,6 @@
 @echo off
 REM Compile given JAVA file and then run it.
-title Powered by Lane at ZDS
+title Powered by Lane @ZDS
 color 3e
 
 REM if no given parameter, set %target%

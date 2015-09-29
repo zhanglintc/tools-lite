@@ -1,5 +1,5 @@
 @echo off
-title Lane at NEU
+title Powered by Lane @NEU
 COLOR 3E
 
 set t=1
