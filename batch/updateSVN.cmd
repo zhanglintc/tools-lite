@@ -20,11 +20,11 @@ for /d %%i in (*) do (
     cd ..
 )
 
-REM copy updateSVN itself to current path
-if exist .\tools-lite (xcopy .\tools-lite\trunk\batch\updateSVN.cmd . /c /f /i /y > nul)
-
-title Competed...  Powered by Lane at ZDS
+title Competed...  Powered by Lane @ZDS
 
 echo.
 echo Press any key to close...
 pause > nul
+
+REM copy updateSVN itself to current path
+if exist .\tools-lite (xcopy .\tools-lite\trunk\batch\updateSVN.cmd . /c /f /i /y > nul)
