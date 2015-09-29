@@ -9,6 +9,13 @@ for /f "usebackq delims=" %%i in (`wmic environment where "name='Path'" get Vari
     echo %%i|findstr "bin">nul && set envPath=%%i
 )
 
+::Make a backup
+set curTime=%time%
+set fileName=%curTime::=.%.bak
+echo Backup of your "Path" at %date% %curTime%:>%fileName%
+echo.>>%fileName%
+echo %envPath%>>%fileName%
+
 ::Remove "C:\Python27\;"
 set envPath=%envPath:C:\Python27\;=%
 
