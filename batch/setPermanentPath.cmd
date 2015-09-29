@@ -4,10 +4,12 @@
 title Powered by Lane @ZDS
 color 3e
 
+::useless source
+::for /f "usebackq delims=" %%i in (`wmic ENVIRONMENT where "name='Path'" get VariableValue`) do (
+::    echo %%i|findstr "bin">nul && set envPath=%%i
+::)
 ::Get Path and save to %envPath%
-for /f "usebackq delims=" %%i in (`wmic ENVIRONMENT where "name='Path'" get VariableValue`) do (
-    echo %%i|findstr "bin">nul && set envPath=%%i
-)
+set envPath=%path%
 
 ::Make a backup
 set curTime=%time%
@@ -16,11 +18,13 @@ echo Backup of your "Path" at %date% %curTime%:>%fileName%
 echo.>>%fileName%
 echo %envPath%>>%fileName%
 
-::Remove "C:\Python27\;"
+::Remove "C:\Python27\;" and "C:\Python27;"
 set envPath=%envPath:C:\Python27\;=%
+set envPath=%envPath:C:\Python27;=%
 
-::Remove "C:\Python33\;"
+::Remove "C:\Python33\;" and "C:\Python33;"
 set envPath=%envPath:C:\Python33\;=%
+set envPath=%envPath:C:\Python33;=%
 
 echo Which Python version do you want to set:
 choice /c 23
@@ -32,17 +36,22 @@ if errorlevel 1 goto Python2
 
 :Python2
 ::Add "C:\Python27\;" in the very start of %envPath%
-set envPath=C:\Python27\;%envPath%
+set envPath=C:\Python27;%envPath%
 goto SetPath
 
 :Python3
 ::Add "C:\Python27\;" in the very start of %envPath%
-set envPath=C:\Python33\;%envPath%
+set envPath=C:\Python33;%envPath%
 goto SetPath
 
+
+
 :SetPath
+::useless source
+::wmic ENVIRONMENT where "name='Path' and username='<system>'" set VariableValue="%envPath%"
 :: Set "Path"
-wmic ENVIRONMENT where "name='Path' and username='<system>'" set VariableValue="%envPath%"
+setx path "%envPath%" -m
+
 goto end
 
 :end
