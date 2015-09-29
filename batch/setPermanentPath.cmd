@@ -5,7 +5,7 @@ title Powered by Lane @ZDS
 color 3e
 
 ::Get Path and save to %envPath%
-for /f "usebackq delims=" %%i in (`wmic ENVIRONMENT where "name='whatgui'" get VariableValue`) do (
+for /f "usebackq delims=" %%i in (`wmic ENVIRONMENT where "name='Path'" get VariableValue`) do (
     echo %%i|findstr "bin">nul && set envPath=%%i
 )
 
@@ -42,8 +42,7 @@ goto SetPath
 
 :SetPath
 :: Set "Path"
-wmic ENVIRONMENT where name="whatgui" delete
-wmic ENVIRONMENT create name="whatgui", username="<system>", VariableValue="%envPath%"
+wmic ENVIRONMENT where "name='Path' and username='<system>'" set VariableValue="%envPath%"
 goto end
 
 :end
