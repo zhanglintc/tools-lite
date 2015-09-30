@@ -10,8 +10,11 @@ echo Default Python3 address: C:\Python33
 echo ***************************************************
 echo.
 echo If you installed other version of Python
-echo or you installed Python in the other place
-echo please modify the code by your self.
+echo or you installed Python in the other place,
+echo please modify the address by your self.
+echo.
+echo If any problem occured, plase use "*.bak" file
+echo to recover your original "Path" setting.
 echo.
 
 ::useless source
@@ -21,12 +24,8 @@ echo.
 ::Get Path and save to %envPath%
 set envPath=%path%
 
-::Make a backup
-set curTime=%time%
-set fileName=%curTime::=.%.bak
-echo Backup of your "Path" at %date% %curTime%:>%fileName%
-echo.>>%fileName%
-echo %envPath%>>%fileName%
+::Use %envPathBak% to store current environment path and save to backup file
+set envPathBak=%path%
 
 ::Remove "C:\Python27\;" and "C:\Python27;"
 set envPath=%envPath:C:\Python27\;=%
@@ -63,6 +62,13 @@ goto SetPath
 ::wmic ENVIRONMENT where "name='Path' and username='<system>'" set VariableValue="%envPath%"
 :: Set "Path"
 setx path "%envPath%" -m
+
+::Make a backup(%envPathBak% won't be modified)
+set curTime=%time%
+set fileName=%curTime::=.%.bak
+echo Backup of your "Path" at %date% %curTime%:>%fileName%
+echo.>>%fileName%
+echo %envPathBak%>>%fileName%
 
 goto end
 
