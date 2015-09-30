@@ -11,7 +11,7 @@ echo ***************************************************
 echo.
 echo If you installed other version of Python
 echo or you installed Python in the other place,
-echo please modify the address by your self.
+echo please modify the address by yourself.
 echo.
 echo If any problem occured, plase use "*.bak" file
 echo to recover your original "Path" setting.
