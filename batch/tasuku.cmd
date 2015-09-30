@@ -9,16 +9,16 @@ for /f "tokens=3" %%i in ('reg query "HKCU\Control Panel\International" /v "sLan
     set reg_localevar=%%i
 )
 
-if reg_localevar==JPN goto Japanese
+if "%reg_localevar%"=="JPN" goto Japanese
 goto English
 
 :Japanese
-set title_str=タスク カウント ツール
-set process_str=処理進度：
-set lines_str1=総行数:
-set lines_str2=有効行数は:
-set linesAbt_str=行ぐらい
-set end_str=以上です!
+set title_str=僞僗僋 僇僂儞僩 僣乕儖
+set process_str=張棟恑搙丗
+set lines_str1=憤峴悢:
+set lines_str2=桳岠峴悢偼:
+set linesAbt_str=峴偖傜偄
+set end_str=埲忋偱偡!
 goto begin
 
 :English
@@ -82,7 +82,7 @@ pause>nul
 
 ::echo the valid lines number
 
-::echo ここから:>>log.c
+::echo 偙偙偐傜:>>log.c
 ::findstr /i "#" %input_path%>>log.c
 echo %end_str%>>log.c
 ::find the lines with # and output to the log.c
