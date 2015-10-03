@@ -107,7 +107,7 @@ def make_commands(send_content):
     return send_commands
 
 
-def auto_commit():
+def auto_commit(streak_detail):
     """
     make an auto-commit to GitHub
 
@@ -122,7 +122,10 @@ def auto_commit():
     os.system('{} git commit -m "{} auto commit"'.format(cd_command, CUR_TIME))
     os.system('{} git push'.format(cd_command))
 
-    send_content = "You have not made any contribution today\nso we did a auto-commit for you\n\n{0}\n\n#GitHub reminder#".format(GITHUB_URL)
+    send_content = "You have not made any contribution today\nso we did a auto-commit for you\n\n{0}\n\n{1}\n\n#GitHub reminder#".format(
+        streak_detail,
+        GITHUB_URL,
+    )
     send_commands = make_commands(send_content)
 
     return send_commands
@@ -221,7 +224,7 @@ def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Fl
     # do automatically commit function
 
     if time.localtime().tm_hour == 23 and int(count) == 0 and Auto_Commit_Flag:
-        send_content = send_commands = auto_commit()
+        send_content = send_commands = auto_commit(streak_detail)
     ##########################################
 
     # if don't want to see log file, use the code next line
