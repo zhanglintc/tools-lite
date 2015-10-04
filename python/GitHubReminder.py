@@ -122,7 +122,7 @@ def auto_commit(streak_detail):
     os.system('{} git commit -m "{} auto commit"'.format(cd_command, CUR_TIME))
     os.system('{} git push'.format(cd_command))
 
-    send_content = "You have not made any contribution today\nso we did a auto-commit for you\n\n{0}\n\n{1}\n\n#GitHub reminder#".format(
+    send_content = "You have not made any contribution today\nso we did a auto-commit for you\n\n{0}\n{1}\n\n#GitHub reminder#".format(
         streak_detail,
         GITHUB_URL,
     )
