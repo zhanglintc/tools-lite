@@ -25,7 +25,7 @@ while GitHubReminder.github_reminder(MailList = Wuhong_Mail_List, GITHUB_URL = W
 # below is Houliyuan special process...
 Houliyuan_Mail_List = [
     "349655336@qq.com",
-    "zhanglintc623@foxmail.com",
+    # "zhanglintc623@foxmail.com",
 ]
 Houliyuan_Github_URL = "https://github.com/Pang327?period=daily"
 while GitHubReminder.github_reminder(MailList = Houliyuan_Mail_List, GITHUB_URL = Houliyuan_Github_URL, Auto_Commit_Flag = False):
