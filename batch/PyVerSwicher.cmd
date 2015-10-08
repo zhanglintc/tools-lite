@@ -36,7 +36,9 @@ set envPath=%envPath:C:\Python33\;=%
 set envPath=%envPath:C:\Python33;=%
 
 echo Current Python version:
+echo ---------------
 python -V
+echo ---------------
 echo.
 echo Which Python version do you want to set:
 choice /c 23
