@@ -41,10 +41,11 @@ python -V
 echo ---------------
 echo.
 echo Which Python version do you want to set:
-choice /c 23
+choice /c 23c
 :: choose 2, errorlevel 1
 :: choose 3, errorlevel 2
 :: judge big number first
+if errorlevel 3 goto end
 if errorlevel 2 goto Python3
 if errorlevel 1 goto Python2
 
@@ -79,7 +80,7 @@ goto end
 
 :end
 cls
-echo Convert Python version to %pyVer% successful.
+if "%pyVer%"=="" (echo Cancelled...) else (echo Convert Python version to %pyVer% successful.)
 echo.
 echo Press any key to close...
 pause>nul
