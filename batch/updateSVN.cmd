@@ -20,7 +20,7 @@ for /d %%i in (*) do (
     cd ..
 )
 
-title Competed...  Powered by Lane @ZDS
+title Completed...  Powered by Lane @ZDS
 
 echo.
 echo Press any key to close...
