@@ -62,8 +62,8 @@ def github_reminder(targetURL):
             pushed_detail += ("Pull request: " + line)
 
         if "/issues/" in line and '"title"' in line:
-            line = re.sub('</a>', '', line) # remove </a>
-            line = line.split('>')[-1] # issue detail is in last position
+            mc = re.search('\>(.*?)\<', line) # issues detail is the shortest string between ">" and "<"
+            line = mc.group(1) + "\n" # add a line break
             pushed_detail += ("Issue: " + line)
 
     fw.close()
