@@ -72,7 +72,6 @@ GITHUB_URL = "https://github.com/zhanglintc?period=daily"
 
 MailList = [
     "zhanglintc623@foxmail.com",
-    "lvregen@163.com",
 ]
 
 TODAY = str(datetime.date.today()) # something like: 2014-11-10
