@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import urllib, re
+import urllib, re, os
 import python_send
 
 # mail setting
