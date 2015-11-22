@@ -24,4 +24,4 @@ def application(environ, start_response):
     print "No.1: ", ret
     print "No.2: ", decryp_xml
 
-    return ret
+    return decryp_xml or "hello world"
