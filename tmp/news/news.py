@@ -46,8 +46,12 @@ def main():
 
     newsList = re.findall("<td>\d</td>.*a href='(.*)' target='_blank'>(.*)</a></td><td>", topHit)
     sendContent = ""
+    sendContent += '<table border="1">'
+    sendContent += '<th>今日看点</th>'
     for news in newsList:
-        sendContent += "{0}:\n{1}\n\n".format(news[1], news[0])
+        sendContent += '<tr><td><a href="{0}">{1}</a></td></tr>'.format(news[0], news[1])
+
+    sendContent += '</table>'
 
     # # debug use only
     # print sendContent
@@ -57,7 +61,7 @@ def main():
         python_send.sendEmail(
             to_addr = MAILLIST,
             from_addr = SENDFROM,
-            alias = "sina news rss",
+            alias = "News by Lane",
             password = PASSWORD,
             smtp_server = SMTPSERV,
             subject = "每日热点新闻",

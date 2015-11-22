@@ -34,7 +34,7 @@ def sendEmail(
         subject = subject,
         content = content):
 
-    msg = MIMEText(content, 'plain', 'utf-8')
+    msg = MIMEText(content, 'html', 'utf-8')
     msg['From']    = _format_addr(u'{0} <{1}>'.format(alias, from_addr))
     msg['To']      = to_addr[0]
     msg['Bcc']     = ','.join(to_addr[1:])
