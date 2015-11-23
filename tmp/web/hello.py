@@ -20,8 +20,8 @@ def application(environ, start_response):
 
     sReplyEchoStr = ""
     if "echostr" in environ['QUERY_STRING']:
-        # d = parse_qs(unquote(environ['QUERY_STRING']))
-        d = parse_qs(environ['QUERY_STRING'])
+        d = parse_qs(unquote(environ['QUERY_STRING']))
+        # d = parse_qs(environ['QUERY_STRING'])
         # print d
 
         wxDecrypt = WXBizMsgCrypt(sToken, sEncodingAESKey, sAppId)
