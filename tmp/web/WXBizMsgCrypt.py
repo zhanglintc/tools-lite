@@ -253,3 +253,17 @@ class WXBizMsgCrypt(object):
         ret,xml_content = pc.decrypt(encrypt,self.appid)
         return ret,xml_content
 
+    def VerifyURL(self, sMsgSignature, sTimeStamp, sNonce, sEchoStr):
+        sha1 = SHA1()
+        ret, signature = sha1.getSHA1(self.token, sTimeStamp, sNonce, sEchoStr)
+        print "token: ", self.token
+        print "signature: ", signature
+        print "sMsgSignature: ", sMsgSignature
+        if ret != 0:
+            return ret, None
+        if not signature == sMsgSignature:
+            return WXBizMsgCrypt_ValidateSignature_Error, None
+        pc = Prpcrypt(self.key)
+        ret, sReplyEchoStr = pc.decrypt(sEchoStr, self.m_sCorpid)
+        return ret, sReplyEchoStr
+

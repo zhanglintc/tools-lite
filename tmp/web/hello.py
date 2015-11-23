@@ -18,15 +18,16 @@ def application(environ, start_response):
     # print "QUERY_STRING: ", environ['QUERY_STRING']
     # print "REQUEST_METHOD: ", environ['REQUEST_METHOD']
 
-    decryp_xml = ""
+    sReplyEchoStr = ""
     if "echostr" in environ['QUERY_STRING']:
-        d = parse_qs(unquote(environ['QUERY_STRING']))
-        print d
+        # d = parse_qs(unquote(environ['QUERY_STRING']))
+        d = parse_qs(environ['QUERY_STRING'])
+        # print d
 
         wxDecrypt = WXBizMsgCrypt(sToken, sEncodingAESKey, sAppId)
-        ret ,decryp_xml = wxDecrypt.DecryptMsg(d["echostr"], d["msg_signature"], d["timestamp"], d["nonce"])
+        ret ,sReplyEchoStr = wxDecrypt.VerifyURL(d["msg_signature"], d["timestamp"], d["nonce"], d["echostr"])
 
         print "No.1: ", ret
-        print "No.2: ", decryp_xml
+        print "No.2: ", sReplyEchoStr
 
-    return decryp_xml or "hello world"
+    return sReplyEchoStr or "hello world"
