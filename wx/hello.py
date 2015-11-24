@@ -4,6 +4,9 @@
 from cgi import parse_qs, escape
 from WXBizMsgCrypt import WXBizMsgCrypt
 from urllib import unquote
+import urllib, urllib2
+import json
+import requests
 
 # firstAuth = "msg_signature=a9ea3b39e262ec645082c5b205b073a3331bff7b&timestamp=1448207658&nonce=411183241&echostr=viq5YYu1KIg%2FxOsH54z3fNNJQCwTbwvHfUllyPAmbFejXGkQ0Ow838mDKL8FgHjIFWKIStZmdOPHXDfaG36%2BTQ%3D%3D"
 
@@ -31,3 +34,29 @@ def application(environ, start_response):
         print "No.2: ", sReplyEchoStr
 
     return sReplyEchoStr or "hello world"
+
+def main():
+    secret = "3AhT8A1akqYHKVuLCtrcx3OvZPFHbMO03vvBaGu4xyciG8Lj6z1OGs8Zp-81ZtnE"
+    url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}".format(sAppId, secret)
+    access_token = "GqVLzboUJyXs6G4El0L2GmkmhVmvNgiuO8s0y-jCppp7_6mWZ3BLCCOKog1FubNKqBL1EnkHczr94HyRQM8YDA"
+    if not access_token:
+        web = urllib.urlopen(url)
+        ret = json.loads(web.read())
+        access_token = ret["access_token"]
+        print access_token
+
+    params = urllib.urlencode({
+        "agentid": "0",
+        "msgtype": "text",
+        "text": {
+            "content": "test message"
+            },
+        "access_token": access_token
+        })
+
+    # request = urllib2.Request("https://qyapi.weixin.qq.com/cgi-bin/message/send", params)
+    # print urllib2.urlopen(request).read()
+    # requests.post("https://qyapi.weixin.qq.com/cgi-bin/message/send", data = params)
+
+if __name__ == '__main__':
+    main()
