@@ -264,6 +264,6 @@ class WXBizMsgCrypt(object):
         if not signature == sMsgSignature:
             return WXBizMsgCrypt_ValidateSignature_Error, None
         pc = Prpcrypt(self.key)
-        ret, sReplyEchoStr = pc.decrypt(sEchoStr, self.m_sCorpid)
+        ret, sReplyEchoStr = pc.decrypt(sEchoStr, self.appid)
         return ret, sReplyEchoStr
 

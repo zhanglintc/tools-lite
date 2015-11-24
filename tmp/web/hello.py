@@ -20,12 +20,12 @@ def application(environ, start_response):
 
     sReplyEchoStr = ""
     if "echostr" in environ['QUERY_STRING']:
-        d = parse_qs(unquote(environ['QUERY_STRING']))
-        # d = parse_qs(environ['QUERY_STRING'])
+        # d = parse_qs(unquote(environ['QUERY_STRING']))
+        d = parse_qs(environ['QUERY_STRING'])
         # print d
 
         wxDecrypt = WXBizMsgCrypt(sToken, sEncodingAESKey, sAppId)
-        ret ,sReplyEchoStr = wxDecrypt.VerifyURL(d["msg_signature"], d["timestamp"], d["nonce"], d["echostr"])
+        ret ,sReplyEchoStr = wxDecrypt.VerifyURL(d["msg_signature"][0], d["timestamp"][0], d["nonce"][0], d["echostr"][0])
 
         print "No.1: ", ret
         print "No.2: ", sReplyEchoStr
