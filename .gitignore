@@ -34,3 +34,5 @@ python/.tags
 python/.tags_sorted_by_file
 
 python/MacCnt.txt
+
+wx/AccessToken

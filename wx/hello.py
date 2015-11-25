@@ -8,6 +8,10 @@ import urllib, urllib2
 import json
 import requests
 
+# disable warnings
+import warnings
+warnings.filterwarnings("ignore")
+
 sToken          = "c8tcRUW1j"
 sEncodingAESKey = "e6msYFTXeev0zxFNQpNCzq91SfzcAKBBn3CGXAJgd90"
 sAppId          = "wx1c77202393c1c41d"
@@ -44,19 +48,44 @@ def main():
         print access_token
 
     params = {
-        "touser": "@all",
-        "toparty": "@all",
-        "totag": "@all",
-        "agentid": "0", # str or int is OK
-        "msgtype": "text",
-        "text": {
-            "content": "test message"
+        "button":[
+            {    
+                "name":"小工具",
+                "key":"V1001_TOOL_LITE",
+                "sub_button":[
+                    {
+                        "type":"view",
+                        "name":"搜索",
+                        "url":"http://www.soso.com/"
+                    },
+                    {
+                        "type":"click",
+                        "name":"Github",
+                        "key":"V1001_GITHUB"
+                    },
+                ]
             },
-        }
+            {
+                "name":"关于",
+                "sub_button":[
+                    {
+                        "type":"view",
+                        "name":"主页",
+                        "url":"http://zhanglintc.co/"
+                    },
+                    {
+                        "type":"view",
+                        "name":"博客",
+                        "url":"http://imlane.farbox.com"
+                    },
+                ]
+            }
+        ]
+    }
     params = json.dumps(params, ensure_ascii = False)
     print params
 
-    print requests.post("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={}".format(access_token), data = params).text
+    print requests.post("https://qyapi.weixin.qq.com/cgi-bin/menu/create?access_token={0}&agentid=0".format(access_token), data = params).text
 
 if __name__ == '__main__':
     main()
