@@ -233,25 +233,29 @@ def github_reminder(MailList = MailList, GITHUB_URL = GITHUB_URL, Auto_Commit_Fl
     if count != None: # if count is initialized, do command
         print("sending...\n")
 
+        doSend = True # debug use only
+
         if not MailType == 'python':
             for send_command in send_commands:
-                # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
-                # sp.communicate()
-                os.system(send_command)
+                if doSend:
+                    # sp = subprocess.Popen(["/bin/bash", "-i", "-c", send_command])
+                    # sp.communicate()
+                    os.system(send_command)
 
                 print(send_command + '\n')
 
         else:
-            # sendEmail(to_addr, from_addr, alias, password, smtp_server, subject, contents)
-            python_send.sendEmail(
-                    to_addr = MailList,
-                    from_addr = SENDFROM,
-                    alias = "Lane-Aliyun",
-                    password = PASSWORD,
-                    smtp_server = SMTPSERV,
-                    subject = "GitHub Report",
-                    content = send_content
-                )
+            if doSend:
+                # sendEmail(to_addr, from_addr, alias, password, smtp_server, subject, contents)
+                python_send.sendEmail(
+                        to_addr = MailList,
+                        from_addr = SENDFROM,
+                        alias = "Lane-Aliyun",
+                        password = PASSWORD,
+                        smtp_server = SMTPSERV,
+                        subject = "GitHub Report",
+                        content = send_content
+                    )
 
             print(send_content)
 
