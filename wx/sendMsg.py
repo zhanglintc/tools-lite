@@ -24,7 +24,7 @@ def getToken():
 
     return access_token
 
-def sendMsg():
+def sendMsg(content = ""):
     try:
         fr = open(tokenFile, "rb")
         access_token = fr.read().strip()
@@ -39,7 +39,7 @@ def sendMsg():
         "agentid": "0",   # str or int is OK
         "msgtype": "text",
         "text": {
-            "content": "test message"
+            "content": content or "test message"
             },
         }
     params = json.dumps(params, ensure_ascii = False)
