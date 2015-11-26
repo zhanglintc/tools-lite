@@ -16,7 +16,7 @@ sToken          = "c8tcRUW1j"
 sEncodingAESKey = "e6msYFTXeev0zxFNQpNCzq91SfzcAKBBn3CGXAJgd90"
 sAppId          = "wx1c77202393c1c41d"
 
-def getRequestBody():
+def getRequestBody(environ):
     # the environment variable CONTENT_LENGTH may be empty or missing
     try:
         request_body_size = int(environ.get('CONTENT_LENGTH', 0))
@@ -34,7 +34,7 @@ def getRequestBody():
 def application(environ, start_response):
     start_response('200 OK', [('Content-Type', 'text/html')])
 
-    print getRequestBody()
+    print getRequestBody(environ)
 
     sReplyEchoStr = ""
     if "echostr" in environ['QUERY_STRING']:
