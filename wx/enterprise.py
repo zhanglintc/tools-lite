@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from cgi import parse_qs, escape
-from WXBizMsgCrypt import WXBizMsgCrypt
+from encrypt.WXBizMsgCrypt import WXBizMsgCrypt
 from urllib import unquote
 import urllib, urllib2
 import json
