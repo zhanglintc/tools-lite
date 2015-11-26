@@ -34,7 +34,14 @@ def getRequestBody(environ):
 def application(environ, start_response):
     start_response('200 OK', [('Content-Type', 'text/html')])
 
-    print getRequestBody(environ)
+    request_body = getRequestBody(environ)
+
+    d = parse_qs(environ['QUERY_STRING'])
+
+    wxDecrypt = WXBizMsgCrypt(sToken, sEncodingAESKey, sAppId)
+    ret, xml_content = wxDecrypt.DecryptMsg(request_body, d["msg_signature"][0], d["timestamp"][0], d["nonce"][0])
+
+    print xml_content
 
     sReplyEchoStr = ""
     if "echostr" in environ['QUERY_STRING']:
