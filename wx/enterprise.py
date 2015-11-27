@@ -71,13 +71,13 @@ def application(environ, start_response):
     ret, xml_content = wx.DecryptMsg(request_body, d["msg_signature"][0], d["timestamp"][0], d["nonce"][0])
     xml_tree = ET.fromstring(xml_content)
 
-    touser_name   = xml_tree.find("ToUserName")
-    fromuser_name = xml_tree.find("FromUserName")
-    create_time   = xml_tree.find("CreateTime")
-    msg_type      = xml_tree.find("MsgType")
-    agent_ID      = xml_tree.find("AgentID")
-    event         = xml_tree.find("Event")
-    event_key     = xml_tree.find("EventKey")
+    touser_name   = xml_tree.find("ToUserName").text
+    fromuser_name = xml_tree.find("FromUserName").text
+    create_time   = xml_tree.find("CreateTime").text
+    msg_type      = xml_tree.find("MsgType").text
+    agent_ID      = xml_tree.find("AgentID").text
+    event         = xml_tree.find("Event").text
+    event_key     = xml_tree.find("EventKey").text
 
     if event_key == "V1001_GITHUB":
         ret, message = wx.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
