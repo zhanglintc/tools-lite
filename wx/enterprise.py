@@ -44,7 +44,7 @@ class AsyncSend(threading.Thread):
         sendContent = getCommit("https://github.com/zhanglintc?period=daily")
         sendMsg.sendMsg(sendContent)
 
-def createMenu():
+def setMenu():
     secret = "3AhT8A1akqYHKVuLCtrcx3OvZPFHbMO03vvBaGu4xyciG8Lj6z1OGs8Zp-81ZtnE"
     url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}".format(sAppId, secret)
     access_token = ""
@@ -158,7 +158,7 @@ def application(environ, start_response):
     return ""
 
 def main():
-    # createMenu()
+    # setMenu()
     pass
 
 if __name__ == '__main__':
