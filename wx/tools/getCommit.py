@@ -10,11 +10,11 @@ import os, urllib
 import datetime, time
 import re
 
-TODAY = str(datetime.date.today()) # something like: 2014-11-10
-CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
-LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
-
 def getCommit(targetURL):
+    TODAY    = str(datetime.date.today()) # something like: 2014-11-10
+    CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
+    LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
+
     web_cotent = urllib.urlopen(targetURL) # open website
     web_cotent = urllib.urlopen(targetURL) # do it twice
 
