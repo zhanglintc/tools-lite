@@ -52,22 +52,22 @@ def getCommit(targetURL):
         if 'Pushed' in line:
             line = re.sub('^ *', '', line) # strip spaces in the beginning of this line
             line = re.sub('</a>', '', line) # remove </a>
-            pushed_detail += ("##" + line + "\n")
+            pushed_detail += ("##" + line)
 
         if "/pull/" in line and '"title"' in line:
             line = re.sub('</a>', '', line) # remove </a>
             line = line.split('>')[-1] # pull request detail is in last position
-            pushed_detail += ("##" + "Pull request: " + line + "\n")
+            pushed_detail += ("##" + "Pull request: " + line)
 
         if "/issues/" in line and '"title"' in line:
             mc = re.search('\>(.*?)\<', line) # issues detail is the shortest string between ">" and "<"
             line = mc.group(1) + "\n" # add a line break
-            pushed_detail += ("##" + "Issue: " + line + "\n")
+            pushed_detail += ("##" + "Issue: " + line)
 
     fw.close()
 
     # send_content = "You have made {0} {1} until now\n{2}\n\n{3}\n#GitHub reminder#\n".format(
-    send_content = "{0}\n\nMade {1} {2}\n\n{3}".format(
+    send_content = "{0}\nAll: {1} {2}\n\n{3}\n#GitHub reminder#\n".format(
         CUR_TIME,
         count,
         "contribution" if int(count) < 2 else "contributions",
