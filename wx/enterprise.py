@@ -3,7 +3,8 @@
 
 from cgi import parse_qs, escape
 from encrypt.WXBizMsgCrypt import WXBizMsgCrypt
-from urllib import unquote
+from tools.getCommit import getCommit
+
 import urllib, urllib2
 import json
 import requests
@@ -16,13 +17,17 @@ sToken          = "c8tcRUW1j"
 sEncodingAESKey = "e6msYFTXeev0zxFNQpNCzq91SfzcAKBBn3CGXAJgd90"
 sAppId          = "wx1c77202393c1c41d"
 
-xml_temp = "\
+# {0}: ToUserName
+# {1}: FromUserName
+# {2}: CreateTime
+# {3}: Content
+text_T = "\
 <xml>\
 <ToUserName><![CDATA[zhanglintc]]></ToUserName>\
 <FromUserName><![CDATA[wx1c77202393c1c41d]]></FromUserName>\
 <CreateTime>1348831860</CreateTime>\
 <MsgType><![CDATA[text]]></MsgType>\
-<Content><![CDATA[this is a test]]></Content>\
+<Content><![CDATA[{0}]]></Content>\
 </xml>\
 "
 
@@ -51,8 +56,6 @@ def application(environ, start_response):
     wxDecrypt = WXBizMsgCrypt(sToken, sEncodingAESKey, sAppId)
     ret, xml_content = wxDecrypt.DecryptMsg(request_body, d["msg_signature"][0], d["timestamp"][0], d["nonce"][0])
 
-    print xml_content
-
     sReplyEchoStr = ""
     if "echostr" in environ['QUERY_STRING']:
         d = parse_qs(environ['QUERY_STRING'])
@@ -61,7 +64,7 @@ def application(environ, start_response):
         ret ,sReplyEchoStr = wxDecrypt.VerifyURL(d["msg_signature"][0], d["timestamp"][0], d["nonce"][0], d["echostr"][0])
 
     # return sReplyEchoStr or "hello world"
-    ret, message = wxDecrypt.EncryptMsg(xml_temp, d["nonce"][0])
+    ret, message = wxDecrypt.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["echostr"][0])
     return message or "hello world"
 
 def sendSth():
@@ -116,6 +119,7 @@ def sendSth():
 
 def main():
     # sendSth()
+    # getCommit("https://github.com/zhanglintc?period=daily")
     pass
 
 if __name__ == '__main__':
