@@ -64,7 +64,7 @@ def application(environ, start_response):
         ret ,sReplyEchoStr = wxDecrypt.VerifyURL(d["msg_signature"][0], d["timestamp"][0], d["nonce"][0], d["echostr"][0])
 
     # return sReplyEchoStr or "hello world"
-    ret, message = wxDecrypt.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["echostr"][0])
+    ret, message = wxDecrypt.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
     return message or "hello world"
 
 def sendSth():
