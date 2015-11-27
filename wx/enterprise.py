@@ -8,8 +8,11 @@ from tools.getCommit import getCommit
 import xml.etree.cElementTree as ET
 
 import urllib, urllib2
+import threading
 import json
 import requests
+
+import sendMsg
 
 # disable warnings
 import warnings
@@ -32,6 +35,14 @@ text_T = "\
 <Content><![CDATA[{0}]]></Content>\
 </xml>\
 "
+
+class AsyncSend(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        sendContent = getCommit("https://github.com/zhanglintc?period=daily")
+        sendMsg.sendMsg(sendContent)
 
 def createMenu():
     secret = "3AhT8A1akqYHKVuLCtrcx3OvZPFHbMO03vvBaGu4xyciG8Lj6z1OGs8Zp-81ZtnE"
@@ -132,8 +143,12 @@ def application(environ, start_response):
         event_key = xml_tree.find("EventKey").text
 
         if event_key == "V1001_GITHUB":
-            ret, message = wx.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
-            return message
+            # ret, message = wx.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
+            aycs = AsyncSend()
+            aycs.start()
+
+            # return null string
+            return ""
 
     else:
         ret, message = wx.EncryptMsg(text_T.format("尚不支持..."), d["nonce"][0])
