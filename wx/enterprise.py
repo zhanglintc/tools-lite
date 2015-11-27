@@ -33,6 +33,56 @@ text_T = "\
 </xml>\
 "
 
+def createMenu():
+    secret = "3AhT8A1akqYHKVuLCtrcx3OvZPFHbMO03vvBaGu4xyciG8Lj6z1OGs8Zp-81ZtnE"
+    url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}".format(sAppId, secret)
+    access_token = ""
+    if not access_token:
+        web = urllib.urlopen(url)
+        ret = json.loads(web.read())
+        access_token = ret["access_token"]
+        print access_token
+
+    params = {
+        "button":[
+            {    
+                "name":"小工具",
+                "key":"V1001_TOOL_LITE",
+                "sub_button":[
+                    {
+                        "type":"view",
+                        "name":"百度搜索",
+                        "url":"http://baidu.com/"
+                    },
+                    {
+                        "type":"click",
+                        "name":"GitHub报告",
+                        "key":"V1001_GITHUB"
+                    },
+                ]
+            },
+            {
+                "name":"关于",
+                "sub_button":[
+                    {
+                        "type":"view",
+                        "name":"打开主页",
+                        "url":"http://zhanglintc.co/"
+                    },
+                    {
+                        "type":"view",
+                        "name":"打开博客",
+                        "url":"http://imlane.farbox.com"
+                    },
+                ]
+            }
+        ]
+    }
+    params = json.dumps(params, ensure_ascii = False)
+    print params
+
+    print requests.post("https://qyapi.weixin.qq.com/cgi-bin/menu/create?access_token={0}&agentid=0".format(access_token), data = params).text
+
 def getRequestBody(environ):
     # the environment variable CONTENT_LENGTH may be empty or missing
     try:
@@ -86,59 +136,8 @@ def application(environ, start_response):
     # return a null string
     return ""
 
-def createMenu():
-    secret = "3AhT8A1akqYHKVuLCtrcx3OvZPFHbMO03vvBaGu4xyciG8Lj6z1OGs8Zp-81ZtnE"
-    url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}".format(sAppId, secret)
-    access_token = ""
-    if not access_token:
-        web = urllib.urlopen(url)
-        ret = json.loads(web.read())
-        access_token = ret["access_token"]
-        print access_token
-
-    params = {
-        "button":[
-            {    
-                "name":"小工具",
-                "key":"V1001_TOOL_LITE",
-                "sub_button":[
-                    {
-                        "type":"view",
-                        "name":"soso搜索",
-                        "url":"http://www.soso.com/"
-                    },
-                    {
-                        "type":"click",
-                        "name":"Github报告",
-                        "key":"V1001_GITHUB"
-                    },
-                ]
-            },
-            {
-                "name":"关于",
-                "sub_button":[
-                    {
-                        "type":"view",
-                        "name":"打开主页",
-                        "url":"http://zhanglintc.co/"
-                    },
-                    {
-                        "type":"view",
-                        "name":"打开博客",
-                        "url":"http://imlane.farbox.com"
-                    },
-                ]
-            }
-        ]
-    }
-    params = json.dumps(params, ensure_ascii = False)
-    print params
-
-    print requests.post("https://qyapi.weixin.qq.com/cgi-bin/menu/create?access_token={0}&agentid=0".format(access_token), data = params).text
-
 def main():
-    createMenu()
-    # getCommit("https://github.com/zhanglintc?period=daily")
+    # createMenu()
     pass
 
 if __name__ == '__main__':
