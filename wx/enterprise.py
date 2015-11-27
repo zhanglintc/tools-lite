@@ -125,12 +125,18 @@ def application(environ, start_response):
     fromuser_name = xml_tree.find("FromUserName").text
     create_time   = xml_tree.find("CreateTime").text
     msg_type      = xml_tree.find("MsgType").text
-    agent_ID      = xml_tree.find("AgentID").text
-    event         = xml_tree.find("Event").text
-    event_key     = xml_tree.find("EventKey").text
 
-    if event_key == "V1001_GITHUB":
-        ret, message = wx.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
+    if msg_type == "event":
+        agent_ID  = xml_tree.find("AgentID").text
+        event     = xml_tree.find("Event").text
+        event_key = xml_tree.find("EventKey").text
+
+        if event_key == "V1001_GITHUB":
+            ret, message = wx.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
+            return message
+
+    else:
+        ret, message = wx.EncryptMsg(text_T.format("尚不支持..."), d["nonce"][0])
         return message
 
     # return a null string
