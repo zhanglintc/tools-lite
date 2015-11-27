@@ -85,12 +85,12 @@ def sendSth():
                 "sub_button":[
                     {
                         "type":"view",
-                        "name":"搜索",
+                        "name":"soso搜索",
                         "url":"http://www.soso.com/"
                     },
                     {
                         "type":"click",
-                        "name":"Github",
+                        "name":"Github报告",
                         "key":"V1001_GITHUB"
                     },
                 ]
@@ -100,12 +100,12 @@ def sendSth():
                 "sub_button":[
                     {
                         "type":"view",
-                        "name":"主页",
+                        "name":"打开主页",
                         "url":"http://zhanglintc.co/"
                     },
                     {
                         "type":"view",
-                        "name":"博客",
+                        "name":"打开博客",
                         "url":"http://imlane.farbox.com"
                     },
                 ]
@@ -118,7 +118,7 @@ def sendSth():
     print requests.post("https://qyapi.weixin.qq.com/cgi-bin/menu/create?access_token={0}&agentid=0".format(access_token), data = params).text
 
 def main():
-    # sendSth()
+    sendSth()
     # getCommit("https://github.com/zhanglintc?period=daily")
     pass
 
