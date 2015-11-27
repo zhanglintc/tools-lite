@@ -16,6 +16,16 @@ sToken          = "c8tcRUW1j"
 sEncodingAESKey = "e6msYFTXeev0zxFNQpNCzq91SfzcAKBBn3CGXAJgd90"
 sAppId          = "wx1c77202393c1c41d"
 
+xml_temp = "\
+<xml>\
+<ToUserName><![CDATA[zhanglintc]]></ToUserName>\
+<FromUserName><![CDATA[wx1c77202393c1c41d]]></FromUserName>\
+<CreateTime>1348831860</CreateTime>\
+<MsgType><![CDATA[text]]></MsgType>\
+<Content><![CDATA[this is a test]]></Content>\
+</xml>\
+"
+
 def getRequestBody(environ):
     # the environment variable CONTENT_LENGTH may be empty or missing
     try:
@@ -50,7 +60,9 @@ def application(environ, start_response):
         wxDecrypt = WXBizMsgCrypt(sToken, sEncodingAESKey, sAppId)
         ret ,sReplyEchoStr = wxDecrypt.VerifyURL(d["msg_signature"][0], d["timestamp"][0], d["nonce"][0], d["echostr"][0])
 
-    return sReplyEchoStr or "hello world"
+    # return sReplyEchoStr or "hello world"
+    ret, message = wxDecrypt.EncryptMsg(xml_temp, d["nonce"][0])
+    return message or "hello world"
 
 def sendSth():
     secret = "3AhT8A1akqYHKVuLCtrcx3OvZPFHbMO03vvBaGu4xyciG8Lj6z1OGs8Zp-81ZtnE"
