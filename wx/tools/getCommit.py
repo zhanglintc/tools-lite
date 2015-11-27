@@ -52,17 +52,17 @@ def getCommit(targetURL):
         if 'Pushed' in line:
             line = re.sub('^ *', '', line) # strip spaces in the beginning of this line
             line = re.sub('</a>', '', line) # remove </a>
-            pushed_detail += ("##" + line + "\n")
+            pushed_detail += ("## " + line + "\n")
 
         if "/pull/" in line and '"title"' in line:
             line = re.sub('</a>', '', line) # remove </a>
             line = line.split('>')[-1] # pull request detail is in last position
-            pushed_detail += ("##" + "Pull request: " + line + "\n")
+            pushed_detail += ("## " + "Pull request: " + line + "\n")
 
         if "/issues/" in line and '"title"' in line:
             mc = re.search('\>(.*?)\<', line) # issues detail is the shortest string between ">" and "<"
             line = mc.group(1) + "\n" # add a line break
-            pushed_detail += ("##" + "Issue: " + line + "\n")
+            pushed_detail += ("## " + "Issue: " + line + "\n")
 
     fw.close()
 
