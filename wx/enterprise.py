@@ -62,8 +62,8 @@ def setMenu():
                 "sub_button":[
                     {
                         "type":"view",
-                        "name":"百度搜索",
-                        "url":"http://baidu.com/"
+                        "name":"github.com",
+                        "url":"http://github.com/"
                     },
                     {
                         "type":"click",
