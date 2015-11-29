@@ -9,6 +9,7 @@ import xml.etree.cElementTree as ET
 
 import urllib, urllib2
 import threading
+import datetime
 import json
 import requests
 
@@ -41,7 +42,8 @@ class AsyncSend(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        sendContent = getCommit("https://github.com/zhanglintc?period=daily")
+        today = str(datetime.date.today()) # something like: 2014-11-10
+        sendContent = getCommit("https://github.com/zhanglintc?tab=contributions&from={0}".format(TODAY))
         sendMsg.sendMsg(sendContent)
 
 def setMenu():

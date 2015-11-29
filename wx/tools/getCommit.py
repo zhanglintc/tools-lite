@@ -10,10 +10,11 @@ import os, urllib
 import datetime, time
 import re
 
+TODAY = str(datetime.date.today()) # something like: 2014-11-10
+
 def getCommit(targetURL):
-    TODAY    = str(datetime.date.today()) # something like: 2014-11-10
-    CUR_TIME = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
-    LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
+    cur_time = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
+    log_file = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
 
     web_cotent = urllib.urlopen(targetURL) # open website
     web_cotent = urllib.urlopen(targetURL) # do it twice
@@ -22,7 +23,7 @@ def getCommit(targetURL):
     error = True
     count = None
     pushed_detail = ""
-    fw = open(LOG_FILE, 'w')
+    fw = open(log_file, 'w')
     while line:
         # read each line while not the end
         line = web_cotent.readline()
@@ -38,7 +39,7 @@ def getCommit(targetURL):
         if 'wrong' in line:
             if error: # really error, this make script hasn't get data-count
                 fw.close()
-                os.remove(LOG_FILE)
+                os.remove(log_file)
                 return 100
             else: # something occurred after get data-count, doesn't matter
                 break
@@ -46,7 +47,7 @@ def getCommit(targetURL):
         if line and count == None: # readline isn't None means urlopen success, initialize count as 0
             count = 0
 
-        if '"{0}"'.format(TODAY) in line: # find TODAY, TODAY must surrounded with quotation marks like "2014-11-10"
+        if '"{0}"'.format(TODAY) in line and "data-from" not in line: # find TODAY, TODAY must surrounded with quotation marks like "2014-11-10"
             count = line.split('\"')[11] # today's commit is in 11th position
 
         if 'Pushed' in line:
@@ -67,7 +68,7 @@ def getCommit(targetURL):
     fw.close()
 
     send_content = "{0}\nMade {1} {2}\n\n\n{3}\n#GitHub reminder#\n".format(
-        CUR_TIME,
+        cur_time,
         count,
         "contribution" if int(count) < 2 else "contributions",
         pushed_detail,
@@ -75,12 +76,12 @@ def getCommit(targetURL):
 
     # if don't want to see log file, use the code next line
     # if want to see log file, then comment the code below
-    os.remove(LOG_FILE) # remove log file any way, zhanglin 2014.11.20
+    os.remove(log_file) # remove log file any way, zhanglin 2014.11.20
 
     return send_content
 
 if __name__ == '__main__':
-    print(getCommit("https://github.com/zhanglintc?period=daily") + "\n")
+    print(getCommit("https://github.com/zhanglintc?tab=contributions&from={0}".format(TODAY)) + "\n")
 
     try:
         raw_input()
