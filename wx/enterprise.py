@@ -43,7 +43,7 @@ class AsyncSend(threading.Thread):
 
     def run(self):
         today = str(datetime.date.today()) # something like: 2014-11-10
-        sendContent = getCommit("https://github.com/zhanglintc?tab=contributions&from={0}".format(TODAY))
+        sendContent = getCommit("https://github.com/zhanglintc?tab=contributions&from={0}".format(today))
         sendMsg.sendMsg(sendContent)
 
 def setMenu():
