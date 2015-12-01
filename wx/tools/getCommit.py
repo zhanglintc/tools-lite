@@ -10,9 +10,8 @@ import os, urllib
 import datetime, time
 import re
 
-TODAY = str(datetime.date.today()) # something like: 2014-11-10
-
 def getCommit(targetURL):
+    today = str(datetime.date.today()) # something like: 2014-11-10
     cur_time = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) # 2014-11-10 15:12:40
     log_file = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')) + '.log' # 20141110_151240.log
 
@@ -47,7 +46,7 @@ def getCommit(targetURL):
         if line and count == None: # readline isn't None means urlopen success, initialize count as 0
             count = 0
 
-        if '"{0}"'.format(TODAY) in line and "data-from" not in line: # find TODAY, TODAY must surrounded with quotation marks like "2014-11-10"
+        if '"{0}"'.format(today) in line and "data-from" not in line: # find TODAY, TODAY must surrounded with quotation marks like "2014-11-10"
             count = line.split('\"')[11] # today's commit is in 11th position
 
         if 'Pushed' in line:
@@ -81,7 +80,7 @@ def getCommit(targetURL):
     return send_content
 
 if __name__ == '__main__':
-    print(getCommit("https://github.com/zhanglintc?tab=contributions&from={0}".format(TODAY)) + "\n")
+    print(getCommit("https://github.com/zhanglintc?tab=contributions&from={0}".format(str(datetime.date.today()))) + "\n")
 
     try:
         raw_input()
