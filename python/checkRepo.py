@@ -18,7 +18,7 @@ def updateDir(path):
 
     # notify if not up-to-date
     if "up-to-date" not in content:
-        print path
+        print('Note: repository "{0}" is not up-to-date'.format(path))
 
     # remove temp file
     os.remove(tempFilePath)
