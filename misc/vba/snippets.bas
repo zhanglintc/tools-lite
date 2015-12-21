@@ -8,3 +8,11 @@ Sub addCircle()
         Next curRow
     Next curSheet
 End Sub
+
+'refer to: http://stackoverflow.com/questions/22498393/is-it-possible-to-return-error-code-to-vba-from-batch-file
+Sub getExitCode()
+    Set oSHELL = VBA.CreateObject("WScript.Shell")
+    'what does 0, True mean below?
+    exitCode = oSHELL.Run(ThisWorkbook.Path & "\exit250.exe", 0, True)
+    Debug.Print exitCode
+End Sub
