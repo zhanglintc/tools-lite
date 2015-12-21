@@ -5,7 +5,7 @@ import os
 
 tempFile = "tempFile"
 
-def updateDir(path):
+def checkRepo(path):
     tempFilePath = "{0}/{1}".format(path, tempFile)
 
     # write log to a temp file
@@ -16,17 +16,26 @@ def updateDir(path):
     content = fr.read()
     fr.close()
 
+    # remove temp file
+    os.remove(tempFilePath)
+
     # notify if not up-to-date
     if "up-to-date" not in content:
         print('Note: repository "{0}" is not up-to-date'.format(path))
 
-    # remove temp file
-    os.remove(tempFilePath)
-
 def main():
     for path in os.listdir("./"):
         if os.path.isdir(path):
-            updateDir(path)
+            checkRepo(path)
+
+    print("Check completed...")
+
+    try:
+        input()
+    except:
+        pass
 
 if __name__ == '__main__':
     main()
+
+
