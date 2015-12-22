@@ -23,6 +23,9 @@ def checkRepo(path):
     if "up-to-date" not in content:
         print('Note: repository "{0}" is not up-to-date'.format(path))
 
+    else:
+        print("OK")
+
 def main():
     for path in os.listdir("./"):
         if os.path.isdir(path):
