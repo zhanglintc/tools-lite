@@ -1,29 +1,34 @@
-#include "iostream"
+#include "stdio.h"
+#include "stdlib.h"
 
-using namespace std;
+int bss_var;
+int data_var0 = 1;
 
-int bss;
+int main(int argc, char **argv) { 
+    printf("\nThe user space's address division of a process as follow:\n\n");
 
-int main(int argc, char const *argv[])
-{
-    int stack = 0;
-    int *heap  = (int *)malloc(sizeof(int));
-    static int data = 0;
+    printf("Data segment:\n");
+    printf("address of \"main\" function: %x\n\n", main);
+    printf("Data segment:\n");
+    printf("address of data_var:    %x\n", &data_var0);
 
-    cout << endl;
+    static int data_var1 = 4;
+    printf("new end of data_var:    %x\n\n", &data_var1);
+    printf("BSS:\n");
+    printf("address of bss_var:     %x\n\n", &bss_var);
 
-    cout << "bss: ";
-    cout << &bss << endl;
+    char *str = (char *)malloc(sizeof(char) * 10);
+    printf("initial heap end:       %x\n", str);
 
-    cout << "stack: ";
-    cout << &stack << endl;
+    char *buf = (char *)malloc(sizeof(char) * 10);
+    printf("new heap end:           %x\n\n", buf);
 
-    cout << "heap: ";
-    cout << &heap << endl;
+    int stack_var0 = 2;
+    printf("Stack segment:\n");
+    printf("initial end of stack:   %x\n", &stack_var0);
 
-    cout << "data: ";
-    cout << &data << endl;
+    int stack_var1 = 3;
+    printf("new end of stack:       %x\n", &stack_var1);
 
-    cout << endl;
     return 0;
 }
