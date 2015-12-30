@@ -20,8 +20,7 @@ sub each_file {
             foreach (<*>) {
                 &innerEachFile(File::Spec->catfile(getcwd, $_));
             }
-            my $dir_name = dirname $path;
-            chdir $dir_name or die "can't chdir $dir_name: $!\n";
+            chdir (dirname $path) or die "can't chdir ".(dirname $path).": $!\n";
         }
         else {
             push @pList, $path; # push file path into local @pList
