@@ -29,9 +29,23 @@ sub each_file {
     }
 }
 
-my $targetFolder = "/Users/lane/Github/leetcode";
+sub read_all {
+    my $target = shift @_;
+
+    open FR, "<", $_ or die "Error: $!";
+
+    my $content;
+    while (<FR>) {
+        $content .= $_;
+    }
+
+    return $content;
+}
+
+my $targetFolder = "/Users/lane/Github/wb";
 foreach (&each_file($targetFolder)) {
-    print "$_\n";
+    my $content = &read_all($_);
+    print $content;
 }
 
 
