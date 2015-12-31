@@ -16,7 +16,7 @@ def IsTargetFile(FileName):
     else:
         return False
 
-def ProcessFile(fPathName, OENver, GENver, PKIver):
+def ProcessFile(fPathName, OENver, GENver, PKIver, SINver, isSINOH):
     fr = open(fPathName, "rb")
     fStr = fr.read()
     fr.close()
@@ -28,12 +28,16 @@ def ProcessFile(fPathName, OENver, GENver, PKIver):
     isReplace = False
     mc = re.search('version=\"(.*?)\"', fStr)
     if mc:
+        # SIN process
+        if isSINOH:
+            fStr = fStr.replace('version="{0}"'.format(mc.group(1)), 'version="{0}"'.format(SINver))
+
         # PKI process
-        if "PKI" in fPathName:
+        elif "PKI" in fPathName.split("\\")[-1]:
             fStr = fStr.replace('version="{0}"'.format(mc.group(1)), 'version="{0}"'.format(PKIver))
 
         # GEN process
-        elif "-" in fPathName:
+        elif "-" in fPathName.split("\\")[-1]:
             fStr = fStr.replace('version="{0}"'.format(mc.group(1)), 'version="{0}"'.format(GENver))
 
         # OWN process
@@ -53,13 +57,13 @@ def ProcessFile(fPathName, OENver, GENver, PKIver):
         return False
 
 def main():
-    if  len(sys.argv) != 5:
+    if  len(sys.argv) != 6:
         print('KMPVerUP [Version 1.0] => A tool makes KMP file version up.')
         print('Powered by ZhangLin. Nothing reserved.')
         print('')
         print('')
         print('Usage:')
-        print('  KMPVerUp folder1|folder2|folderN OENver GENver PKIver')
+        print('  KMPVerUp folder1|folder2|folderN OENver GENver PKIver SINver')
         print('')
         print('Note:')
         print('  This is not the main entry file,')
@@ -76,20 +80,29 @@ def main():
 
         return -1
 
-    targetFolderStr = sys.argv[1]   # **/Model/C658|**/Model/C658FA => split by "|"
+    targetFolderStr = sys.argv[1]   # **/Model/C658|**/Model/C658FA|**/Model/D300[S] => split by "|"
     OENver = sys.argv[2]            # eg: 5.0.13.0 => no quotation
     GENver = sys.argv[3]            # eg: 5.0.13.0 => no quotation
     PKIver = sys.argv[4]            # eg: 5.0.13.OSW1_01 => no quotation
+    SINver = sys.argv[5]            # eg: 5.0.13.OSW1_01 => no quotation
 
     targetFoderList = targetFolderStr.split("|")
     KMPCount = 0
     for targetFolder in targetFoderList:
+        # SIN special process
+        isSINOH = False
+        if "[S]" in targetFolder:
+            targetFolder = targetFolder.replace("[S]", "")
+            isSINOH = True
+
+        print targetFolder
+
         FTuple = os.walk(targetFolder)
         for root, dirs, files in FTuple:
             for Tmpfile in files:
                 if IsTargetFile(Tmpfile):
                     of = os.path.join(root, Tmpfile)
-                    if ProcessFile(of, OENver, GENver, PKIver):
+                    if ProcessFile(of, OENver, GENver, PKIver, SINver, isSINOH):
                         KMPCount += 1
 
     return KMPCount
