@@ -13,7 +13,7 @@ def cdRepo path
   File.delete tempFilePath
 
   if not content.include? "up-to-date"
-    puts path
+    puts "Note: repository \"#{path}\" is not up-to-date"
   else
     puts "OK"
   end
