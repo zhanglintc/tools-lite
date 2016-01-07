@@ -70,7 +70,6 @@ set fileName=%curTime::=.%.bak
 echo Backup of your "Path" at %date% %curTime%:>%fileName%
 echo.>>%fileName%
 echo %envPathBak%>>%fileName%
-pause
 goto end
 
 :end
