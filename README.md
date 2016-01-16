@@ -1,21 +1,32 @@
 tools-lite
 ==========
 
-Some lite tools written by myself.
+Lite tools of my own.
 
 ### batch:
-Windows platform based batch file.
+Batch file of Windows.
 
-### leetcode:
-Solutions of leetcode.com problems.
-Most are Python solutions, some are C++,
-plan to add Java solutions in the future.</br>
-> **"zhanglintc/tools-lite/leetcode" has been moved to" zhanglintc/leetcode" since 2015.03.23 at Rev802**
+### bin:
+Executable applications.
+
+### conf:
+Configuration files.
 
 ### misc:
-Something that hard to classify.
+Things hard to be classified.
+
+### perl:
+Tools written by Perl.
 
 ### python:
 Tools written by Python.
 
+### reg:
+Registry files ow Windows.
+
+### ruby:
+Tools written by Ruby.
+
+### tmp:
+Temporary uploaded files.
 
