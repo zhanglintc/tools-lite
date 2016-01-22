@@ -63,11 +63,6 @@ def setMenu():
                 "key":"V1001_TOOL_LITE",
                 "sub_button":[
                     {
-                        "type":"view",
-                        "name":"github.com",
-                        "url":"http://github.com/"
-                    },
-                    {
                         "type":"click",
                         "name":"GitHub报告",
                         "key":"V1001_GITHUB"
