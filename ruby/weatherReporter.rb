@@ -8,7 +8,7 @@ require 'mail'
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
-fr = open ".pass", "rb"
+fr = open (File.dirname(__FILE__) + "/.pass"), "rb"
 password = fr.read.chomp
 
 city = "chongqing"
