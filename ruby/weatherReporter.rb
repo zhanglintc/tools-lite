@@ -1,4 +1,3 @@
-#!/env/bin/ruby
 # encoding: utf-8
 
 require 'net/http'
@@ -36,14 +35,14 @@ today = "\
 "
 
 begin
-  fr = open "yesterday.txt", "r"
+  fr = open (File.dirname(__FILE__) + "/yesterday.txt"), "r"
   yesterday = fr.read
   fr.close
 rescue
   yesterday = ""
 end
 
-fw = open "yesterday.txt", "w"
+fw = open (File.dirname(__FILE__) + "/yesterday.txt"), "w"
 fw.write (today)
 fw.close
 
