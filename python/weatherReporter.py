@@ -3,7 +3,7 @@
 
 import urllib
 import json
-import os
+import sys, os
 
 import python_send
 
@@ -71,13 +71,13 @@ today = """\
 )
 
 try:
-    fr = open("yesterday.txt", "rb")
+    fr = open(sys.path[0] + "/yesterday.txt", "rb")
     yesterday = fr.read()
     fr.close
 except:
     yesterday = ""
 
-fw = open("yesterday.txt", "wb")
+fw = open(sys.path[0] + "/yesterday.txt", "wb")
 fw.write(today)
 fw.close
 
