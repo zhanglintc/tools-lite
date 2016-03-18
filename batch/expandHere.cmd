@@ -25,6 +25,34 @@ for %%i in (*) do (
     if "%%~xi"==".kp_" (
         expand %%i .\expanded\%%~ni.kpd
     )
+    
+    if "%%~xi"==".ex_" (
+        expand %%i .\expanded\%%~ni.exe
+    )
+    
+    if "%%~xi"==".pp_" (
+        expand %%i .\expanded\%%~ni.ppd
+    )
+    
+    if "%%~xi"==".gp_" (
+        expand %%i .\expanded\%%~ni.gpd
+    )
+    
+    if "%%~xi"==".kv_" (
+        expand %%i .\expanded\%%~ni.kvd
+    )
+    
+    if "%%~xi"==".xm_" (
+        expand %%i .\expanded\%%~ni.xml
+    )
+    
+    if "%%~xi"==".confi_" (
+        expand %%i .\expanded\%%~ni.config
+    )
+    
+    if "%%~xi"==".manifes_" (
+        expand %%i .\expanded\%%~ni.manifest
+    )
 )
 
 echo=
