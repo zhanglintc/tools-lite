@@ -30,15 +30,15 @@ if not PASSWORD:
 else:
     pass
 
-SENDFROM = "zhanglintc@163.com"
-USERNAME = "zhanglintc@163.com"
+SENDFROM = "aliserv@163.com"
+USERNAME = "aliserv@163.com"
 SMTPSERV = "smtp.163.com"
 MailList = [
     "zhanglintc623@foxmail.com",
 ]
 
-city = "harbin"
-city_CN = "哈尔滨"
+city = "dalian"
+city_CN = "大连"
 base_url = "http://api.worldweatheronline.com/free/v2/weather.ashx"
 params = "?key=55f1fdd05fba23be0a18043d0a017&num_of_days=3&format=json&lang=zh&q={0}".format(city)
 
