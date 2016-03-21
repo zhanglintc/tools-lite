@@ -64,8 +64,8 @@ else:
     pass
 
 MailType = 'python' # 'sendemail' # 'mutt'
-SENDFROM = "zhanglintc@163.com"
-USERNAME = "zhanglintc@163.com"
+SENDFROM = "aliserv@163.com"
+USERNAME = "aliserv@163.com"
 SMTPSERV = "smtp.163.com"
 
 GITHUB_URL = "https://github.com/zhanglintc?period=daily"
