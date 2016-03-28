@@ -225,7 +225,7 @@ Func GenHtmls()
                Send("{DOWN}")
             Else
                Send("{ENTER}")
-               Sleep(1000)
+               ; Sleep(1000)
                Send("!tr")
                $curTmpFileStorePath = $curFilePath&"\"&$szTmpFName
                WinWaitActive("[CLASS:#32770]")
@@ -234,16 +234,18 @@ Func GenHtmls()
                   ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath)
                   Send("!s")
 
-                  Sleep(500)
+                  While (WinExists("WinMerge", "レポート生成に成功しました。") <> 1 And WinExists("名前を付けて保存の確認") <> 1)
+                  WEnd
+
                   Local $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
                   local $j = 0
                   While $getWinForExist <> "&Ok"
                      $j = $j + 1
-                     Sleep(500)
                      Send("{ENTER}")
                      ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath&"_"&$j)
                      Send("!s")
-                     Sleep(500)
+                     While (WinExists("WinMerge", "レポート生成に成功しました。") <> 1 And WinExists("名前を付けて保存の確認") <> 1)
+                     WEnd
                      $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
                   WEnd
 
@@ -253,12 +255,12 @@ Func GenHtmls()
 
                   WinWaitActive("[CLASS:#32770]")
                   Send("{ENTER}")
-                  Sleep(500)
+                  ; Sleep(500)
                   Send("{ESC}")
                Else
                   MsgBox($MB_SYSTEMMODAL, "", "Store dialog does not exist")
                EndIf
-               Sleep(500)
+               ; Sleep(500)
                Send("{DOWN}")
                if StringLen($szTmpFName)+4 > 31 Then
                   FileWriteLine($hLogFileOpen, $szTmpFName&".html file name len is over than 31 charachter.")
