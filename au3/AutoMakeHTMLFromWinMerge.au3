@@ -94,7 +94,7 @@ Func GenHtmls()
 
     $curFilePath = _GUICtrlEdit_GetText($idFilePath)
     if $curFilePath == "" Then
-        MsgBox($MB_SYSTEMMODAL, "Error", "Please set html stroe path first!")
+        MsgBox($MB_SYSTEMMODAL, "Error", "Please set html store path first!")
         Return
     EndIf
 
@@ -103,7 +103,7 @@ Func GenHtmls()
     $curTime = @YEAR & @MON & @MDAY & @HOUR & @MIN & @SEC
     $curFilePath = $curFilePath & "\" & $curTime
     If not DirCreate($curFilePath) Then
-        MsgBox($MB_SYSTEMMODAL, "Error", "Create html stroe error!")
+        MsgBox($MB_SYSTEMMODAL, "Error", "Create html store error!")
         Return
     EndIf
     If not _FileCreate($curFilePath & "\" & $curTime & "_log.txt") Then
