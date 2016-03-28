@@ -3,6 +3,9 @@ tools-lite
 
 Lite tools of my own.
 
+### au3:
+Scripts of AutoIt3.
+
 ### batch:
 Batch file of Windows.
 
