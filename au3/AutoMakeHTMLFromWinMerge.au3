@@ -9,13 +9,17 @@
 #include <StringConstants.au3>
 #include <Timers.au3>
 
+; Developers:
+; Created by FangJun
+; Modified by ZhangLin & YanBin
+
 CreateGUI()
 
 Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.1", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.2", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("No. | FileName | Path ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -24,7 +28,7 @@ Func CreateGUI()
     Local $selectButton = GUICtrlCreateButton("Select", 470, 185, 100)
     Local $readButton = GUICtrlCreateButton("Read Diff List", 10, 220, 100)
     Local $genHTMLButton = GUICtrlCreateButton("Create Html Files", 130, 220)
-    ;Local $testButton = GUICtrlCreateButton("Test", 290, 220, 100)
+    ; Local $testButton = GUICtrlCreateButton("Test", 290, 220, 100)
     Global $DECheckbox = GUICtrlCreateCheckbox("DE", 10, 260)
     Global $ENCheckbox = GUICtrlCreateCheckbox("EN", 60, 260)
     Global $ESCheckbox = GUICtrlCreateCheckbox("ES", 110, 260)
@@ -101,12 +105,12 @@ Func GenHtmls()
         MsgBox($MB_SYSTEMMODAL, "Error", "Create html stroe error!")
         Return
     EndIf
-    If not _FileCreate($curFilePath&"\"&$curTime&"_log.txt") Then
+    If not _FileCreate($curFilePath & "\" & $curTime & "_log.txt") Then
         MsgBox($MB_SYSTEMMODAL, "Error", "Create log file error!")
         Return
     EndIf
 
-    Local $hLogFileOpen = FileOpen($curFilePath&"\"&$curTime&"_log.txt", $FO_APPEND)
+    Local $hLogFileOpen = FileOpen($curFilePath & "\" & $curTime & "_log.txt", $FO_APPEND)
     If $hLogFileOpen = -1 Then
         MsgBox($MB_SYSTEMMODAL, "", "An error occurred when open the Log.")
         Return
@@ -127,105 +131,105 @@ Func GenHtmls()
             $szOrgFName = $szTmpFName
             $szTmpFPath = StringStripWS(_GUICtrlListView_GetItemText($idListview, $i, 2), 8)
             if (StringInStr($szTmpFPath, "\RAST") Or StringInStr($szTmpFPath, "\_RAST") Or StringInStr($szTmpFPath, "\_PCL") Or StringInStr($szTmpFPath, "\PCL")  Or StringInStr($szTmpFPath, "_PCL_")) and (0=StringInStr($szTmpFPath, "FA\")) Then
-                $szTmpFName = $szTmpFName&"_PCL"
+                $szTmpFName = $szTmpFName & "_PCL"
             EndIf
             if StringInStr($szTmpFPath, "\PS") Or StringInStr($szTmpFPath, "\_PS")  Or StringInStr($szTmpFPath, "_PS_")  Then
-                $szTmpFName = $szTmpFName&"_PS"
+                $szTmpFName = $szTmpFName & "_PS"
             EndIf
             if StringInStr($szTmpFPath, "\XPS") Or StringInStr($szTmpFPath, "\_XPS")  Or StringInStr($szTmpFPath, "_XPS_")  Then
-                $szTmpFName = $szTmpFName&"_XPS"
+                $szTmpFName = $szTmpFName & "_XPS"
             EndIf
             ; if (StringInStr($szTmpFPath, "\PCLXL") Or StringInStr($szTmpFPath, "\_PCLXL")) And StringInStr($szTmpFPath, "FA\")  Then
-            ;     $szTmpFName = $szTmpFName&"_FAX"
+            ;     $szTmpFName = $szTmpFName & "_FAX"
             ; EndIf
 
             ; if (StringInStr($szTmpFPath, "\PCLXL") Or StringInStr($szTmpFPath, "\_PCLXL")) And 0=StringInStr($szTmpFPath, "FA\")  Then
-            ;     $szTmpFName = $szTmpFName&"_PCL"
+            ;     $szTmpFName = $szTmpFName & "_PCL"
             ; EndIf
 
             if StringInStr($szTmpFPath, "FA\") Then
-                $szTmpFName = $szTmpFName&"_FAX"
+                $szTmpFName = $szTmpFName & "_FAX"
             EndIf
             if StringInStr($szTmpFPath, "\DE\") Then
-                $szTmpFName = $szTmpFName&"_DE"
+                $szTmpFName = $szTmpFName & "_DE"
             EndIf
             if StringInStr($szTmpFPath, "\EN\") Then
-                $szTmpFName = $szTmpFName&"_EN"
+                $szTmpFName = $szTmpFName & "_EN"
             EndIf
             if StringInStr($szTmpFPath, "\ES\") Then
-                $szTmpFName = $szTmpFName&"_ES"
+                $szTmpFName = $szTmpFName & "_ES"
             EndIf
             if StringInStr($szTmpFPath, "\FR\") Then
-                $szTmpFName = $szTmpFName&"_FR"
+                $szTmpFName = $szTmpFName & "_FR"
             EndIf
             if StringInStr($szTmpFPath, "\IT\") Then
-                $szTmpFName = $szTmpFName&"_IT"
+                $szTmpFName = $szTmpFName & "_IT"
             EndIf
             if StringInStr($szTmpFPath, "\JA\") Then
-                $szTmpFName = $szTmpFName&"_JA"
+                $szTmpFName = $szTmpFName & "_JA"
             EndIf
             if StringInStr($szTmpFPath, "\KO\") Then
-                $szTmpFName = $szTmpFName&"_KO"
+                $szTmpFName = $szTmpFName & "_KO"
             EndIf
             if StringInStr($szTmpFPath, "\ZH-CN\") Then
-                $szTmpFName = $szTmpFName&"_ZN"
+                $szTmpFName = $szTmpFName & "_ZN"
             EndIf
             if StringInStr($szTmpFPath, "\ZH-TW\") Then
-                $szTmpFName = $szTmpFName&"_ZW"
+                $szTmpFName = $szTmpFName & "_ZW"
             EndIf
             if StringInStr($szTmpFPath, "\Win2kXP") Or StringInStr($szTmpFPath, "\Win_x86") Or StringInStr($szTmpFPath, "\WinLH32") Then
-                $szTmpFName = $szTmpFName&"_32"
+                $szTmpFName = $szTmpFName & "_32"
             EndIf
             if StringInStr($szTmpFPath, "\Win64") Or StringInStr($szTmpFPath, "\Win_x64") Or StringInStr($szTmpFPath, "\WinLH64") Then
-                $szTmpFName = $szTmpFName&"_64"
+                $szTmpFName = $szTmpFName & "_64"
             EndIf
             if StringInStr($szTmpFPath, "\Mono")  Or StringInStr($szTmpFPath, "_Mono_") Then
-                $szTmpFName = $szTmpFName&"_M"
+                $szTmpFName = $szTmpFName & "_M"
             EndIf
 
             ; MsgBox($MB_SYSTEMMODAL, $szTmpFName, $szTmpFPath)
             ; if StringInStr($szTmpFPath, "PKI") Then
             if StringRegExp($szTmpFPath, "\\Model\\(.+PKI)\\") Then
-                $szTmpFName = $szTmpFName&"_P"
+                $szTmpFName = $szTmpFName & "_P"
             ; ElseIf StringRegExp($szTmpFPath, ".+\\Model\\(.+-.+)\\.+") or StringInStr($szTmpFPath, "_Gen") Then
             ElseIf StringRegExp($szTmpFPath, ".+\\Model\\(.+-.+)\\.+") Then
-                $szTmpFName = $szTmpFName&"_G"
+                $szTmpFName = $szTmpFName & "_G"
             Else
-                $szTmpFName = $szTmpFName&"_O"
+                $szTmpFName = $szTmpFName & "_O"
             EndIf
 
             If _IsChecked($DECheckbox) And StringInStr($szTmpFPath, "\DE\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => DE")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => DE")
                 Send("{DOWN}")
             ElseIf _IsChecked($ENCheckbox) And StringInStr($szTmpFPath, "\EN\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => EN")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => EN")
                 Send("{DOWN}")
             ElseIf _IsChecked($ESCheckbox) And StringInStr($szTmpFPath, "\ES\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => ES")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => ES")
                 Send("{DOWN}")
             ElseIf _IsChecked($FRCheckbox) And StringInStr($szTmpFPath, "\FR\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => FR")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => FR")
                 Send("{DOWN}")
             ElseIf _IsChecked($ITCheckbox) And StringInStr($szTmpFPath, "\IT\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => IT")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => IT")
                 Send("{DOWN}")
             ElseIf _IsChecked($JACheckbox) And StringInStr($szTmpFPath, "\JA\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => JA")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => JA")
                 Send("{DOWN}")
             ElseIf _IsChecked($KOCheckbox) And StringInStr($szTmpFPath, "\KO\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => KO")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => KO")
                 Send("{DOWN}")
             ElseIf _IsChecked($CNCheckbox) And StringInStr($szTmpFPath, "\ZH-CN\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => CN")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => CN")
                 Send("{DOWN}")
             ElseIf _IsChecked($TWCheckbox) And StringInStr($szTmpFPath, "\ZH-TW\") Then
-                FileWriteLine($hLogFileOpen, $szTmpFPath&$szOrgFName&" is not created => TW")
+                FileWriteLine($hLogFileOpen, $szTmpFPath & $szOrgFName & " is not created => TW")
                 Send("{DOWN}")
             Else
                 Send("{ENTER}")
                 ; Sleep(1000)
                 Send("!tr")
-                $curTmpFileStorePath = $curFilePath&"\"&$szTmpFName
+                $curTmpFileStorePath = $curFilePath & "\" & $szTmpFName
                 WinWaitActive("[CLASS:#32770]")
                 If WinExists("[CLASS:#32770]") Then
                     Local $hFileDlgWnd = WinGetHandle("[CLASS:#32770]")
@@ -240,7 +244,7 @@ Func GenHtmls()
                     While $getWinForExist <> "&Ok"
                         $j = $j + 1
                         Send("{ENTER}")
-                        ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath&"_"&$j)
+                        ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath & "_" & $j)
                         Send("!s")
                         While (WinExists("WinMerge", "レポート生成に成功しました。") <> 1 And WinExists("名前を付けて保存の確認") <> 1)
                         WEnd
@@ -248,7 +252,7 @@ Func GenHtmls()
                     WEnd
 
                     if $j > 0 Then
-                        FileWriteLine($hLogFileOpen, "file not match any rule: "&$curTmpFileStorePath&"_"&$j&".htm")
+                        FileWriteLine($hLogFileOpen, "file not match any rule: " & $curTmpFileStorePath & "_" & $j & ".htm")
                     EndIf
 
                     WinWaitActive("[CLASS:#32770]")
@@ -260,8 +264,8 @@ Func GenHtmls()
                 EndIf
                 ; Sleep(500)
                 Send("{DOWN}")
-                if StringLen($szTmpFName)+4 > 31 Then
-                    FileWriteLine($hLogFileOpen, $szTmpFName&".html file name len is over than 31 charachter.")
+                if StringLen($szTmpFName) + 4 > 31 Then
+                    FileWriteLine($hLogFileOpen, $szTmpFName & ".html file name len is over than 31 charachter.")
                 EndIf
             EndIf
         Next
@@ -269,7 +273,7 @@ Func GenHtmls()
         MsgBox($MB_SYSTEMMODAL, "", "WinMerge does not exist")
     EndIf
     FileClose($hLogFileOpen)
-    MsgBox($MB_SYSTEMMODAL, "", "Make Htmls Done!"&@CRLF&"Takes Time:"&Int((_Timer_Diff($hStarttime))/1000)&"S")
+    MsgBox($MB_SYSTEMMODAL, "", "Make Htmls Done!" & @CRLF & "Takes Time:" & Int((_Timer_Diff($hStarttime)) / 1000) & "S")
 EndFunc
 
 Func PathSelect()
@@ -313,7 +317,7 @@ Func ReadDiffList()
         $szFName = StringStripWS($szFName, 8)
         $itemTemp = $fileCount & " | " & $szFName & "_" & StringRight($szExt, 3) & " | " & $szDrive & $szDir
         GUICtrlCreateListViewItem($itemTemp, $idListview)
-        ;MsgBox(0,"t",$szDir)
+        ; MsgBox(0,"t",$szDir)
     Wend
 
     FileClose($file)
