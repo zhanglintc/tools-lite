@@ -9,9 +9,10 @@
 #include <StringConstants.au3>
 #include <Timers.au3>
 
-; Developers:
-; Created by FangJun
-; Modified by ZhangLin & YanBin
+; Changelog:
+; v1.0 初版做成(NB 的初版) by FangJun
+; v1.1 解决路径中含有九语言字样(如 IT, DE 等)导致成果物中出现 IT, DE 字样以及生成失败 by ZhangLin
+; v1.2 大幅优化生成速度(时间缩减 60%), 增加默认文件名处理(当无法匹配任何规则时) by ZhangLin & YanBin
 
 CreateGUI()
 
@@ -227,7 +228,7 @@ Func GenHtmls()
                 Send("{DOWN}")
             Else
                 Send("{ENTER}")
-                ; Sleep(1000)
+                ; Sleep(1000) ; 任何强行人为设置的等待时间都是耍流氓, 特别是这种没有效果的等待 !
                 Send("!tr")
                 $curTmpFileStorePath = $curFilePath & "\" & $szTmpFName
                 WinWaitActive("[CLASS:#32770]")
@@ -237,16 +238,18 @@ Func GenHtmls()
                     Send("!s")
 
                     While (WinExists("WinMerge", "レポート生成に成功しました。") <> 1 And WinExists("名前を付けて保存の確認") <> 1)
+                        ; do noting here, just wait
                     WEnd
 
                     Local $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
-                    local $j = 0
+                    Local $j = 0
                     While $getWinForExist <> "&Ok"
                         $j = $j + 1
                         Send("{ENTER}")
                         ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath & "_" & $j)
                         Send("!s")
                         While (WinExists("WinMerge", "レポート生成に成功しました。") <> 1 And WinExists("名前を付けて保存の確認") <> 1)
+                            ; do noting here, just wait
                         WEnd
                         $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
                     WEnd
@@ -257,12 +260,12 @@ Func GenHtmls()
 
                     WinWaitActive("[CLASS:#32770]")
                     Send("{ENTER}")
-                    ; Sleep(500)
+                    ; Sleep(500) ; 任何强行人为设置的等待时间都是耍流氓, 特别是这种没有效果的等待 !
                     Send("{ESC}")
                 Else
                     MsgBox($MB_SYSTEMMODAL, "", "Store dialog does not exist")
                 EndIf
-                ; Sleep(500)
+                ; Sleep(500) ; 任何强行人为设置的等待时间都是耍流氓, 特别是这种没有效果的等待 !
                 Send("{DOWN}")
                 if StringLen($szTmpFName) + 4 > 31 Then
                     FileWriteLine($hLogFileOpen, $szTmpFName & ".html file name len is over than 31 charachter.")
@@ -317,7 +320,7 @@ Func ReadDiffList()
         $szFName = StringStripWS($szFName, 8)
         $itemTemp = $fileCount & " | " & $szFName & "_" & StringRight($szExt, 3) & " | " & $szDrive & $szDir
         GUICtrlCreateListViewItem($itemTemp, $idListview)
-        ; MsgBox(0,"t",$szDir)
+        ; MsgBox(0, "t", $szDir)
     Wend
 
     FileClose($file)
