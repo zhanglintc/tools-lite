@@ -114,7 +114,7 @@ Func GenHtmls()
         Return
      EndIf
 
-     ;FileWriteLine($hLogFileOpen, "The below files did not create html:")
+    ;FileWriteLine($hLogFileOpen, "The below files did not create html:")
 
     ; Display the handle of the Notepad window.
     ;MsgBox($MB_SYSTEMMODAL, "", $hWnd)
@@ -186,9 +186,11 @@ Func GenHtmls()
             EndIf
 
             ;MsgBox($MB_SYSTEMMODAL, $szTmpFName, $szTmpFPath)
-            if StringInStr($szTmpFPath, "PKI") Then
+            ;if StringInStr($szTmpFPath, "PKI") Then
+            if StringRegExp($szTmpFPath, "\\Model\\(.+PKI)\\") Then
                $szTmpFName = $szTmpFName&"_P"
-            ElseIf StringRegExp($szTmpFPath, ".+\\Model\\(.+-.+)\\.+") or StringInStr($szTmpFPath, "_Gen") Then
+            ;ElseIf StringRegExp($szTmpFPath, ".+\\Model\\(.+-.+)\\.+") or StringInStr($szTmpFPath, "_Gen") Then
+            ElseIf StringRegExp($szTmpFPath, ".+\\Model\\(.+-.+)\\.+") Then
                $szTmpFName = $szTmpFName&"_G"
             Else
                $szTmpFName = $szTmpFName&"_O"
@@ -230,8 +232,25 @@ Func GenHtmls()
                If WinExists("[CLASS:#32770]") Then
                   Local $hFileDlgWnd = WinGetHandle("[CLASS:#32770]")
                   ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath)
-                  Sleep(500)
                   Send("!s")
+
+                  Sleep(500)
+                  Local $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
+                  local $j = 0
+                  While $getWinForExist <> "&Ok"
+                     $j = $j + 1
+                     Sleep(500)
+                     Send("{ENTER}")
+                     ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath&"_"&$j)
+                     Send("!s")
+                     Sleep(500)
+                     $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
+                  WEnd
+
+                  if $j > 0 Then
+                     FileWriteLine($hLogFileOpen, "file not match any rule: "&$curTmpFileStorePath&"_"&$j&".htm")
+                  EndIf
+
                   WinWaitActive("[CLASS:#32770]")
                   Send("{ENTER}")
                   Sleep(500)
