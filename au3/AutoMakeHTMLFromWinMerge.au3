@@ -275,7 +275,7 @@ Func GenHtmls()
         MsgBox($MB_SYSTEMMODAL, "", "WinMerge does not exist")
     EndIf
     FileClose($hLogFileOpen)
-    MsgBox($MB_SYSTEMMODAL, "", "Make Htmls Done!" & @CRLF & "Takes Time:" & Int((_Timer_Diff($hStarttime)) / 1000) & "S")
+    MsgBox($MB_SYSTEMMODAL, "", "Make Htmls Done!" & @CRLF & "Takes Time: " & Int((_Timer_Diff($hStarttime)) / 1000) & "s"  & @CRLF & @CRLF & $curFilePath)
 EndFunc
 
 Func PathSelect()
