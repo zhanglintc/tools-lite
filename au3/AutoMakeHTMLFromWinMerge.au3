@@ -94,7 +94,7 @@ Func GenHtmls()
 
     $curFilePath = _GUICtrlEdit_GetText($idFilePath)
     if $curFilePath == "" Then
-        $curFilePath = @scriptdir ; 如果没有指定生成路径， 则默认生成到脚本当前路径
+        $curFilePath = @WorkingDir ; 如果没有指定生成路径， 则默认生成到脚本当前路径
     EndIf
 
     Local $hStarttime = _Timer_Init()
