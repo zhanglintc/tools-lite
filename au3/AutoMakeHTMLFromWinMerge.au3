@@ -12,7 +12,7 @@
 ; Changelog:
 ; v1.0 初版做成(NB 的初版) by FangJun
 ; v1.1 解决路径中含有九语言字样(如 IT, DE 等)导致成果物中出现 IT, DE 字样以及生成失败 by ZhangLin
-; v1.2 大幅优化生成速度(时间缩减 60%), 增加默认文件名处理(当无法匹配任何规则时) by ZhangLin & YanBin
+; v1.2 增加默认文件名处理(当无法匹配任何规则时), 大幅优化生成速度(时间缩减 60%), 添加 html 默认生成路径 by YanBin & ZhangLin
 
 CreateGUI()
 
@@ -94,8 +94,7 @@ Func GenHtmls()
 
     $curFilePath = _GUICtrlEdit_GetText($idFilePath)
     if $curFilePath == "" Then
-        MsgBox($MB_SYSTEMMODAL, "Error", "Please set html store path first!")
-        Return
+        $curFilePath = @scriptdir ; 如果没有指定生成路径， 则默认生成到脚本当前路径
     EndIf
 
     Local $hStarttime = _Timer_Init()
