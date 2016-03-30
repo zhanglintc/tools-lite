@@ -236,7 +236,7 @@ Func GenHtmls()
                     ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath)
                     Send("!s")
 
-                    While (WinExists("WinMerge", "レポート生成に成功しました。") <> 1 And WinExists("名前を付けて保存の確認") <> 1)
+                    While Not WinExists("WinMerge", "レポート生成に成功しました。") And Not WinExists("名前を付けて保存の確認")
                         ; do noting here, just wait
                     WEnd
 
@@ -247,7 +247,7 @@ Func GenHtmls()
                         Send("{ENTER}")
                         ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath & "_" & $j)
                         Send("!s")
-                        While (WinExists("WinMerge", "レポート生成に成功しました。") <> 1 And WinExists("名前を付けて保存の確認") <> 1)
+                        While Not WinExists("WinMerge", "レポート生成に成功しました。") And Not WinExists("名前を付けて保存の確認")
                             ; do noting here, just wait
                         WEnd
                         $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
