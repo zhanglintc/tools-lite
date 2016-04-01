@@ -5,7 +5,7 @@ echo ---------------------------------------------------------------------------
 echo Intro: This tool helps to chang your Logon image,
 echo        drag any JPEG file here to use.
 echo.
-echo Note: Image file shoud smaller than 200kb. Not set means reset.
+echo Note: Image file should be smaller than 200kb. Set NULL to use default image.
 echo -------------------------------------------------------------------------------
 echo.
 
