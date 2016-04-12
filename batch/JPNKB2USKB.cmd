@@ -30,7 +30,7 @@ echo You haven't changed anything.
 
 :end
 echo.
-echo Press any to close...
+echo Press any key to close...
 pause > nul
 
 
