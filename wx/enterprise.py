@@ -133,6 +133,7 @@ def application(environ, start_response):
     fromuser_name = xml_tree.find("FromUserName").text
     create_time   = xml_tree.find("CreateTime").text
     msg_type      = xml_tree.find("MsgType").text
+    content_text  = xml_tree.find("Content").text
 
     if msg_type == "event":
         agent_ID  = xml_tree.find("AgentID").text
