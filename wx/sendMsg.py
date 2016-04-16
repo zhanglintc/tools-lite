@@ -9,7 +9,7 @@ from updateAccessToken import updateAccessToken
 
 tokenFile = "AccessToken"
 
-def sendMsg(content = ""):
+def sendMsg(content = "", touser = "@all"):
     try:
         fr = open(tokenFile, "rb")
         access_token = fr.read().strip()
@@ -18,7 +18,7 @@ def sendMsg(content = ""):
         access_token = updateAccessToken()
    
     params = {
-        "touser" : "@all",
+        "touser" : touser,
         "toparty": "@all",
         "totag"  : "@all",
         "agentid": "0",   # str or int is OK

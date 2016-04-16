@@ -38,13 +38,17 @@ text_T = "\
 "
 
 class AsyncSend(threading.Thread):
-    def __init__(self):
+    def __init__(self, fromuser_name):
         threading.Thread.__init__(self)
+        self.fromuser_name = fromuser_name
 
     def run(self):
         today = str(datetime.date.today()) # something like: 2014-11-10
         sendContent = getCommit("https://github.com/zhanglintc?tab=contributions&from={0}".format(today))
-        sendMsg.sendMsg(sendContent)
+        sendMsg.sendMsg(
+            content = sendContent,
+            touser = self.fromuser_name,
+        )
 
 def setMenu():
     secret = "3AhT8A1akqYHKVuLCtrcx3OvZPFHbMO03vvBaGu4xyciG8Lj6z1OGs8Zp-81ZtnE"
@@ -134,21 +138,27 @@ def application(environ, start_response):
     create_time   = xml_tree.find("CreateTime").text
     msg_type      = xml_tree.find("MsgType").text
     content_text  = xml_tree.find("Content").text
+    agent_ID      = xml_tree.find("AgentID").text
+    event         = xml_tree.find("Event").text
+    event_key     = xml_tree.find("EventKey").text
 
-    if msg_type == "event":
-        agent_ID  = xml_tree.find("AgentID").text
-        event     = xml_tree.find("Event").text
-        event_key = xml_tree.find("EventKey").text
+    if agent_ID == "0":
+        if msg_type == "event":
+            event_key = xml_tree.find("EventKey").text
 
-        if event_key == "V1001_GITHUB":
-            # ret, message = wx.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
-            aycs = AsyncSend()
-            aycs.start()
+            if event_key == "V1001_GITHUB":
+                # ret, message = wx.EncryptMsg(text_T.format(getCommit("https://github.com/zhanglintc?period=daily")), d["nonce"][0])
+                aycs = AsyncSend(fromuser_name)
+                aycs.start()
 
-            # return null string
-            return ""
+                # return null string
+                return ""
 
-    else:
+        else:
+            ret, message = wx.EncryptMsg(text_T.format("尚不支持..."), d["nonce"][0])
+            return message
+
+    if agent_ID == "3":
         ret, message = wx.EncryptMsg(text_T.format("尚不支持..."), d["nonce"][0])
         return message
 
