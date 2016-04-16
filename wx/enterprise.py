@@ -3,6 +3,7 @@
 
 from cgi import parse_qs, escape
 from encrypt.WXBizMsgCrypt import WXBizMsgCrypt
+from pypinyin import pinyin, lazy_pinyin
 from tools.getCommit import getCommit
 
 import xml.etree.cElementTree as ET
@@ -137,10 +138,10 @@ def application(environ, start_response):
     fromuser_name = xml_tree.find("FromUserName").text
     create_time   = xml_tree.find("CreateTime").text
     msg_type      = xml_tree.find("MsgType").text
-    content_text  = xml_tree.find("Content").text
     agent_ID      = xml_tree.find("AgentID").text
-    event         = xml_tree.find("Event").text
-    event_key     = xml_tree.find("EventKey").text
+    # content_text  = xml_tree.find("Content").text
+    # event         = xml_tree.find("Event").text
+    # event_key     = xml_tree.find("EventKey").text
 
     if agent_ID == "0":
         if msg_type == "event":
@@ -159,6 +160,11 @@ def application(environ, start_response):
             return message
 
     if agent_ID == "3":
+        if msg_type == "text":
+            content_text  = xml_tree.find("Content").text
+            ret, message = wx.EncryptMsg(text_T.format(lazy_pinyin(content_text)), d["nonce"][0])
+            return message
+
         ret, message = wx.EncryptMsg(text_T.format("尚不支持..."), d["nonce"][0])
         return message
 
