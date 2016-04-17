@@ -162,7 +162,11 @@ def application(environ, start_response):
     if agent_ID == "3":
         if msg_type == "text":
             content_text  = xml_tree.find("Content").text
-            ret, message = wx.EncryptMsg(text_T.format(lazy_pinyin(unicode(content_text))), d["nonce"][0])
+            pinyinList = lazy_pinyin(unicode(content_text))
+            pinyin = ""
+            for item in pinyinList:
+                pinyin += item
+            ret, message = wx.EncryptMsg(text_T.format(pinyin), d["nonce"][0])
             return message
 
         ret, message = wx.EncryptMsg(text_T.format("尚不支持..."), d["nonce"][0])
