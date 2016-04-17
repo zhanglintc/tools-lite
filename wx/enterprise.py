@@ -5,6 +5,7 @@ from cgi import parse_qs, escape
 from encrypt.WXBizMsgCrypt import WXBizMsgCrypt
 from pypinyin import pinyin, lazy_pinyin
 from tools.getCommit import getCommit
+from tools.getWeather import getWeather
 
 import xml.etree.cElementTree as ET
 
@@ -166,7 +167,10 @@ def application(environ, start_response):
             pinyin = ""
             for item in pinyinList:
                 pinyin += item
-            ret, message = wx.EncryptMsg(text_T.format(pinyin), d["nonce"][0])
+
+            weather = getWeather(pinyin)
+
+            ret, message = wx.EncryptMsg(text_T.format(weather), d["nonce"][0])
             return message
 
         ret, message = wx.EncryptMsg(text_T.format("尚不支持..."), d["nonce"][0])
