@@ -6,10 +6,12 @@ import json
 import sys, os
 
 Report_T = """\
-{city} {date} 天气状况:
-早上 {morning_tempC} 摄氏度, {morning_Desc}.
-中午 {noon_tempC} 摄氏度, {noon_Desc}.
-晚上 {afternoon_tempC} 摄氏度, {afternoon_Desc}.\
+城市: {city}
+日期: {date}
+
+早上 {morning_tempC} 度, {morning_Desc}.
+中午 {noon_tempC} 度, {noon_Desc}.
+晚上 {afternoon_tempC} 度, {afternoon_Desc}.\
 """
 
 def getWeather(city):
