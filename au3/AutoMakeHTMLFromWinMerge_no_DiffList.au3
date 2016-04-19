@@ -248,6 +248,7 @@ Func GenHtmls()
             EndIf
 
             ; get file name
+            WaitFileCompareActivate()
             $curFullPath = ControlGetText("WinMerge", "", "Edit2")
             $szTmpFName  = CreateFileName($curFullPath)
             $szTmpFName = StringReplace($szTmpFName, "-", "_") ; change "-" to "_" in file name
@@ -306,7 +307,7 @@ Func GenHtmls()
                 FileWriteLine($hLogFileOpen, $szTmpFName & ".html file name len is over than 31 charachter.")
             EndIf
 
-            ; report generated, "ESC" and "DOWN" to next line            
+            ; report generated, "ESC" and "DOWN" to next line
             Send("{ESC}")
             Send("{DOWN}")
         WEnd
