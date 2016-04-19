@@ -40,7 +40,7 @@ Func CreateGUI()
     Global $KOCheckbox = GUICtrlCreateCheckbox("KO", 310, 260)
     Global $CNCheckbox = GUICtrlCreateCheckbox("CN", 360, 260)
     Global $TWCheckbox = GUICtrlCreateCheckbox("TW", 410, 260)
-    GUICtrlCreateLabel("unuse language", 460, 260)
+    GUICtrlCreateLabel("ignored language", 460, 260)
     GUISetState(@SW_SHOW, $hMainGUI)
 
     While 1
@@ -97,6 +97,39 @@ Func WaitResultOfSaveButton()
     While Not WinExists("WinMerge", "レポート生成に成功しました。") And Not WinExists("名前を付けて保存の確認")
         ; do noting here, just wait
     WEnd
+EndFunc
+
+Func IsIgnoredFile($szTmpFPath, $hLogFileOpen)
+    If     _IsChecked($DECheckbox) And StringInStr($szTmpFPath, "\DE\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => DE")
+        Return True
+    ElseIf _IsChecked($ENCheckbox) And StringInStr($szTmpFPath, "\EN\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => EN")
+        Return True
+    ElseIf _IsChecked($ESCheckbox) And StringInStr($szTmpFPath, "\ES\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => ES")
+        Return True
+    ElseIf _IsChecked($FRCheckbox) And StringInStr($szTmpFPath, "\FR\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => FR")
+        Return True
+    ElseIf _IsChecked($ITCheckbox) And StringInStr($szTmpFPath, "\IT\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => IT")
+        Return True
+    ElseIf _IsChecked($JACheckbox) And StringInStr($szTmpFPath, "\JA\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => JA")
+        Return True
+    ElseIf _IsChecked($KOCheckbox) And StringInStr($szTmpFPath, "\KO\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => KO")
+        Return True
+    ElseIf _IsChecked($CNCheckbox) And StringInStr($szTmpFPath, "\ZH-CN\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => CN")
+        Return True
+    ElseIf _IsChecked($TWCheckbox) And StringInStr($szTmpFPath, "\ZH-TW\") Then
+        FileWriteLine($hLogFileOpen, $szTmpFPath & " is not created => TW")
+        Return True
+    EndIf
+
+    Return False
 EndFunc
 
 Func CreateFileName($szTmpFPath)
@@ -227,6 +260,14 @@ Func GenHtmls()
                 ExitLoop
             EndIf
             $tmpFullPath = $curFullPath
+
+            ; ignore selected languages
+            If IsIgnoredFile($curFullPath, $hLogFileOpen) Then
+                ; exit current compare and go down
+                Send("{ESC}")
+                Send("{DOWN}")
+                ContinueLoop
+            EndIF
 
             ; generate html report
             Send("!tr")
