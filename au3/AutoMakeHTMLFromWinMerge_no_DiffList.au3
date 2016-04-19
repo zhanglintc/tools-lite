@@ -23,7 +23,7 @@ Func CreateGUI()
     HotKeySet("!x", "Terminate")
     Local $hMainGUI = GUICreate("AutoMakeHTML v1.3", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
-    Global $idListview = GUICtrlCreateListView("No. | FileName | Path ", 10, 30, 580, 150)
+    Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
     GUICtrlCreateLabel("HTML Store Path", 10, 190)
     Global $idFilePath = GUICtrlCreateInput("", 110, 185, 350, BitAND($ES_READONLY, $ES_AUTOHSCROLL, $ES_LEFT))
@@ -298,28 +298,10 @@ EndFunc
 
 Func ReadDiffList()
     _GUICtrlListView_DeleteAllItems ($idListview)
-    $fileCount = 0
-
-    $file = FileOpen("DiffFileList.txt", $FO_READ)
-
-    ; Check if file opened for reading OK
-    If $file = -1 Then
-        MsgBox(48, "Error", "Unable to open file.")
-        Exit
-    EndIf
-
-    ; Read in lines of text until the EOF is reached
-    While 1
-        $line = FileReadLine($file)
-        If @error = -1 Then ExitLoop
-        Dim $szDrive, $szDir, $szFName, $szExt
-        _PathSplit($line, $szDrive, $szDir, $szFName, $szExt)
-        $fileCount = $fileCount + 1
-        $szFName = StringStripWS($szFName, 8)
-        $itemTemp = $fileCount & " | " & $szFName & "_" & StringRight($szExt, 3) & " | " & $szDrive & $szDir
-        GUICtrlCreateListViewItem($itemTemp, $idListview)
-        ; MsgBox(0, "t", $szDir)
-    Wend
-
-    FileClose($file)
+    GUICtrlCreateListViewItem("因为文件名不再从txt读取", $idListview)
+    GUICtrlCreateListViewItem("所以这个按钮已经没用了", $idListview)
+    GUICtrlCreateListViewItem("不过为了好看", $idListview)
+    GUICtrlCreateListViewItem("这个界面没有删除", $idListview)
+    GUICtrlCreateListViewItem("按钮也没有删除", $idListview)
+    GUICtrlCreateListViewItem("喜欢怀旧也可以点一下", $idListview)
 EndFunc
