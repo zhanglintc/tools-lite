@@ -1,7 +1,6 @@
 
-; ControlSend("INITOKPD2", "", "[CLASS:Button; INSTANCE:2]", "{Enter}")
-
-; ControlClick("INITOKPD2", "", '', "", 1, 88, 17)
+; Version: v0.1
+; Author: ZhangLin
 
 Global $TYPE_FOLDER = 1
 Global $TYPE_FILE   = 2
@@ -98,6 +97,12 @@ Func LoadModels($TARGET)
 EndFunc
 
 Func LoadKPDs($TARGET)
+    $DeviceCaps = ""
+    $Command = ""
+    $Cst = ""
+    $Version = ""
+    $Phonebook = ""
+
     $KPD_LIST = GetNames($TARGET, $TYPE_FILE)
 
     For $KPD In $KPD_LIST
@@ -115,52 +120,120 @@ Func LoadKPDs($TARGET)
     Next
 EndFunc
 
+If Not WinExists("INITOKPD2") Then
+    MsgBox(0, "Error", "No INITOKPD2 has opened!")
+    Exit
+EndIf
+
+; 新建工程
+WinActivate("INITOKPD2")
+Send("!fn")
+Sleep(200)
+
+; 不保存结果
+If WinExists("INITOKPD2", "Do you save a file?") Then
+    ControlSend("INITOKPD2", "", "Button2", "{SPACE}")
+EndIf
+
 $INI2KPD_FOLDER = @WorkingDir
 $TOP_FOLDER = StringReplace($INI2KPD_FOLDER, "\InitoKPD\RELEASE(NewKey)", "")
 $MODEL_FOLDER = $TOP_FOLDER & "\Driver\Model"
 
+Local $MODELs[5]
 LoadModels($MODEL_FOLDER)
+$MODELs[0] = $OWN_PTR
+$MODELs[1] = $OWN_FA
+$MODELs[2] = $GEN_PTR
+$MODELs[3] = $GEN_FA
+$MODELs[4] = $PKI_PTR
 
-ControlSetText("INITOKPD2", "", "Edit1", $OWN_PTR)
-Sleep(100)
-ControlSend("INITOKPD2", "", "Button2", "{SPACE}")
+For $MODEL In $MODELs
+    If $MODEL == "" Then
+        ContinueLoop
+    EndIf
 
-ControlSetText("INITOKPD2", "", "Edit2", $MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\INI\_PCLXL")
-ControlSetText("INITOKPD2", "", "Edit3", $MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\INI")
+    ; 填写机种名
+    Sleep(200)
+    ControlSetText("INITOKPD2", "", "Edit1", $MODEL)
+    Sleep(500)
+    ControlSend("INITOKPD2", "", "Button2", "{SPACE}")
 
-; 填写各个 KPD 名字
-LoadKPDs($MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\KPD\_PCLXL\JA")
-ControlSetText("INITOKPD2", "", "Edit4", $DeviceCaps)
-ControlSetText("INITOKPD2", "", "Edit5", $Command)
-ControlSetText("INITOKPD2", "", "Edit6", $Cst)
-ControlSetText("INITOKPD2", "", "Edit7", $Version)
-ControlSetText("INITOKPD2", "", "Edit8", $Phonebook)
+    ; 选择以空白模式添加新机种
+    Sleep(200)
+    If WinExists("IniToBin Model Add") Then
+        ControlSend("IniToBin Model Add", "", "Button3", "{SPACE}")
+        ControlSend("IniToBin Model Add", "", "Button1", "{SPACE}")
+    EndIf
 
-; 进入 Output 设置
-ControlSend("INITOKPD2", "", "Button14", "{SPACE}") ; 点击 New
-Sleep(100)
-ControlSetText("Folder Name Registration", "", "Edit1", "KPD") ; 填写 Folder　Name
-ControlSetText("Folder Name Registration", "", "Edit2", $MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\KPD") ; 填写 Top Folder
+    Local $PDLs[3]
+    If $MODEL = $OWN_PTR Or $MODEL = $GEN_PTR Then
+        $PDLs[0] = "_PCLXL"
+        $PDLs[1] = "_PS"
+        $PDLs[2] = "_XPS_GPD"
+    ElseIf $MODEL = $OWN_FA Or $MODEL = $GEN_FA Then
+        $PDLs[0] = "_PCLXL"
+        $PDLs[1] = ""
+        $PDLs[2] = ""
+    ElseIf $MODEL = $PKI_PTR Then
+        $PDLs[0] = "_PCLXL"
+        $PDLs[1] = "_PS"
+        $PDLs[2] = ""
+    EndIf
 
-; 修改Folder Item => PDL
-ControlSend("Folder Name Registration", "", "ListBox2", "{HOME}") ; 到顶
-ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 PDL
-ControlSend("Folder Name Registration", "", "Button9", "{SPACE}") ; 打开 PDL 设置
-Sleep(100)
-ControlSetText("PDL Information", "", "Edit2", "_PCLXL") ; 填写内容
-ControlSend("PDL Information", "", "Button3", "{SPACE}") ; 点击 Set
-ControlSend("PDL Information", "", "Button1", "{SPACE}") ; 点击 OK
-ControlSend("Folder Name Registration", "", "Button6", "{SPACE}") ; 点击 Add
+    For $PDL in $PDLs
+        ; 设置 PDL 种类
+        If     $PDL = "_PCLXL" Then
+            ControlSend("INITOKPD2", "", "ComboBox2", "{HOME}")
 
-ControlSend("Folder Name Registration", "", "ListBox2", "{HOME}") ; 到顶
-ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 PDL
-ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 Language Folder
-ControlSend("Folder Name Registration", "", "Button6", "{SPACE}") ; 点击 Add
+        ElseIf $PDL = "_PS" Then
+            ControlSend("INITOKPD2", "", "ComboBox2", "{HOME}")
+            ControlSend("INITOKPD2", "", "ComboBox2", "{DOWN}")
 
-ControlSend("Folder Name Registration", "", "Button1", "{SPACE}") ; 点击 OK
+        ElseIf $PDL = "_XPS_GPD" Then
+            ControlSend("INITOKPD2", "", "ComboBox2", "{HOME}")
+            ControlSend("INITOKPD2", "", "ComboBox2", "{DOWN}")
+            ControlSend("INITOKPD2", "", "ComboBox2", "{DOWN}")
 
+        Else
+            ContinueLoop
+        EndIf
 
+        ; 填写 ini 地址
+        ControlSetText("INITOKPD2", "", "Edit2", $MODEL_FOLDER & "\" & $MODEL & "\CUSTOM\INI\" & $PDL)
+        ControlSetText("INITOKPD2", "", "Edit3", $MODEL_FOLDER & "\" & $MODEL & "\CUSTOM\INI")
 
+        ; 填写各个 KPD 名字
+        LoadKPDs($MODEL_FOLDER & "\" & $MODEL & "\CUSTOM\KPD\" & $PDL & "\EN")
+        ControlSetText("INITOKPD2", "", "Edit4", $DeviceCaps)
+        ControlSetText("INITOKPD2", "", "Edit5", $Command)
+        ControlSetText("INITOKPD2", "", "Edit6", $Cst)
+        ControlSetText("INITOKPD2", "", "Edit7", $Version)
+        ControlSetText("INITOKPD2", "", "Edit8", $Phonebook)
 
+        ; 进入 Output 设置
+        ControlSend("INITOKPD2", "", "Button14", "{SPACE}") ; 点击 New
+        Sleep(200)
+        ControlSetText("Folder Name Registration", "", "Edit1", "KPD") ; 填写 Folder　Name
+        ControlSetText("Folder Name Registration", "", "Edit2", $MODEL_FOLDER & "\" & $MODEL & "\CUSTOM\KPD") ; 填写 Top Folder
 
+        ; 修改Folder Item => PDL
+        ControlSend("Folder Name Registration", "", "ListBox2", "{HOME}") ; 到顶
+        ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 PDL
+        ControlSend("Folder Name Registration", "", "Button9", "{SPACE}") ; 打开 PDL 设置
+        Sleep(200)
+        ControlSetText("PDL Information", "", "Edit2", $PDL) ; 填写内容
+        ControlSend("PDL Information", "", "Button3", "{SPACE}") ; 点击 Set
+        ControlSend("PDL Information", "", "Button1", "{SPACE}") ; 点击 OK
+        ControlSend("Folder Name Registration", "", "Button6", "{SPACE}") ; 点击 Add
+
+        ControlSend("Folder Name Registration", "", "ListBox2", "{HOME}") ; 到顶
+        ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 PDL
+        ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 Language Folder
+        ControlSend("Folder Name Registration", "", "Button6", "{SPACE}") ; 点击 Add
+
+        ControlSend("Folder Name Registration", "", "Button1", "{SPACE}") ; 点击 OK
+    Next
+Next
+
+MsgBox(0, "Completed", "Auto filled IT2 Project!")
 
