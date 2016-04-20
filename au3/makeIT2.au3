@@ -1,10 +1,22 @@
 
 ; ControlSend("INITOKPD2", "", "[CLASS:Button; INSTANCE:2]", "{Enter}")
 
-ControlClick("INITOKPD2", "", '', "", 1, 88, 17)
+; ControlClick("INITOKPD2", "", '', "", 1, 88, 17)
 
 Global $TYPE_FOLDER = 1
 Global $TYPE_FILE   = 2
+
+Global $OWN_PTR = ""
+Global $OWN_FA = ""
+Global $GEN_PTR = ""
+Global $GEN_FA = ""
+Global $PKI_PTR = ""
+
+Global $DeviceCaps = ""
+Global $Command = ""
+Global $Cst = ""
+Global $Version = ""
+Global $Phonebook = ""
 
 Func GetNames($givenPath, $type)
     ; Assign a Local variable the search handle of all files in the current directory.
@@ -63,17 +75,92 @@ Func GetNames($givenPath, $type)
     Return $aFiles
 EndFunc
 
-$curPath = @WorkingDir
-$topFolder = $curPath & "\..\.."
+Func LoadModels($TARGET)
+    $MODEL_LIST = GetNames($TARGET, $TYPE_FOLDER)
 
-;$OWN_PCL_KPD_PTR = $topFolder & "\Driver\Model\" & $PDL &"\CUSTOM\KPD\_PCLXL\JA"
-;$OWN_PCL_KPD_FA  = $topFolder & "\Driver\Model\" & $PDL &"FA\CUSTOM\KPD\_PCLXL\JA"
+    For $MODEL In $MODEL_LIST
+        If StringInStr($MODEL, "-") Then
+            If StringInStr($MODEL, "FA") Then
+                $GEN_FA = $MODEL
+            Else
+                $GEN_PTR = $MODEL
+            EndIf
+        ElseIf StringInStr($MODEL, "PKI") Then
+            $PKI_PTR = $MODEL
+        Else
+            If StringInStr($MODEL, "FA") Then
+                $OWN_FA = $MODEL
+            Else
+                $OWN_PTR = $MODEL
+            EndIf
+        EndIF
+    Next
+EndFunc
 
-$l = GetNames("E:\Git_Mine\tools-lite\au3", 2)
+Func LoadKPDs($TARGET)
+    $KPD_LIST = GetNames($TARGET, $TYPE_FILE)
 
-ConsoleWrite($l[0] & @CRLF)
+    For $KPD In $KPD_LIST
+        If     StringInStr($KPD, "D.KPD") Then
+            $DeviceCaps = $KPD
+        ElseIf StringInStr($KPD, "M.KPD") Then
+            $Command = $KPD
+        ElseIf StringInStr($KPD, "C.KPD") Then
+            $Cst = $KPD
+        ElseIf StringInStr($KPD, "_.KPD") Then
+            $Version = $KPD
+        ElseIf StringInStr($KPD, "V.KPD") Then
+            $Phonebook = $KPD
+        EndIF
+    Next
+EndFunc
 
-;MsgBox(0, "MsgBox", $PCL_KPD_Folder)
+$INI2KPD_FOLDER = @WorkingDir
+$TOP_FOLDER = StringReplace($INI2KPD_FOLDER, "\InitoKPD\RELEASE(NewKey)", "")
+$MODEL_FOLDER = $TOP_FOLDER & "\Driver\Model"
+
+LoadModels($MODEL_FOLDER)
+
+ControlSetText("INITOKPD2", "", "Edit1", $OWN_PTR)
+Sleep(100)
+ControlSend("INITOKPD2", "", "Button2", "{SPACE}")
+
+ControlSetText("INITOKPD2", "", "Edit2", $MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\INI\_PCLXL")
+ControlSetText("INITOKPD2", "", "Edit3", $MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\INI")
+
+; 填写各个 KPD 名字
+LoadKPDs($MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\KPD\_PCLXL\JA")
+ControlSetText("INITOKPD2", "", "Edit4", $DeviceCaps)
+ControlSetText("INITOKPD2", "", "Edit5", $Command)
+ControlSetText("INITOKPD2", "", "Edit6", $Cst)
+ControlSetText("INITOKPD2", "", "Edit7", $Version)
+ControlSetText("INITOKPD2", "", "Edit8", $Phonebook)
+
+; 进入 Output 设置
+ControlSend("INITOKPD2", "", "Button14", "{SPACE}") ; 点击 New
+Sleep(100)
+ControlSetText("Folder Name Registration", "", "Edit1", "KPD") ; 填写 Folder　Name
+ControlSetText("Folder Name Registration", "", "Edit2", $MODEL_FOLDER & "\" & $OWN_PTR & "\CUSTOM\KPD") ; 填写 Top Folder
+
+; 修改Folder Item => PDL
+ControlSend("Folder Name Registration", "", "ListBox2", "{HOME}") ; 到顶
+ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 PDL
+ControlSend("Folder Name Registration", "", "Button9", "{SPACE}") ; 打开 PDL 设置
+Sleep(100)
+ControlSetText("PDL Information", "", "Edit2", "_PCLXL") ; 填写内容
+ControlSend("PDL Information", "", "Button3", "{SPACE}") ; 点击 Set
+ControlSend("PDL Information", "", "Button1", "{SPACE}") ; 点击 OK
+ControlSend("Folder Name Registration", "", "Button6", "{SPACE}") ; 点击 Add
+
+ControlSend("Folder Name Registration", "", "ListBox2", "{HOME}") ; 到顶
+ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 PDL
+ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 Language Folder
+ControlSend("Folder Name Registration", "", "Button6", "{SPACE}") ; 点击 Add
+
+ControlSend("Folder Name Registration", "", "Button1", "{SPACE}") ; 点击 OK
+
+
+
 
 
 
