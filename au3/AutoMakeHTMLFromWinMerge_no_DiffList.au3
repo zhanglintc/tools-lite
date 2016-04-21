@@ -296,7 +296,7 @@ Func GenHtmls()
                     FileWriteLine($hLogFileOpen, "file not match any rule: " & $curTmpFileStorePath & "_" & $j & ".htm")
                 EndIf
 
-                ; click "ENTER" to save html file
+                ; HTML file generated, click "ENTER" to close the dialog
                 WinWaitActive("[CLASS:#32770]")
                 Send("{ENTER}")
             Else
@@ -325,11 +325,8 @@ Func PathSelect()
     ; Display an open dialog to select a file.
     Local $sFileSelectFolder = FileSelectFolder($sMessage, "")
     If @error Then
-        ; Display the error message.
         MsgBox($MB_SYSTEMMODAL, "", "No folder was selected.")
     Else
-        ; Display the selected folder.
-        ; MsgBox($MB_SYSTEMMODAL, "", "You chose the following folder:" & @CRLF & $sFileSelectFolder)
         GUICtrlSetData($idFilePath, $sFileSelectFolder)
     EndIf
 EndFunc
