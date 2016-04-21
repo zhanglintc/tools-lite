@@ -1,4 +1,3 @@
-
 ; Version: v0.1
 ; Author: ZhangLin
 
@@ -17,13 +16,31 @@ Global $Cst = ""
 Global $Version = ""
 Global $Phonebook = ""
 
+Func IsFolder($filePath)
+    $Attrib = FileGetAttrib($filePath)
+    If StringInStr($Attrib, "D") Then
+        Return True
+    EndIf
+
+    Return False
+EndFunc
+
+Func IsFile($filePath)
+    $Attrib = FileGetAttrib($filePath)
+    If Not StringInStr($Attrib, "D") Then
+        Return True
+    EndIf
+
+    Return False
+EndFunc
+
 Func GetNames($givenPath, $type)
     ; Assign a Local variable the search handle of all files in the current directory.
     Local $hSearch = FileFindFirstFile($givenPath & "\*.*")
 
     ; Check if the search was successful, if not display a message and return False.
     If $hSearch = -1 Then
-        MsgBox($MB_SYSTEMMODAL, "", "Error: No files/directories matched the search pattern.")
+        MsgBox(0, "", "Error: No files/directories matched the search pattern.")
         Return False
     EndIf
 
@@ -35,9 +52,9 @@ Func GetNames($givenPath, $type)
         ; If there is no more file matching the search.
         If @error Then ExitLoop
 
-        If $type = $TYPE_FILE And StringInStr($sFileName, ".") Then
+        If $type = $TYPE_FILE And IsFile($givenPath & "\" & $sFileName) Then
             $iCount += 1
-        ElseIf $type = $TYPE_FOLDER And Not StringInStr($sFileName, ".") Then
+        ElseIf $type = $TYPE_FOLDER And IsFolder($givenPath & "\" & $sFileName) Then
             $iCount += 1
         EndIf
     WEnd
@@ -49,7 +66,7 @@ Func GetNames($givenPath, $type)
     $hSearch = FileFindFirstFile($givenPath & "\*.*")
 
     If $hSearch = -1 Then
-        MsgBox($MB_SYSTEMMODAL, "", "Error: No files/directories matched the search pattern.")
+        MsgBox(0, "", "Error: No files/directories matched the search pattern.")
         Return False
     EndIf
 
@@ -61,10 +78,10 @@ Func GetNames($givenPath, $type)
         ; If there is no more file matching the search.
         If @error Then ExitLoop
 
-        If $type = $TYPE_FILE And StringInStr($sFileName, ".") Then
+        If $type = $TYPE_FILE And IsFile($givenPath & "\" & $sFileName) Then
             $aFiles[$iCount] = $sFileName
             $iCount += 1
-        ElseIf $type = $TYPE_FOLDER And Not StringInStr($sFileName, ".") Then
+        ElseIf $type = $TYPE_FOLDER And IsFolder($givenPath & "\" & $sFileName) Then
             $aFiles[$iCount] = $sFileName
             $iCount += 1
         EndIf
