@@ -1,5 +1,9 @@
-; Version: v0.1
-; Author: ZhangLin
+#RequireAdmin
+
+#include <WinAPIProc.au3>
+
+Global $TITLE_VER = "MakeIT2 -- v0.1"
+Global $Author    = "ZhangLin"
 
 Global $TYPE_FOLDER = 1
 Global $TYPE_FILE   = 2
@@ -40,7 +44,7 @@ Func GetNames($givenPath, $type)
 
     ; Check if the search was successful, if not display a message and return False.
     If $hSearch = -1 Then
-        MsgBox(0, "", "Error: No files/directories matched the search pattern.")
+        MsgBox(0, $TITLE_VER, "Error: No files/directories matched the search pattern.")
         Return False
     EndIf
 
@@ -66,7 +70,7 @@ Func GetNames($givenPath, $type)
     $hSearch = FileFindFirstFile($givenPath & "\*.*")
 
     If $hSearch = -1 Then
-        MsgBox(0, "", "Error: No files/directories matched the search pattern.")
+        MsgBox(0, $TITLE_VER, "Error: No files/directories matched the search pattern.")
         Return False
     EndIf
 
@@ -138,13 +142,7 @@ Func LoadKPDs($TARGET)
 EndFunc
 
 If Not WinExists("INITOKPD2") Then
-    Run("iniToKPD2.exe", @WorkingDir)
-EndIf
-
-Sleep(500)
-
-If Not WinExists("INITOKPD2") Then
-    MsgBox(0, "Error", "No iniToKPD2.exe here")
+    MsgBox(0, $TITLE_VER, "No iniToKPD2.exe is running.")
     Exit
 EndIf
 
@@ -158,7 +156,8 @@ If WinExists("INITOKPD2", "Do you save a file?") Then
     ControlSend("INITOKPD2", "", "Button2", "{SPACE}")
 EndIf
 
-$INI2KPD_FOLDER = @WorkingDir
+$INI2KPD_PID = WinGetProcess("INITOKPD2")
+$INI2KPD_FOLDER = _WinAPI_GetProcessWorkingDirectory($INI2KPD_PID)
 $TOP_FOLDER = StringReplace($INI2KPD_FOLDER, "\InitoKPD\RELEASE(NewKey)", "")
 $MODEL_FOLDER = $TOP_FOLDER & "\Driver\Model"
 
@@ -258,5 +257,5 @@ For $MODEL In $MODELs
     Next
 Next
 
-MsgBox(0, "Completed", "IT2 Project auto fill completed !!!")
+MsgBox(0, $TITLE_VER, "IT2 Project has been created.")
 
