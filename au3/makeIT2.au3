@@ -121,7 +121,13 @@ Func LoadKPDs($TARGET)
 EndFunc
 
 If Not WinExists("INITOKPD2") Then
-    MsgBox(0, "Error", "No INITOKPD2 has opened!")
+    Run("iniToKPD2.exe", @WorkingDir)
+EndIf
+
+Sleep(500)
+
+If Not WinExists("INITOKPD2") Then
+    MsgBox(0, "Error", "No iniToKPD2.exe here")
     Exit
 EndIf
 
@@ -235,5 +241,5 @@ For $MODEL In $MODELs
     Next
 Next
 
-MsgBox(0, "Completed", "Auto filled IT2 Project!")
+MsgBox(0, "Completed", "IT2 Project auto fill completed !!!")
 
