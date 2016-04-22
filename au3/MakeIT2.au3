@@ -149,7 +149,7 @@ EndIf
 ; 新建工程
 WinActivate("INITOKPD2")
 Send("!fn")
-Sleep(200)
+Sleep(100)
 
 ; 不保存结果
 If WinExists("INITOKPD2", "Do you save a file?") Then
@@ -175,13 +175,12 @@ For $MODEL In $MODELs
     EndIf
 
     ; 填写机种名
-    Sleep(200)
     ControlSetText("INITOKPD2", "", "Edit1", $MODEL)
-    Sleep(500)
+    Sleep(100)
     ControlSend("INITOKPD2", "", "Button2", "{SPACE}")
 
     ; 选择以空白模式添加新机种
-    Sleep(200)
+    Sleep(100)
     If WinExists("IniToBin Model Add") Then
         ControlSend("IniToBin Model Add", "", "Button3", "{SPACE}")
         ControlSend("IniToBin Model Add", "", "Button1", "{SPACE}")
@@ -234,7 +233,7 @@ For $MODEL In $MODELs
 
         ; 进入 Output 设置
         ControlSend("INITOKPD2", "", "Button14", "{SPACE}") ; 点击 New
-        Sleep(200)
+        Sleep(100)
         ControlSetText("Folder Name Registration", "", "Edit1", "KPD") ; 填写 Folder　Name
         ControlSetText("Folder Name Registration", "", "Edit2", $MODEL_FOLDER & "\" & $MODEL & "\CUSTOM\KPD") ; 填写 Top Folder
 
@@ -242,7 +241,7 @@ For $MODEL In $MODELs
         ControlSend("Folder Name Registration", "", "ListBox2", "{HOME}") ; 到顶
         ControlSend("Folder Name Registration", "", "ListBox2", "{DOWN}") ; 下移一位到 PDL
         ControlSend("Folder Name Registration", "", "Button9", "{SPACE}") ; 打开 PDL 设置
-        Sleep(200)
+        Sleep(100)
         ControlSetText("PDL Information", "", "Edit2", $PDL) ; 填写内容
         ControlSend("PDL Information", "", "Button3", "{SPACE}") ; 点击 Set
         ControlSend("PDL Information", "", "Button1", "{SPACE}") ; 点击 OK
