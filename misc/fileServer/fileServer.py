@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import SocketServer
+import SocketServer, os
 
 # Format: name_len      --- one byte
 #         name          --- name_len bytes
@@ -14,14 +14,16 @@ class MyTCPHandler (SocketServer.StreamRequestHandler):
     def handle(self):
         name_len = ord(self.rfile.read(1))
         name = self.rfile.read(name_len)
-        print "Get request:%s" % name
+        print "Get request: %s" % name
         fd = open(name, 'wb')
         cont = self.rfile.read(4096)    
         while cont:
             fd.write(cont)
             cont = self.rfile.read(4096)
         fd.close()
-        print "Out :%s" % name
+        print "Out: %s" % name
+        os.system("sudo mv ./{0} /usr/local/tomcat/server/webapps/".format(name))
+        print "Move: %s" % name
 
 server = SocketServer.TCPServer(addr, MyTCPHandler)
 print "Serving on port %s ..." % addr[1]
