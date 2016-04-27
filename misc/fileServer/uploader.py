@@ -5,7 +5,7 @@ from socket import *
 import os.path
 import sys
 
-target = ('115.29.192.240', 8688)
+target = ('115.29.192.240', 8988)
 
 def get_header(name):
     leng = len(name)

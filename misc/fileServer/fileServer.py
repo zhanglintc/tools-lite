@@ -9,7 +9,7 @@ import SocketServer, os
 
 # Save data to name into current directory
 # Refer to: http://blog.csdn.net/g__gle/article/details/8144968
-addr = ('', 8688)
+addr = ('', 8988)
 class MyTCPHandler (SocketServer.StreamRequestHandler):
     def handle(self):
         name_len = ord(self.rfile.read(1))
