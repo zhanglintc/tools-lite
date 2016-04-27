@@ -14,6 +14,7 @@
 ; v1.1 解决路径中含有九语言字样(如 IT, DE 等)导致成果物中出现 IT, DE 字样以及生成失败 by ZhangLin
 ; v1.2 增加默认文件名处理(当无法匹配任何规则时), 大幅优化生成速度(时间缩减 60%), 添加 html 默认生成路径 by YanBin & ZhangLin
 ; v1.3 ①自动关闭因为编码错误出现的对话框以便保证程序正常运行 ②将生成的文件名中的减号"-"统一修改为下划线"_"(否则Excel导入时会报错) by ZhangLin
+; v1.4 不再需要使用DiffList.txt
 
 CreateGUI()
 
@@ -21,7 +22,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.3", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.4", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -296,7 +297,7 @@ Func GenHtmls()
                     FileWriteLine($hLogFileOpen, "file not match any rule: " & $curTmpFileStorePath & "_" & $j & ".htm")
                 EndIf
 
-                ; click "ENTER" to save html file
+                ; HTML file generated, click "ENTER" to close the dialog
                 WinWaitActive("[CLASS:#32770]")
                 Send("{ENTER}")
             Else
@@ -325,11 +326,8 @@ Func PathSelect()
     ; Display an open dialog to select a file.
     Local $sFileSelectFolder = FileSelectFolder($sMessage, "")
     If @error Then
-        ; Display the error message.
         MsgBox($MB_SYSTEMMODAL, "", "No folder was selected.")
     Else
-        ; Display the selected folder.
-        ; MsgBox($MB_SYSTEMMODAL, "", "You chose the following folder:" & @CRLF & $sFileSelectFolder)
         GUICtrlSetData($idFilePath, $sFileSelectFolder)
     EndIf
 EndFunc
