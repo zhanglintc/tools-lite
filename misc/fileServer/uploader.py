@@ -35,9 +35,14 @@ def send_file(name):
     s.close()
 
 while True:
-    f = raw_input("Drag file here: ")
+    f = raw_input("Drag file here: ").strip().replace("\"", "")
+
+    if f == "exit":
+        sys.exit()
+
     try:
         send_file(f)
         print 'Success: "%s" has been sent to server.\n' % os.path.basename(f)
+
     except Exception, e:
         print 'Error: %s\n' % e
