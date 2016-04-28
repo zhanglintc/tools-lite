@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import SocketServer, os
+import SocketServer
+import struct
+import os
 
 # Format: name_len      --- one byte
 #         name          --- name_len bytes
@@ -15,13 +17,27 @@ class MyTCPHandler (SocketServer.StreamRequestHandler):
         name_len = ord(self.rfile.read(1))
         name = self.rfile.read(name_len)
         print "Get request: %s" % name
+        file_size = struct.unpack(">l", self.rfile.read(4))[0]
+        restfile = file_size
         fd = open(name, 'wb')
-        cont = self.rfile.read(4096)    
-        while cont:
-            fd.write(cont)
+        package_cnt = 0
+        while restfile > 4096:
+            package_cnt += 1
+
             cont = self.rfile.read(4096)
+            fd.write(cont)
+            restfile -= 4096
+
+            if package_cnt >= 5:
+                self.request.send(struct.pack('>l', file_size - restfile))
+                package_cnt = 0
+
+        self.request.send(struct.pack('>l', file_size - restfile))
+
+        fd.write(self.rfile.read(restfile))
         fd.close()
-        print "Out: %s" % name
+        print "Out: %s\n" % name
+
         os.system("sudo mv ./{0} /usr/local/tomcat/server/webapps/".format(name))
         print "Move: %s" % name
 
