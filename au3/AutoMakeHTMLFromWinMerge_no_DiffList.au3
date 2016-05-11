@@ -15,6 +15,7 @@
 ; v1.2 增加默认文件名处理(当无法匹配任何规则时), 大幅优化生成速度(时间缩减 60%), 添加 html 默认生成路径 by YanBin & ZhangLin
 ; v1.3 ①自动关闭因为编码错误出现的对话框以便保证程序正常运行 ②将生成的文件名中的减号"-"统一修改为下划线"_"(否则Excel导入时会报错) by ZhangLin
 ; v1.4 不再需要使用DiffList.txt
+; v1.5 正则表达式修正
 
 CreateGUI()
 
@@ -22,7 +23,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.4", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.5", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -59,15 +60,6 @@ Func CreateGUI()
                 ; Test()
         EndSwitch
     WEnd
-EndFunc
-
-Func Test()
-    ; _FileCreate("E:\work\AutoHTMLFromWinMerge\txt.txt")
-    $szTmpFPath = StringStripWS(_GUICtrlListView_GetItemText($idListview, 1, 2), 8)
-    If StringRegExp($szTmpFPath, ".+\\Model\\(.+-.+)\\.+") Then
-        $szTmpFPath = $szTmpFPath & "yes"
-    EndIf
-    MsgBox(0, "ff", $szTmpFPath)
 EndFunc
 
 Func TogglePause()
@@ -187,9 +179,9 @@ Func CreateFileName($szTmpFPath)
         $szTmpFName = $szTmpFName & "_M"
     EndIf
 
-    if StringRegExp($szTmpFPath, "\\Model\\(.+PKI)\\") Then
+    if StringRegExp($szTmpFPath, "\\Model\\([^\\]+PKI)\\") Then
         $szTmpFName = $szTmpFName & "_P"
-    ElseIf StringRegExp($szTmpFPath, ".+\\Model\\(.+-.+)\\.+") Then
+    ElseIf StringRegExp($szTmpFPath, ".+\\Model\\([^\\]+-[^\\]+)\\.+") Then
         $szTmpFName = $szTmpFName & "_G"
     Else
         $szTmpFName = $szTmpFName & "_O"
