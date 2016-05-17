@@ -16,6 +16,7 @@
 ; v1.3 ①自动关闭因为编码错误出现的对话框以便保证程序正常运行 ②将生成的文件名中的减号"-"统一修改为下划线"_"(否则Excel导入时会报错) by ZhangLin
 ; v1.4 不再需要使用DiffList.txt
 ; v1.5 正则表达式修正
+; v1.6 Own, Gen, PKI判断条件增加
 
 CreateGUI()
 
@@ -23,7 +24,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.5", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.6", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -179,9 +180,9 @@ Func CreateFileName($szTmpFPath)
         $szTmpFName = $szTmpFName & "_M"
     EndIf
 
-    if StringRegExp($szTmpFPath, "\\Model\\([^\\]+PKI)\\") Then
+    if StringRegExp($szTmpFPath, "\\Model\\([^\\]+PKI)\\") Or StringInStr($szTmpFPath, "_PKI_") Then
         $szTmpFName = $szTmpFName & "_P"
-    ElseIf StringRegExp($szTmpFPath, ".+\\Model\\([^\\]+-[^\\]+)\\.+") Then
+    ElseIf StringRegExp($szTmpFPath, ".+\\Model\\([^\\]+-[^\\]+)\\.+") Or StringInStr($szTmpFPath, "_Gen_") Then
         $szTmpFName = $szTmpFName & "_G"
     Else
         $szTmpFName = $szTmpFName & "_O"
