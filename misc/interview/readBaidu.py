@@ -5,6 +5,24 @@ from bs4 import BeautifulSoup
 import urllib, urllib2
 import time, re
 
+class JsonDict(dict):
+    """
+    Copied from weibo official SDK:
+    https://github.com/michaelliao/sinaweibopy
+
+    Make a dict access more convenient,
+    now you can get value from dict just like property.
+    """
+
+    def __getattr__(self, attr):
+        try:
+            return self[attr]
+        except KeyError:
+            raise AttributeError(r"'JsonDict' object has no attribute '%s'" % attr)
+
+    def __setattr__(self, attr, value):
+        self[attr] = value
+
 def readBaidu(url, pages):
     html = urllib.urlopen(url).read()
 
@@ -25,7 +43,7 @@ def readBaidu(url, pages):
         dikt["time"] = publish_time
         dikt["abstract"] = abstract
 
-        items.append(dict(dikt))
+        items.append(JsonDict(dikt))
 
     pages.append(items[:])
     next_page = "http://www.baidu.com" + soup.body.find("a", text="下一页>").attrs["href"]
@@ -38,6 +56,18 @@ if __name__ == '__main__':
     for i in range(2):
         target = readBaidu(target, pages)
 
-    print pages
+    page_cnt = 0
+    for page in pages:
+        page_cnt += 1
+        item_cnt = 0
+        for item in page:
+            item_cnt += 1
+            print "page: " + str(page_cnt)
+            print "item: " + str(item_cnt)
+            print "title: " + item.title
+            print "publisher: " + item.publisher
+            print "time: " + item.time
+            print "abstract: " + item.abstract
+            print "=============================="
 
 
