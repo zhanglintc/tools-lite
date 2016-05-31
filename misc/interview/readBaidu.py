@@ -34,7 +34,7 @@ def readBaidu(url, pages):
 
         title = item.h3.a.text
         time_elapsed = int(re.search(".*(\d).*", item.p.text).group(1))
-        publisher = re.search("(.*?)\d.*", item.p.text).group(1)
+        publisher = re.search("(.*?)\d.*", item.p.text).group(1).replace(u"\xa0", "")
         publish_time = time.strftime ("%Y-%m-%d %X", time.localtime(time.time() - time_elapsed * 60 * 24) )
         abstract = re.search( "/p>(.*)<span", str(item.find("div")) ).group(1).replace("<em>", "").replace("</em>", "")
 
@@ -62,12 +62,12 @@ if __name__ == '__main__':
         item_cnt = 0
         for item in page:
             item_cnt += 1
-            print "page: " + str(page_cnt)
-            print "item: " + str(item_cnt)
-            print "title: " + item.title
-            print "publisher: " + item.publisher
-            print "time: " + item.time
-            print "abstract: " + item.abstract
+            print "> page      =>   " + str(page_cnt)
+            print "> item      =>   " + str(item_cnt)
+            print "> title     =>   " + item.title
+            print "> publisher =>   " + item.publisher
+            print "> time      =>   " + item.time
+            print "> abstract  =>   " + item.abstract
             print "=============================="
 
 
