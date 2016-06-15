@@ -24,7 +24,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.6", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.61", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -182,7 +182,7 @@ Func CreateFileName($szTmpFPath)
 
     if StringRegExp($szTmpFPath, "\\Model\\([^\\]+PKI)\\") Or StringInStr($szTmpFPath, "_PKI_") Then
         $szTmpFName = $szTmpFName & "_P"
-    ElseIf StringRegExp($szTmpFPath, ".+\\Model\\([^\\]+-[^\\]+)\\.+") Or StringInStr($szTmpFPath, "_Gen_") Then
+    ElseIf StringRegExp($szTmpFPath, ".+\\Model\\([^\\]+-[^\\]+)\\.+") Or StringInStr($szTmpFPath, "_Gen") Then
         $szTmpFName = $szTmpFName & "_G"
     Else
         $szTmpFName = $szTmpFName & "_O"
