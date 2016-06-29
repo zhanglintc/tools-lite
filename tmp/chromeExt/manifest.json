@@ -1,10 +1,10 @@
 {
-  "name": "hijack analyse plug",
+  "name": "壁虎漫步自动登录插件",
   "version": "0.0.1",
   "manifest_version": 2,
 
   // 简单描述
-  "description": "chrome plug analyse and guard the http hijack",
+  "description": "自动填写帐号密码并且登录壁虎漫步",
   "icons": {
     "16": "image/icon16.png",
     "48": "image/icon48.png"
@@ -14,7 +14,7 @@
 
   // 浏览器小图表部分
   "browser_action": {
-    "default_title": "反劫持",
+    "default_title": "壁虎漫步自动登录",
     "default_icon": "image/icon16.png",
     "default_popup": "html/test.html"
   },
@@ -24,16 +24,16 @@
     {
       "js": ["script/test.js"],
       // 在什么情况下使用该脚本
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
+      "matches": ["<all_urls>"],
       // 什么情况下运行【文档加载开始】
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "match_about_blank":true,
+      "all_frames": true
     }
   ],
   // 应用协议页面
   "permissions": [
+    "tabs",
     "http://*/*",
     "https://*/*"
   ]
