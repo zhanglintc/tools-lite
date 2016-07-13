@@ -17,6 +17,7 @@
 ; v1.4 不再需要使用DiffList.txt
 ; v1.5 正则表达式修正
 ; v1.6 Own, Gen, PKI判断条件增加
+; v1.7 如果用户的WinMerge语言不是日语, 将提示用户注意. 如果用户打开了IDM, 将提示用户关闭
 
 CreateGUI()
 
@@ -24,7 +25,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.61", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.7", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -45,6 +46,11 @@ Func CreateGUI()
     Global $TWCheckbox = GUICtrlCreateCheckbox("TW", 410, 260)
     GUICtrlCreateLabel("ignored language", 460, 260)
     GUISetState(@SW_SHOW, $hMainGUI)
+
+    IF ProcessExists("IDMan.exe") Then
+        ; ProcessClose("IDMan.exe")
+        MsgBox($MB_SYSTEMMODAL, "Warning", "IDM is running, please close it !!!")
+    EndIf
 
     While 1
         Switch GUIGetMsg()
@@ -195,6 +201,11 @@ Func GenHtmls()
     Local $hWnd = WinGetHandle("[CLASS:WinMergeWindowClassW]")
     If @error Then
         MsgBox($MB_SYSTEMMODAL, "", "An error occurred when trying to retrieve the window handle of WinMerge.")
+        Return
+    EndIf
+
+    IF Not WinExists("WinMerge", "レディ") Then
+        MsgBox($MB_SYSTEMMODAL, "Warning", "Your WinMerge language is not JA, please set it to JA !!!")
         Return
     EndIf
 
