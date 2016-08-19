@@ -25,7 +25,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.7", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.71", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -204,7 +204,7 @@ Func GenHtmls()
         Return
     EndIf
 
-    IF Not WinExists("WinMerge", "レディ") Then
+    IF Not WinExists("WinMerge", "レディ") And Not WinExists("WinMerge", "経過時間") Then
         MsgBox($MB_SYSTEMMODAL, "Warning", "Your WinMerge language is not JA, please set it to JA !!!")
         Return
     EndIf
