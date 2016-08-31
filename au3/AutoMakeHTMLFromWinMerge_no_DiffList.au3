@@ -18,6 +18,11 @@
 ; v1.5 正则表达式修正
 ; v1.6 Own, Gen, PKI判断条件增加
 ; v1.7 如果用户的WinMerge语言不是日语, 将提示用户注意. 如果用户打开了IDM, 将提示用户关闭
+; v1.8 抛弃了愚蠢地每次通过直接尝试保存判断是否报错来决定是否需要改名字的做法(尽管新方法依然较为愚蠢), 采用全局数组变量存储已经用到过的名字, 查看想要的名字是否在数组中即可.
+
+; 这是用来存储所有用到过的文件名的全局变量
+; 第一个元素是随便一个字符串, 不会被轻易匹配到就行了
+Global $g_UsedNames = ["this is a string shouldn't match any thing"]
 
 CreateGUI()
 
@@ -25,7 +30,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.71", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.8", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -93,6 +98,7 @@ Func WaitFileCompareActivate()
 EndFunc
 
 ; 等待保存成功或者保存失败的界面弹出
+; v1.8以后应该是用不到了, 过几个版本后删除 -- by zhanglin
 Func WaitResultOfSaveButton()
     While Not WinExists("WinMerge", "レポート生成に成功しました。") And Not WinExists("名前を付けて保存の確認")
         ; do noting here, just wait
@@ -197,6 +203,25 @@ Func CreateFileName($szTmpFPath)
     Return $szTmpFName
 EndFunc
 
+Func IfFileNameDuplicated($outFile, $fileName)
+    Local $suffix = 0
+    Local $tmp = $fileName
+
+    While _ArraySearch($g_UsedNames, $tmp) <> -1
+        $suffix = $suffix + 1
+        $tmp = $fileName & "_" & $suffix
+    WEnd
+
+    $fileName = $tmp
+    _ArrayAdd($g_UsedNames, $fileName)
+
+    If $suffix > 0 Then
+        FileWriteLine($outFile, "file not match any rule: " & $fileName & ".htm")
+    EndIf
+
+    return $fileName
+EndFunc
+
 Func GenHtmls()
     Local $hWnd = WinGetHandle("[CLASS:WinMergeWindowClassW]")
     If @error Then
@@ -279,27 +304,12 @@ Func GenHtmls()
             Send("!tr")
             WinWaitActive("[CLASS:#32770]")
             If WinExists("[CLASS:#32770]") Then
+
+                $curTmpFileStorePath = IfFileNameDuplicated($hLogFileOpen, $curTmpFileStorePath)
+
                 Local $hFileDlgWnd = WinGetHandle("[CLASS:#32770]")
                 ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath)
                 Send("!s")
-
-                WaitResultOfSaveButton()
-
-                ; file name duplicated process by YanBin
-                Local $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
-                Local $j = 0
-                While $getWinForExist <> "&Ok"
-                    $j = $j + 1
-                    Send("{ENTER}")
-                    ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath & "_" & $j)
-                    Send("!s")
-                    WaitResultOfSaveButton()
-                    $getWinForExist = ControlGetText("[CLASS:#32770]", "", "Button1")
-                WEnd
-
-                if $j > 0 Then
-                    FileWriteLine($hLogFileOpen, "file not match any rule: " & $curTmpFileStorePath & "_" & $j & ".htm")
-                EndIf
 
                 ; HTML file generated, click "ENTER" to close the dialog
                 WinWaitActive("[CLASS:#32770]")
