@@ -18,7 +18,12 @@
 ; v1.5 正则表达式修正
 ; v1.6 Own, Gen, PKI判断条件增加
 ; v1.7 如果用户的WinMerge语言不是日语, 将提示用户注意. 如果用户打开了IDM, 将提示用户关闭
-; v1.8 抛弃了愚蠢地每次通过直接尝试保存判断是否报错来决定是否需要改名字的做法(尽管新方法依然较为愚蠢), 采用全局数组变量存储已经用到过的名字, 查看想要的名字是否在数组中即可.
+; v1.8  1. 抛弃了愚蠢地每次通过直接尝试保存判断是否报错来决定是否需要改名字的做法(尽管新方法依然较为愚蠢)
+;          采用全局数组变量存储已经用到过的名字, 查看想要的名字是否在数组中即可 by ZhangLin
+;       2. 不再使用"[CLASS:#32770]"进行窗体查找(因为使用这个CLASS的程序太多, 实在太™容易找错了) by ZhangLin
+;       3. 把因为CodePage不对导致的报错窗口的查找条件由"無題"变更为"エンコーディングエラーにより情報が失われています"
+;          这样能适应多语言环境, 因为新的字符串在各种语言OS下均能够保持一致(比如日文, 中文下一致)  by ZhangLin
+
 
 ; 这是用来存储所有用到过的文件名的全局变量
 ; 第一个元素是随便一个字符串, 不会被轻易匹配到就行了
@@ -273,7 +278,7 @@ Func GenHtmls()
 
             ; wait until compare mode activated and ignore error window
             WaitFileCompareActivate()
-            If WinExists("WinMerge", "無題") Then
+            If WinExists("WinMerge", "エンコーディングエラーにより情報が失われています") Then
                 Send("{ESC}") ; close the error window
             EndIf
 
@@ -302,17 +307,17 @@ Func GenHtmls()
 
             ; generate html report
             Send("!tr")
-            WinWaitActive("[CLASS:#32770]")
-            If WinExists("[CLASS:#32770]") Then
+            WinWaitActive("名前を付けて保存")
+            If WinExists("名前を付けて保存") Then
 
                 $curTmpFileStorePath = IfFileNameDuplicated($hLogFileOpen, $curTmpFileStorePath)
 
-                Local $hFileDlgWnd = WinGetHandle("[CLASS:#32770]")
+                Local $hFileDlgWnd = WinGetHandle("名前を付けて保存")
                 ControlSetText($hFileDlgWnd, "", "Edit1", $curTmpFileStorePath)
                 Send("!s")
 
                 ; HTML file generated, click "ENTER" to close the dialog
-                WinWaitActive("[CLASS:#32770]")
+                WinWaitActive("WinMerge", "レポート生成に成功しました")
                 Send("{ENTER}")
             Else
                 MsgBox($MB_SYSTEMMODAL, "", "Store dialog does not exist")
