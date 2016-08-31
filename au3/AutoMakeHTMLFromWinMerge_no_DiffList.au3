@@ -22,7 +22,8 @@
 ;          采用全局数组变量存储已经用到过的名字, 查看想要的名字是否在数组中即可 by ZhangLin
 ;       2. 不再使用"[CLASS:#32770]"进行窗体查找(因为使用这个CLASS的程序太多, 实在太™容易找错了) by ZhangLin
 ;       3. 把因为CodePage不对导致的报错窗口的查找条件由"無題"变更为"エンコーディングエラーにより情報が失われています"
-;          这样能适应多语言环境, 因为新的字符串在各种语言OS下均能够保持一致(比如日文, 中文下一致)  by ZhangLin
+;          这样能适应多语言环境, 因为新的字符串在各种语言OS下均能够保持一致(比如日文, 中文下一致) by ZhangLin
+;       4. 对是否存在"[CLASS:WinMergeWindowClassW]"的判断做了一些微小的调整(错误判断提前, 正常逻辑放在后面) by ZhangLin
 
 
 ; 这是用来存储所有用到过的文件名的全局变量
@@ -263,9 +264,11 @@ Func GenHtmls()
         Return
     EndIf
 
-    If WinExists("[CLASS:WinMergeWindowClassW]") Then
+    If Not WinExists($hWnd) Then
+        MsgBox($MB_SYSTEMMODAL, "", "WinMerge does not exist")
+    Else
         WinActivate($hWnd)
-        WinWaitActive("[CLASS:WinMergeWindowClassW]")
+        WinWaitActive($hWnd)
 
         ; go to the top
         Send("{HOME}")
@@ -331,8 +334,6 @@ Func GenHtmls()
             Send("{ESC}")
             Send("{DOWN}")
         WEnd
-    Else
-        MsgBox($MB_SYSTEMMODAL, "", "WinMerge does not exist")
     EndIf
 
     FileClose($hLogFileOpen)
