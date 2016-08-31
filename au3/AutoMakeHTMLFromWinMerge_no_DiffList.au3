@@ -91,7 +91,7 @@ EndFunc
 
 Func Terminate()
     $rlt = MsgBox(4, "Quit", "Sure to quit.")
-    if $rlt == 6 Then
+    If $rlt == 6 Then
         Exit 0
     EndIf
 EndFunc
@@ -148,60 +148,62 @@ Func CreateFileName($szTmpFPath)
     Local $PathArray  = StringSplit($szTmpFPath, "\")
     Local $szTmpFName = $PathArray[$PathArray[0]]
     Local $szOrgFName = $szTmpFName
-    if (StringInStr($szTmpFPath, "\RAST") Or StringInStr($szTmpFPath, "\_RAST") Or StringInStr($szTmpFPath, "\_PCL") Or StringInStr($szTmpFPath, "\PCL")  Or StringInStr($szTmpFPath, "_PCL_")) and (0=StringInStr($szTmpFPath, "FA\")) Then
+    If (StringInStr($szTmpFPath, "\RAST") Or StringInStr($szTmpFPath, "\_RAST") Or StringInStr($szTmpFPath, "\_PCL") Or StringInStr($szTmpFPath, "\PCL")  Or StringInStr($szTmpFPath, "_PCL_")) and (0=StringInStr($szTmpFPath, "FA\")) Then
         $szTmpFName = $szTmpFName & "_PCL"
     EndIf
-    if StringInStr($szTmpFPath, "\PS") Or StringInStr($szTmpFPath, "\_PS")  Or StringInStr($szTmpFPath, "_PS_")  Then
+    If StringInStr($szTmpFPath, "\PS") Or StringInStr($szTmpFPath, "\_PS")  Or StringInStr($szTmpFPath, "_PS_")  Then
         $szTmpFName = $szTmpFName & "_PS"
     EndIf
-    if StringInStr($szTmpFPath, "\XPS") Or StringInStr($szTmpFPath, "\_XPS")  Or StringInStr($szTmpFPath, "_XPS_")  Then
+    If StringInStr($szTmpFPath, "\XPS") Or StringInStr($szTmpFPath, "\_XPS")  Or StringInStr($szTmpFPath, "_XPS_")  Then
         $szTmpFName = $szTmpFName & "_XPS"
     EndIf
 
-    if StringInStr($szTmpFPath, "FA\") Then
+    If StringInStr($szTmpFPath, "FA\") Then
         $szTmpFName = $szTmpFName & "_FAX"
     EndIf
-    if StringInStr($szTmpFPath, "\DE\") Then
+    If StringInStr($szTmpFPath, "\DE\") Then
         $szTmpFName = $szTmpFName & "_DE"
     EndIf
-    if StringInStr($szTmpFPath, "\EN\") Then
+    If StringInStr($szTmpFPath, "\EN\") Then
         $szTmpFName = $szTmpFName & "_EN"
     EndIf
-    if StringInStr($szTmpFPath, "\ES\") Then
+    If StringInStr($szTmpFPath, "\ES\") Then
         $szTmpFName = $szTmpFName & "_ES"
     EndIf
-    if StringInStr($szTmpFPath, "\FR\") Then
+    If StringInStr($szTmpFPath, "\FR\") Then
         $szTmpFName = $szTmpFName & "_FR"
     EndIf
-    if StringInStr($szTmpFPath, "\IT\") Then
+    If StringInStr($szTmpFPath, "\IT\") Then
         $szTmpFName = $szTmpFName & "_IT"
     EndIf
-    if StringInStr($szTmpFPath, "\JA\") Then
+    If StringInStr($szTmpFPath, "\JA\") Then
         $szTmpFName = $szTmpFName & "_JA"
     EndIf
-    if StringInStr($szTmpFPath, "\KO\") Then
+    If StringInStr($szTmpFPath, "\KO\") Then
         $szTmpFName = $szTmpFName & "_KO"
     EndIf
-    if StringInStr($szTmpFPath, "\ZH-CN\") Then
+    If StringInStr($szTmpFPath, "\ZH-CN\") Then
         $szTmpFName = $szTmpFName & "_ZN"
     EndIf
-    if StringInStr($szTmpFPath, "\ZH-TW\") Then
+    If StringInStr($szTmpFPath, "\ZH-TW\") Then
         $szTmpFName = $szTmpFName & "_ZW"
     EndIf
-    if StringInStr($szTmpFPath, "\Win2kXP") Or StringInStr($szTmpFPath, "\Win_x86") Or StringInStr($szTmpFPath, "\WinLH32") Then
+    If StringInStr($szTmpFPath, "\Win2kXP") Or StringInStr($szTmpFPath, "\Win_x86") Or StringInStr($szTmpFPath, "\WinLH32") Then
         $szTmpFName = $szTmpFName & "_32"
     EndIf
-    if StringInStr($szTmpFPath, "\Win64") Or StringInStr($szTmpFPath, "\Win_x64") Or StringInStr($szTmpFPath, "\WinLH64") Then
+    If StringInStr($szTmpFPath, "\Win64") Or StringInStr($szTmpFPath, "\Win_x64") Or StringInStr($szTmpFPath, "\WinLH64") Then
         $szTmpFName = $szTmpFName & "_64"
     EndIf
-    if StringInStr($szTmpFPath, "\Mono")  Or StringInStr($szTmpFPath, "_Mono_") Then
+    If StringInStr($szTmpFPath, "\Mono")  Or StringInStr($szTmpFPath, "_Mono_") Then
         $szTmpFName = $szTmpFName & "_M"
     EndIf
 
-    if StringRegExp($szTmpFPath, "\\Model\\([^\\]+PKI)\\") Or StringInStr($szTmpFPath, "_PKI_") Then
+    If StringRegExp($szTmpFPath, "\\Model\\([^\\]+PKI)\\") Or StringInStr($szTmpFPath, "_PKI_") Then
         $szTmpFName = $szTmpFName & "_P"
     ElseIf StringRegExp($szTmpFPath, ".+\\Model\\([^\\]+-[^\\]+)\\.+") Or StringInStr($szTmpFPath, "_Gen") Then
         $szTmpFName = $szTmpFName & "_G"
+    ElseIf StringRegExp($szTmpFPath, ".+\\Model\\([D|N]\d+).*\\.+") Or StringInStr($szTmpFPath, "_SIN") Then
+        $szTmpFName = $szTmpFName & "_S"
     Else
         $szTmpFName = $szTmpFName & "_O"
     EndIf
@@ -241,7 +243,7 @@ Func GenHtmls()
     EndIf
 
     $curFilePath = _GUICtrlEdit_GetText($idFilePath)
-    if $curFilePath == "" Then
+    If $curFilePath == "" Then
         $curFilePath = @WorkingDir ; 如果没有指定生成路径， 则默认生成到脚本当前路径
     EndIf
 
@@ -326,7 +328,7 @@ Func GenHtmls()
                 MsgBox($MB_SYSTEMMODAL, "", "Store dialog does not exist")
             EndIf
 
-            if StringLen($szTmpFName) + 4 > 31 Then
+            If StringLen($szTmpFName) + 4 > 31 Then
                 FileWriteLine($hLogFileOpen, $szTmpFName & ".html file name len is over than 31 charachter.")
             EndIf
 
