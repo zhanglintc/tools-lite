@@ -228,7 +228,7 @@ Func IfFileNameDuplicated($outFile, $fileName)
         FileWriteLine($outFile, "file not match any rule: " & $fileName & ".htm")
     EndIf
 
-    return $fileName
+    Return $fileName
 EndFunc
 
 Func GenHtmls()
