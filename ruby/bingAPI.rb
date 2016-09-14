@@ -14,11 +14,11 @@ url = jsn["images"][0]["url"]
 copyright = jsn["images"][0]["copyright"]
 
 get '/' do
-  return url
+  redirect url
 end
 
 get '/url' do
-  return url
+  redirect url
 end
 
 get '/date' do
