@@ -1,6 +1,8 @@
 require 'Find'
 require 'nkf'
 
+VERSION = "v0.1"
+
 targetFolder = ''
 
 def each_file target
