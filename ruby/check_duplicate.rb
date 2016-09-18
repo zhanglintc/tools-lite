@@ -1,7 +1,7 @@
 require 'Find'
 require 'nkf'
 
-VERSION = "v0.1"
+VERSION = "v0.11"
 
 targetFolder = ''
 
@@ -31,7 +31,7 @@ def processFile path
   content = NKF.nkf "-w", content
   content =~ /Duplicate : (\d+),/
   if $1.to_i > 0
-    puts "Duplicated: " + path
+    puts "Duplicated => #{$1}: " + path
   end
 end
 
