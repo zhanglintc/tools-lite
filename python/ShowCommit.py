@@ -83,8 +83,8 @@ def github_reminder(targetURL):
     return send_content
 
 if __name__ == '__main__':
-    cprint(github_reminder("https://github.com/zhanglintc?period=daily") + "\n")
-    cprint(github_reminder("https://github.com/pang327?period=daily") + "\n")
+    cprint(github_reminder("https://github.com/zhanglintc?tab=overview&from={0}".format(TODAY)) + "\n")
+    cprint(github_reminder("https://github.com/pang327?tab=overview&from={0}".format(TODAY)) + "\n")
 
     try:
         raw_input()
