@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import urllib2
+import json
 import os
 
 repos = [
@@ -19,6 +21,13 @@ repos = [
     #### Theodolite ####
     'git@github.com:Theodolite/3plus2.git',
 ]
+
+repos = []
+recv = urllib2.urlopen("https://api.github.com/users/zhanglintc/repos")
+raw = recv.read()
+dikt = json.loads(raw)
+for item in dikt:
+    repos.append(item["ssh_url"])
 
 # /home/lane
 base_path  = os.path.expanduser('~')
