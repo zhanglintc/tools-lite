@@ -4,7 +4,7 @@
 app_name = "bingAPI.rb"
 
 puts "killing #{app_name}"
-system "ps -ef | grep #{File.basename(app_name, ".*")} | grep -v grep | cut -c 9-15 | xargs kill -s 9"
+system "ps -ef | grep 5969 | grep -v grep | cut -c 9-15 | xargs kill -s 9"
 
 puts "restarting #{app_name}"
 system "nohup ruby #{app_name}&"
