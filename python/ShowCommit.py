@@ -17,8 +17,8 @@ LOG_FILE = (datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S
 
 def github_reminder(targetURL):
     cprint("[" + targetURL.split("/")[-1].split("?")[0] + ":, red]\n")
-    web_cotent = urllib.urlopen(targetURL) # open website
-    web_cotent = urllib.urlopen(targetURL) # do it twice
+    web_content = urllib.urlopen(targetURL) # open website
+    web_content = urllib.urlopen(targetURL) # do it twice
 
     line  = True
     error = True
@@ -27,7 +27,7 @@ def github_reminder(targetURL):
     fw = open(LOG_FILE, 'w')
     while line:
         # read each line while not the end
-        line = web_cotent.readline()
+        line = web_content.readline()
 
         # write web_content to log file
         fw.write(line)
