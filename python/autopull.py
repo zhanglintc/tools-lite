@@ -44,7 +44,7 @@ def gitbak(userName):
             os.system('cd {0}/gitbak/{1} && git clone {2}'.format(base_path, userName, repo))
 
         else:
-            os.system('cd {0}/gitbak/{1}/{2} && git pull'.format(base_path, userName, repo))
+            os.system('cd {0}/gitbak/{1}/{2} && git pull'.format(base_path, userName, repoName))
 
 if __name__ == '__main__':
     gitbak("zhanglintc")
