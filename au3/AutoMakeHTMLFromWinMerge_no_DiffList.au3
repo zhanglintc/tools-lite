@@ -25,6 +25,7 @@
 ;          这样能适应多语言环境, 因为新的字符串在各种语言OS下均能够保持一致(比如日文, 中文下一致) by ZhangLin
 ;       4. 对是否存在"[CLASS:WinMergeWindowClassW]"的判断做了一些微小的调整(错误判断提前, 正常逻辑放在后面) by ZhangLin
 ;       5. 对于SINDOH自动添加"_S"后缀 by ZhangLin
+; v1.9 优化对于PPD文件中乱码导致的弹出提示框的处理
 
 
 ; 这是用来存储所有用到过的文件名的全局变量
@@ -37,7 +38,7 @@ Func CreateGUI()
     Global $Paused
     HotKeySet("!c", "TogglePause")
     HotKeySet("!x", "Terminate")
-    Local $hMainGUI = GUICreate("AutoMakeHTML v1.8", 600, 300)
+    Local $hMainGUI = GUICreate("AutoMakeHTML v1.9", 600, 300)
     GUICtrlCreateLabel("Different File List", 10, 10)
     Global $idListview = GUICtrlCreateListView("Informations               ", 10, 30, 580, 150)
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
@@ -110,6 +111,10 @@ Func WaitResultOfSaveButton()
     While Not WinExists("WinMerge", "レポート生成に成功しました。") And Not WinExists("名前を付けて保存の確認")
         ; do noting here, just wait
     WEnd
+EndFunc
+
+Func GetFullPath()
+    Return ControlGetText("WinMerge", "", "Edit2")
 EndFunc
 
 Func IsIgnoredFile($szTmpFPath, $hLogFileOpen)
@@ -284,13 +289,13 @@ Func GenHtmls()
 
             ; wait until compare mode activated and ignore error window
             WaitFileCompareActivate()
-            If WinExists("WinMerge", "エンコーディングエラーにより情報が失われています") Then
+            If WinExists("WinMerge", "エンコーディングエラーにより情報が失われています") Or GetFullPath() == "" Then
                 Send("{ESC}") ; close the error window
             EndIf
 
             ; get file name
             WaitFileCompareActivate()
-            $curFullPath = ControlGetText("WinMerge", "", "Edit2")
+            $curFullPath = GetFullPath()
             $szTmpFName  = CreateFileName($curFullPath)
             $szTmpFName = StringReplace($szTmpFName, "-", "_") ; change "-" to "_" in file name
             $szTmpFName = StringReplace($szTmpFName, ".", "_") ; change "." to "_" in file name
