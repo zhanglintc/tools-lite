@@ -11,7 +11,7 @@ def req_data daysAgo
   jsn = JSON.parse raw
 
   $enddate = jsn["images"][0]["enddate"]
-  $url = jsn["images"][0]["url"]
+  $url = "http://www.bing.com" + jsn["images"][0]["url"]
   $copyright = jsn["images"][0]["copyright"]
 end
 
