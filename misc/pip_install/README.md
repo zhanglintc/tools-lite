@@ -5,7 +5,7 @@ pip安装方法
 `pip`是`Python`中在线安装模块最简便的一种工具（至少我是这么感觉的）。
 比如你想要安装一个名字叫做`argparse`的模块，只需输入：
 
-    pip argparse
+    pip install argparse
 
 `argparse`就安装好了。但是想要使用`pip`工具，还需要先安装一下`pip`。不过磨刀不误砍柴工，安装好了以后肯定是会很方便的！
 
