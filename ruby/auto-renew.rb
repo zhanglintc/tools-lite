@@ -2,9 +2,9 @@
 # Written by zhanglintc at 2017.07.13
 
 # issue the certificate in folder "zhanglintc.co"
-puts "issue the certificate => not enabled"
+# puts "issue the certificate"
 # `acme.sh  --issue --dns -d zhanglintc.co -d www.zhanglintc.co -d mmrz.zhanglintc.co -d zncx.zhanglintc.co`
-puts "issue: done\n\n"
+# puts "issue: done\n\n"
 
 # renew the certificatea
 puts "renew the certificate"
@@ -20,4 +20,6 @@ puts "copy: done\n\n"
 puts "reload Nginx"
 puts `sudo service nginx force-reload`
 puts "reload: done\n\n"
+
+
 
