@@ -1,0 +1,13 @@
+Beyond Compare 3
+
+old key:
+--- BEGIN LICENSE KEY ---
+mv1nPlXAywBDCdhxFc9QOVv6TBcQHLAXBQUAKTh3ie4fqSEOnWrPsnVkF
+yt0wAkJHweoExRJWWVwwCniKNROSdJzJXE6YVapYW7f+tRRXRFI4yn4Nj
+jZ0RiiqGRCTVzwComUcXB-eiFWRBY6JpSsCNkmIxL5KsRCo442djHhTZE
+--- END LICENSE KEY -----
+
+new key: 2014.10.23 by zhanglin
+--- BEGIN LICENSE KEY ---
+HmB5oANygQOhaStTHNa+zOKgOeWHOkeAp6d1+QwIebz6z9kwYCm9-O0jF9F79zvzed9v5UVC4VrDkDMmTM8nB+
+--- END LICENSE KEY -----

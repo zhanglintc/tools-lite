@@ -15,8 +15,8 @@ cnt_blank_lines = True
 # judge your python version
 version = sys.version[0]
 
-ext_list = ['c','cpp','h','java','py']
-target_folder = r"/Users/lane/Github"
+ext_list = ['c','cpp','h','pl','pm', 't']
+target_folder = r"Z:\golive"
 
 def QuotationStrip(target_folder):
     """
