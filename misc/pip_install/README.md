@@ -13,7 +13,7 @@ pip安装方法
 
 **方法一:**
 
-直接执行 `http://115.29.192.240/get_pip.py | python` 即可.
+直接执行 `curl http://115.29.192.240/get_pip.py | python` 即可.
 
 **方法二:**
 
