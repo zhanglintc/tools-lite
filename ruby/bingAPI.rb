@@ -1,6 +1,7 @@
 require 'net/http'
 require 'json'
 require 'sinatra'
+require 'sinatra/jsonp'
 
 set :bind, '0.0.0.0'
 set :port, '5969'
@@ -38,3 +39,13 @@ get '/description' do
   req_data(daysAgo)
   return $copyright
 end
+
+get '/description_with_callback' do
+  callback = (params['callback'] or 'default_callback')
+  daysAgo = (params['daysAgo'] or 0)
+  req_data(daysAgo)
+  jsn = {"description": $copyright}
+  jsonp $copyright, callback
+end
+
+
