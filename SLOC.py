@@ -49,7 +49,7 @@ def line_count(target_file):
         lines += 1
 
     fr.close()
- 
+
     return lines
 
 def getExtension(target_file):
@@ -92,7 +92,7 @@ if __name__ == '__main__':
     print("")
 
     try:
-        input("Press any key to close...")
+        input("Press [Enter] to close...")
     except:
         pass
 
