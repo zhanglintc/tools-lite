@@ -15,7 +15,7 @@ static int (**hget(int (**t)[2], int k))[2] {
     // for (int h = k & (SIZE - 1); **t && ***t != k; h = ((h + 1) & (SIZE - 1)), t += h);
     int h = k & (SIZE - 1);
 
-    while(**t && ***t != k) {
+    while (**t && ***t != k) {
         h = ((h + 1) & (SIZE - 1));
         t += h;
     }
@@ -27,7 +27,7 @@ static void hset(int (**t)[2], int k, int v) {
     // for (int (**a)[2] = hget(t, k); !*a && (*a=(int (*)[2])malloc(sizeof(**t))); (**a)[0]=k,(**a)[1]=v);
     int (**a)[2] = hget(t, k);
 
-    if(!*a && (*a=(int (*)[2])malloc(sizeof(**t)))) {
+    if (!*a && (*a=(int (*)[2])malloc(sizeof(**t)))) {
         (**a)[0]=k,(**a)[1]=v;
     }
 
@@ -51,17 +51,17 @@ int main() {
     printf("%d:%d\n", (**b)[0], (**b)[1]);
     ***********************************/
 
-    for(int i = 0; i < testSize; i++) {
-        hset(table, i, i);
+    for (int i = 0; i < testSize; ++i) {
+        hset(table, i, i-100);
     }
 
-    for(int i = 0; i < testSize; i++) {
-        printf("%d:%d\n", **(hget(table, i))[0], **hget(table, i)[0]);
+    for (int i = 0; i < testSize; ++i) {
+        printf( "k: %d -- v: %d\n", (**hget(table, i))[0], (**hget(table, i))[1] );
     }
 
     // delete hash table
     hdel(table);
 
     // pause to see the result
-    getchar();
+    // getchar();
 }
