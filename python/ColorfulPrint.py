@@ -2,25 +2,25 @@
 # -*- coding: utf-8 -*-
 
 """
-                   _ooOoo_ 
-                  o8888888o 
-                  88" . "88 
-                  (| -_- |) 
-                  O\  =  /O 
-               ____/`---'\____ 
-             .'  \\|     |//  `. 
-            /  \\|||  :  |||//  \ 
-           /  _||||| -:- |||||-  \ 
-           |   | \\\  -  /// |   | 
-           | \_|  ''\---/''  |   | 
-           \  .-\__  `-`  ___/-. / 
-         ___`. .'  /--.--\  `. . __ 
-      ."" '<  `.___\_<|>_/___.'  >'"". 
-     | | :  `- \`.;`\ _ /`;.`/ - ` : | | 
-     \  \ `-.   \_ __\ /__ _/   .-` /  / 
-======`-.____`-.___\_____/___.-`____.-'====== 
-                   `=---=' 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
          佛祖保佑    iii    永无BUG
 """
 
@@ -59,7 +59,7 @@ class Color:
 
     else:
         std_out_handle = None
-    
+
     def set_cmd_color(self, color, handle=std_out_handle):
         """
         (color) -> bit
@@ -68,10 +68,10 @@ class Color:
 
         bool = ctypes.windll.kernel32.SetConsoleTextAttribute(handle, color)
         return bool
-    
+
     def reset_color(self):
         self.set_cmd_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
-    
+
     def print_red_text(self, print_text):
         if 'Windows' in platform.platform():
             self.set_cmd_color(FOREGROUND_RED | FOREGROUND_INTENSITY)
@@ -80,7 +80,7 @@ class Color:
 
         else:
             print('\033[91m' + print_text + '\033[0m', end = '')
-        
+
     def print_green_text(self, print_text):
         if 'Windows' in platform.platform():
             self.set_cmd_color(FOREGROUND_GREEN | FOREGROUND_INTENSITY)
@@ -89,7 +89,7 @@ class Color:
 
         else:
             print('\033[92m' + print_text + '\033[0m', end = '')
-    
+
     def print_blue_text(self, print_text):
         if 'Windows' in platform.platform():
             self.set_cmd_color(FOREGROUND_BLUE | FOREGROUND_INTENSITY)
@@ -98,7 +98,7 @@ class Color:
 
         else:
             print('\033[96m' + print_text + '\033[0m', end = '')
-          
+
     def print_red_text_with_blue_bg(self, print_text):
         self.set_cmd_color(FOREGROUND_RED | FOREGROUND_INTENSITY| BACKGROUND_BLUE | BACKGROUND_INTENSITY)
         print(print_text, end = '')
@@ -153,6 +153,6 @@ if __name__ == "__main__":
         input()
     except:
         pass
-    
+
 # code from: http://www.sharejs.com/codes/python/8665
 

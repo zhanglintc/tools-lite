@@ -19,7 +19,7 @@ def get_geo(target):
         driver.find_element_by_xpath('//input[@id="s_t"]').send_keys(Keys.ENTER)
         driver.find_element_by_xpath('//div[@id="m_r"]')
         driver.set_window_size(1200, 900)
-        
+
         # map_f_2 = driver.find_element_by_name("map_f_2")
 
         # while not map_f_2:

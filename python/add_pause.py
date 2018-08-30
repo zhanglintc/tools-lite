@@ -6,7 +6,7 @@ for i in range(len(fExt)):
 
 def IsTargetFile(FileName):
     sufix = os.path.splitext(FileName)[1][1:]
-    
+
     if sufix.lower() in fExt:
         return True
     else:
@@ -17,7 +17,7 @@ f_log = open('not_utf8.log', 'w')
 for root,dirs,files in FTuple:
     for Tmpfile in files:
         if IsTargetFile(Tmpfile):
-			print(Tmpfile) # print something makes user know program is running
+            print(Tmpfile) # print something makes user know program is running
             line_number = 1
             try:
                 of = os.path.join(root,Tmpfile)
