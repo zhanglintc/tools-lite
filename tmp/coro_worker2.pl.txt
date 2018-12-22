@@ -1,0 +1,23 @@
+use Coro;
+use Coro::Timer;
+use Coro::Semaphore;
+
+my $sem = Coro::Semaphore->new(5);
+my $g;
+sub worker {
+  my ($n, $url) = @_; 
+  $g++;
+  my $guard = $sem->guard;
+Coro::Timer::sleep(rand(10));
+  printf("woker(%d): %s\n", $n, $url);
+  #Coro::Timer::sleep(rand(10));
+}
+
+my @coros;
+for my $i (0 .. 20){
+  my $url = sprintf("http://www%d.exmaple.com", $i);
+  push @coros, async {worker($i, $url)};
+}
+$_->join for @coros;
+
+print $g;
