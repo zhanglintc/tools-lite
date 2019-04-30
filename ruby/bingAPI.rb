@@ -48,4 +48,14 @@ get '/description_with_callback' do
   jsonp $copyright, callback
 end
 
+get '/description_string' do
+  callback = (params['callback'] or 'default_callback')
+  daysAgo = (params['daysAgo'] or 0)
+  req_data(daysAgo)
+  jsn = {"description": $copyright}
+  response.headers['content-type'] = 'application/javascript; charset=utf-8'
+  ret = "#{callback}(\"#{$copyright}\")"
+  # jsonp $copyright, callback
+end
+
 
