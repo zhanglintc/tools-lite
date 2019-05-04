@@ -14,15 +14,6 @@ my $__abspath__ = abs_path __FILE__;
 my $__dir__     = dirname $__abspath__;
 my $__file__    = basename $__abspath__;
 
-my $apps = [
-    "/home/lane/Mmrz-Sync/server/Mmrz-Sync.py",
-    "/home/lane/wx-globe/wx-globe.py",
-    "/home/lane/navi-site/navi-site.py",
-    "/home/lane/lhsjlc4/lhsjlc4.rb",
-    "/home/lane/tools-lite/ruby/bingAPI.rb",
-    "/home/lane/tools-lite/ruby/returnAddr.rb",
-];
-
 my $g_applist_yaml = catfile($__dir__, "applist.yml");
 
 sub load_yaml_config {
