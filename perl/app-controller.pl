@@ -89,6 +89,7 @@ sub active_or_down {
 sub show_status {
     my $separator = "\t  ";
 
+    say "-" x 30;
     say "Status${separator}Applictaion";
 
     my $app_list = load_yaml_config();
@@ -99,6 +100,8 @@ sub show_status {
 
         say "@{[active_or_down($_, $name) ? 'Active' : 'Down']} ${separator}$_";
     }
+
+    say "-" x 30;
 }
 
 sub activate_all {
@@ -114,11 +117,12 @@ sub activate_all {
             my $exec = "";
             $exec = "ruby" if grep {/\.rb/} $name;
             $exec = "python" if grep {/\.py/} $name;
+            $exec = "perl" if grep {/\.pl/} $name;
 
-            my $cmd = "cd $dir; nohup $exec ./$name\&";
+            my $cmd = "cd $dir; $exec ./$name\&";
 
-            say "activate $_";
-            system "$cmd>/dev/null 2>&1";
+            say " - activate $_";
+            system "$cmd";
         }
     }
 
@@ -133,10 +137,11 @@ sub stop_all {
 
     my $app_list = load_yaml_config();
     for (@$app_list) {
+        my $expect_name = $_;
         my $dir = dirname $_;
         my $name = basename $_;
 
-        my $details = grep_app_name($_);
+        my $details = grep_app_name($name);
         my @matched_items = grep {$_->{full_path} eq $expect_name} @$details;
 
         for my $item (@matched_items) {
