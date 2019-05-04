@@ -14,13 +14,16 @@ sub grep_app_name {
 
     my @details;
     for my $pid (@pids) {
-        chomp($pid);
+        chomp $pid;
 
         my $cwd = readlink "/proc/$pid/cwd";
         next unless defined $cwd;
 
         my $exe = readlink "/proc/$pid/exe";
         next unless defined $exe;
+
+        my $port = `netstat -ntlp 2>/dev/null | grep ${pid} | awk '{print \$4}' | awk -F ':' '{print \$2}'`;
+        chomp $port;
 
         my $cmdline = `cat /proc/$pid/cmdline`;
         my @cmdline_arr = split /\0/, $cmdline;
@@ -32,6 +35,7 @@ sub grep_app_name {
             exe => $exe,
             cwd => $cwd,
             app => $app_name,
+            port => $port,
             full_path => $full_path,
         };
 
@@ -41,5 +45,5 @@ sub grep_app_name {
     return \@details;
 }
 
-say Dumper grep_app_name("zhanglintc.pl")
+say Dumper grep_app_name("Mmrz-Sync.py")
 
