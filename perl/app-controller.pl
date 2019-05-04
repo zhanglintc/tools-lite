@@ -10,7 +10,9 @@ use File::Spec::Functions qw/catfile/;
 use Data::Dumper;
 # use Data::Dump qw/dump/;
 
-my $__file__ = basename __FILE__;
+my $__abspath__ = abs_path __FILE__;
+my $__dir__     = dirname $__abspath__;
+my $__file__    = basename $__abspath__;
 
 my $apps = [
     "/home/lane/Mmrz-Sync/server/Mmrz-Sync.py",
@@ -21,7 +23,7 @@ my $apps = [
     "/home/lane/tools-lite/ruby/returnAddr.rb",
 ];
 
-my $g_applist_yaml = "applist.yml";
+my $g_applist_yaml = catfile($__dir__, "applist.yml");
 
 sub load_yaml_config {
     open my $fr, "<", $g_applist_yaml;
@@ -89,7 +91,9 @@ sub show_status {
 
     say "Status${separator}Applictaion";
 
-    for (@$apps) {
+    my $app_list = load_yaml_config();
+
+    for (@$app_list) {
         my $dir = dirname $_;
         my $name = basename $_;
 
@@ -100,7 +104,9 @@ sub show_status {
 sub activate_all {
     say "try to start all apps";
 
-    for (@$apps) {
+    my $app_list = load_yaml_config();
+
+    for (@$app_list) {
         my $dir = dirname $_;
         my $name = basename $_;
 
@@ -117,14 +123,40 @@ sub activate_all {
     }
 
     say "start all apps done";
+    say "";
+
+    show_status();
 }
 
 sub stop_all {
-    say "not implimented yet";
+    say "try to stop all apps";
+
+    my $app_list = load_yaml_config();
+    for (@$app_list) {
+        my $dir = dirname $_;
+        my $name = basename $_;
+
+        my $details = grep_app_name($_);
+        my @matched_items = grep {$_->{full_path} eq $expect_name} @$details;
+
+        for my $item (@matched_items) {
+            my $pid = $item->{pid};
+            `kill -9 $pid`;
+        }
+    }
+
+    say "stop all apps done";
+    say "";
+
+    show_status();
 }
 
 sub show_app_list {
     my $app_list = load_yaml_config();
+
+    unless (@$app_list) {
+        say "applist is null";
+    }
 
     for my $idx (0 .. $#{$app_list}) {
         say "$idx: ${$app_list}[$idx]";
@@ -142,6 +174,27 @@ sub add_app {
 
     my $app_list = load_yaml_config();
     my $full_path = abs_path $name;
+
+    if (-d $full_path) {
+        say "given path is a directory:";
+        say "$full_path";
+        exit;
+    }
+
+    if (!-f $full_path) {
+        say "given path is not an existing file:";
+        say "$full_path";
+        exit;
+    }
+
+    if (grep {/$full_path/} @$app_list)
+    {
+        say "given path already exist in applist:";
+        say "$full_path";
+        show_app_list();
+        exit;
+    }
+
     push @$app_list, $full_path;
     dump_yaml_config($app_list);
     say "add success, current list is:";
@@ -158,6 +211,12 @@ sub del_app {
     }
 
     my $app_list = load_yaml_config();
+
+    unless (@$app_list) {
+        say "app_list is null";
+        say "del cannot be done";
+        exit;
+    }
 
     if ($seq > $#{$app_list}){
         say "given number out of range";
