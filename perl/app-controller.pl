@@ -50,7 +50,7 @@ sub grep_app_name {
 
     my @details;
     for my $pid (@pids) {
-        chomp($pid);
+        chomp $pid;
 
         my $cwd = readlink "/proc/$pid/cwd";
         next unless defined $cwd;
@@ -63,11 +63,15 @@ sub grep_app_name {
         my $app_name = $cmdline_arr[1];
         my $full_path = abs_path catfile($cwd, $app_name);
 
+        my $port = `netstat -ntlp 2>/dev/null | grep ${pid} | awk '{print \$4}' | awk -F ':' '{print \$2}'`; chomp $port;
+        $port = undef if not $port;
+
         my $detail = {
             pid => $pid,
             exe => $exe,
             cwd => $cwd,
             app => $app_name,
+            port => $port,
             full_path => $full_path,
         };
 
@@ -90,7 +94,7 @@ sub show_status {
     my $separator = "\t  ";
 
     say "-" x 30;
-    say "Status${separator}Applictaion";
+    say "Status${separator}Pid${separator}Port${separator}Applictaion";
 
     my $app_list = load_yaml_config();
 
@@ -98,7 +102,15 @@ sub show_status {
         my $dir = dirname $_;
         my $name = basename $_;
 
-        say "@{[active_or_down($_, $name) ? 'Active' : 'Down']} ${separator}$_";
+        my @items = active_or_down($_, $name);
+        my $item = pop @items;
+
+        my $status = $item ? 'Active' : 'Down';
+        my $pid = $item->{pid} // "-";
+        my $port = $item->{port} // "-";
+        my $full_path = $item->{full_path} // $_;
+
+        say "${status}${separator}${pid}${separator}${port}${separator}${full_path}";
     }
 
     say "-" x 30;
@@ -119,7 +131,7 @@ sub activate_all {
             $exec = "python" if grep {/\.py/} $name;
             $exec = "perl" if grep {/\.pl/} $name;
 
-            my $cmd = "cd $dir; $exec ./$name\&";
+            my $cmd = "cd $dir; $exec ./$name>/dev/null 2>&1 \&";
 
             say " - activate $_";
             system "$cmd";
