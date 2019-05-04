@@ -14,7 +14,18 @@ my $__abspath__ = abs_path __FILE__;
 my $__dir__     = dirname $__abspath__;
 my $__file__    = basename $__abspath__;
 
-my $g_applist_yaml = catfile($__dir__, "applist.yml");
+my $g_applist_yaml;
+
+sub init {
+    my $apm_home = catfile($ENV{"HOME"}, ".apm");
+
+    if (-d $apm_home) {
+        $g_applist_yaml = catfile($apm_home, "applist.yml");
+    }
+    else {
+        $g_applist_yaml = catfile($__dir__, "applist.yml");
+    }
+}
 
 sub load_yaml_config {
     open my $fr, "<", $g_applist_yaml;
@@ -84,6 +95,7 @@ sub active_or_down {
 sub show_status {
     my $separator = "\t  ";
 
+    say "status:";
     say "-" x 30;
     say "Status${separator}Pid${separator}Port${separator}Applictaion";
 
@@ -162,6 +174,9 @@ sub stop_all {
 sub show_app_list {
     my $app_list = load_yaml_config();
 
+    say "items:";
+    say "-" x 30;
+
     unless (@$app_list) {
         say "applist is null";
     }
@@ -169,6 +184,8 @@ sub show_app_list {
     for my $idx (0 .. $#{$app_list}) {
         say "$idx: ${$app_list}[$idx]";
     }
+
+    say "-" x 30;
 }
 
 sub add_app {
@@ -240,15 +257,16 @@ sub del_app {
 }
 
 sub main {
+    init();
+
     my $command = shift @ARGV;
 
     if (!defined $command) {
         say "usage:";
-        say "$__file__ show/start/stop/list/add/del";
-        say "default: show";
+        say "$__file__ [command]";
         say "";
-
-        show_status();
+        say"[command] can be: show/start/stop/list/add/del";
+        say "";
     }
     elsif ($command eq "show") {
         show_status();
@@ -268,9 +286,26 @@ sub main {
     elsif ($command eq "del") {
         del_app();
     }
+    elsif ($command eq "help") {
+        say "usage:";
+        say "$__file__ [command]";
+        say "";
+        say "command:";
+        say "show:  show app status";
+        say "start: start all apps";
+        say "stop:  stop all apps";
+        say "list:  list all apps with index";
+        say "add:   add an app; eg $__file__ add 1";
+        say "del:   del an app; eg $__file__ del 1";
+        say "help:  show this help";
+        say "";
+    }
     else {
+        say "command cannot be recognized";
+        say "";
         say "usage:";
         say "$__file__ show/start/stop/list/add/del";
+        say "";
     }
 }
 
