@@ -4,7 +4,6 @@
 import os
 import re
 import json
-import queue
 import requests
 
 from concurrent import futures
@@ -12,7 +11,7 @@ from bs4 import BeautifulSoup
 
 
 cpta_url = "http://www.cpta.com.cn/"
-json_db = "tmp/bulitin_json_db"
+json_db = "./bulitin_json_db"
 
 
 def read_one_link(link):
@@ -52,6 +51,11 @@ def main():
     for title in titles:
         if title not in bulitin_history:
             bulitin_history.append(title)
+
+            text = requests.compat.quote(title)
+            url = "http://zhanglintc.work:8000/send?text={0}".format(text)
+            requests.get(url)
+
             print(title)
 
     with open(json_db, "w") as fw:
