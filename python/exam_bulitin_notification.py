@@ -46,7 +46,7 @@ def main():
             try:
                 bulitin_history = json.loads(bulitin_history)
             except ValueError:
-                pass
+                bulitin_history = []
 
     for title in titles:
         if title not in bulitin_history:
@@ -58,8 +58,13 @@ def main():
 
             print(title)
 
+    import subprocess
+    date = subprocess.check_output('date').rstrip().decode()
+    bulitin_history.insert(0, date)
+
+
     with open(json_db, "w") as fw:
-        fw.write(json.dumps(bulitin_history))
+        fw.write(json.dumps(bulitin_history, indent=4))
 
 
 if __name__ == '__main__':
