@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 
 
 cpta_url = "http://www.cpta.com.cn/"
-json_db = "./bulitin_json_db"
+json_db = "/tmp/bulitin_json_db"
 
 
 def read_one_link(link):
@@ -21,7 +21,7 @@ def read_one_link(link):
 
     soup = BeautifulSoup(html, "html.parser")
     title = soup.select_one('.text_con > #p_title').text
-    return title
+    return "{title}: {link}".format(title=title, link=link)
 
 
 def main():
