@@ -6,7 +6,7 @@
     "drag_text": false,
     "draw_white_space": "all",
     "enable_hexadecimal_encoding": false,
-    "font_face": "Consolas",
+    "font_face": "Consolas-with-Yahei",
     "font_size": 14,
     "highlight_modified_tabs": true,
     "ignored_packages":
@@ -16,7 +16,9 @@
     "open_files_in_new_window": false,
     "scroll_speed": 0,
     "show_encoding": true,
+    "show_git_status": false,
     "tab_completion": false,
+    "theme": "Default.sublime-theme",
     "translate_tabs_to_spaces": true,
     "vintage_start_in_command_mode": true,
     "word_wrap": false,
