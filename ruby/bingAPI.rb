@@ -40,22 +40,20 @@ get '/description' do
   return $copyright
 end
 
+# get '/description_with_callback' do
+#   callback = (params['callback'] or 'default_callback')
+#   daysAgo = (params['daysAgo'] or 0)
+#   req_data(daysAgo)
+#   jsn = {"description": $copyright}
+#   jsonp $copyright, callback
+# end
+
 get '/description_with_callback' do
   callback = (params['callback'] or 'default_callback')
   daysAgo = (params['daysAgo'] or 0)
   req_data(daysAgo)
-  jsn = {"description": $copyright}
-  jsonp $copyright, callback
-end
-
-get '/description_string' do
-  callback = (params['callback'] or 'default_callback')
-  daysAgo = (params['daysAgo'] or 0)
-  req_data(daysAgo)
-  jsn = {"description": $copyright}
   response.headers['content-type'] = 'application/javascript; charset=utf-8'
-  ret = "#{callback}(\"#{$copyright}\")"
-  # jsonp $copyright, callback
+  ret = "#{callback}(\"#{$copyright}\", #{daysAgo})"
 end
 
 
