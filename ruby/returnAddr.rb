@@ -1,4 +1,4 @@
-#!/env/bin/ruby
+#!/usr/bin/ruby
 # encoding: utf-8
 
 require 'sinatra'
@@ -9,3 +9,4 @@ set :port, '3322'
 get '/' do
   return env['REMOTE_ADDR']
 end
+
