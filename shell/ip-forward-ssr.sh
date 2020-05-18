@@ -1,10 +1,10 @@
 #/usr/bin/bash
 
-bwh=104.243.25.34
+bwh=167.179.103.95
 ten=10.139.131.156
 
-remotePort=10285
-localPort=10000
+remotePort=10185
+localPort=10167
 
 # detele all existing rules
 sudo iptables -t nat -F
