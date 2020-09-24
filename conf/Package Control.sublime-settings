@@ -1,0 +1,35 @@
+{
+	"bootstrapped": true,
+	"channels":
+	[
+		"http://ali.zhanglintc.co/channel_v3.json"
+	],
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Advanced CSV",
+		"AutoItScript",
+		"Behave Color Scheme",
+		"ConvertToUTF8",
+		"Emmet",
+		"Emmet Css Snippets",
+		"Gherkin (Cucumber) Formatter",
+		"Gherkin Auto-Complete Plus",
+		"INI",
+		"LDIF Syntax Highlighting",
+		"ModernPerl",
+		"Package Control",
+		"Python 3",
+		"Python Improved",
+		"RailsCasts Colour Scheme",
+		"rainbow_csv",
+		"Schemr",
+		"SublimeLinter",
+		"SublimeLinter-pycodestyle",
+		"TabNine",
+		"Tera Term Language",
+		"URLEncode"
+	]
+}
