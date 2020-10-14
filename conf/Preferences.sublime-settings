@@ -1,6 +1,6 @@
 {
     "always_show_minimap_viewport": true,
-    "auto_complete": true,
+    "auto_complete": false,
     "auto_complete_commit_on_tab": false,
     "auto_match_enabled": true,
     "close_windows_when_empty": false,
@@ -19,10 +19,10 @@
     "scroll_speed": 0,
     "show_encoding": true,
     "show_git_status": true,
-    "tab_completion": false,
+    "tab_completion": true,
     "theme": "Default.sublime-theme",
     "translate_tabs_to_spaces": true,
+    "update_check": false,
     "vintage_start_in_command_mode": true,
-    "word_wrap": false,
-    "update_check": false
+    "word_wrap": false
 }
