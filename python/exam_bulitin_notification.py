@@ -162,6 +162,12 @@ jieqi_json = """
 }
 """
 
+headers = {
+    'User-Agent': 'curl/7.54.1',
+    'Host': 'www.cpta.com.cn',
+    'Accept': '*/*',
+}
+
 
 cpta_url = "http://www.cpta.com.cn/"
 json_db = "/tmp/bulitin_json_db"
@@ -170,8 +176,8 @@ wechat_send_url = u"http://zhanglintc.work:8000/send?text={0}"
 
 
 def read_one_link(link):
-    res = requests.get(link)
-    res.encoding = "GB2312"
+    res = requests.get(link, headers=headers)
+    res.encoding = "UTF-8"
     html = res.text
 
     soup = BeautifulSoup(html, "html.parser")
@@ -180,8 +186,8 @@ def read_one_link(link):
 
 
 def exam_monitor():
-    res = requests.get(cpta_url)
-    res.encoding = "GB2312"
+    res = requests.get(cpta_url, headers=headers)
+    res.encoding = "UTF-8"
     html = res.text
 
     soup = BeautifulSoup(html, "html.parser")
@@ -236,8 +242,8 @@ def jieqi_monitor():
 
 
 def main():
-    exam_monitor()
     jieqi_monitor()
+    exam_monitor()
 
 
 if __name__ == '__main__':
