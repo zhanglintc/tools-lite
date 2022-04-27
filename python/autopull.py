@@ -10,8 +10,9 @@ base_path = os.path.expanduser('~')
 gitbak_dir = f"{base_path}/gitbak/"
 token_file = f"{gitbak_dir}/.token_file"
 
-with open(token_file, 'rb') as fr:
+with open(token_file, 'r') as fr:
     token_file_content = fr.read()
+    token_file_content = token_file_content.strip()
 
 """
     URL which able to retrieve PRIVATE repos:
@@ -28,7 +29,7 @@ with open(token_file, 'rb') as fr:
 """
 
 
-token = 'token_file_content'
+token = token_file_content
 url = "https://api.github.com/search/repositories"
 
 
