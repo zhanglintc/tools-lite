@@ -1,37 +1,50 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import urllib2
+import requests
 import json
 import os
 
-# repos = [
-#     #### zhanglintc ####
-#     'git@github.com:zhanglintc/tools-lite.git',
-#     'git@github.com:zhanglintc/leetcode.git',
-#     'git@github.com:zhanglintc/wb.git',
-#     'git@github.com:zhanglintc/snake.git',
-#     'git@github.com:zhanglintc/SourcePrac.git',
-#     'git@github.com:zhanglintc/zhanglintc.github.io.git',
-#     'git@github.com:zhanglintc/5th.git',
-#     'git@github.com:zhanglintc/sanguosha.git',
-#     'git@github.com:zhanglintc/daDoudou.git',
-#     'git@github.com:zhanglintc/SetWallpaper.git',
-
-#     #### Theodolite ####
-#     'git@github.com:Theodolite/3plus2.git',
-# ]
-
 # /home/lane
 base_path = os.path.expanduser('~')
+gitbak_dir = f"{base_path}/gitbak/"
+token_file = f"{gitbak_dir}/.token_file"
+
+with open(token_file, 'rb') as fr:
+    token_file_content = fr.read()
+
+"""
+    URL which able to retrieve PRIVATE repos:
+        `https://api.github.com/search/repositories?q=user:zhanglintc`
+    Note: `user` can be replaced with `org`, if you're tring to retrieve organization information.
+    Refer: https://github.community/t/how-to-get-list-of-private-repositories-via-api-call/120175/2
+
+
+    URL which only able to retrieve PUBLIC repos:
+        `https://api.github.com/users/zhanglintc/repos`
+
+    How to provide a access token:
+        `https://developer.github.com/changes/2020-02-10-deprecating-auth-through-query-param/`
+"""
+
+
+token = 'token_file_content'
+url = "https://api.github.com/search/repositories"
+
 
 def gitbak(userName):
-    repos = []
-    recv = urllib2.urlopen("https://api.github.com/users/{0}/repos".format(userName))
-    raw = recv.read()
-    dikt = json.loads(raw)
-    for item in dikt:
-        repos.append(item["ssh_url"])
+    params = {
+        'q': f'user:{userName}',
+        'per_page': 999,
+    }
+    headers = {
+        'Authorization': f'token {token}',
+    }
+    res = requests.get(url, params=params, headers=headers)
+
+    o = json.loads(res.text)
+    items = o['items']
+    repos = [it['ssh_url'] for it in items]
 
     if not os.path.exists('{0}/gitbak/{1}'.format(base_path, userName)):
         os.makedirs('{0}/gitbak/{1}'.format(base_path, userName))
@@ -42,7 +55,6 @@ def gitbak(userName):
         repoName = repo.split('/')[1][:-4]
         if repoName not in dirs:
             os.system('cd {0}/gitbak/{1} && git clone {2}'.format(base_path, userName, repo))
-
         else:
             os.system('cd {0}/gitbak/{1}/{2} && git pull'.format(base_path, userName, repoName))
 
