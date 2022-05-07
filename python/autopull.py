@@ -62,6 +62,7 @@ def gitbak(userName):
 if __name__ == '__main__':
     gitbak("zhanglintc")
     gitbak("Theodolite")
+    gitbak("Mmrz-Repos")
 
 os.system('date >> {0}/gitbak/gitbak.log'.format(base_path))
 
