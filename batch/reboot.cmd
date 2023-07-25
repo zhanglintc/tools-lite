@@ -1,7 +1,7 @@
 ::restart windows explorer easily
 
 @echo off
-color 3e
+rem color 3e
 title Reboot Lite
 taskkill /f /im explorer.exe
 start explorer.exe
